@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>भगवान जगन्नाथ पूजा</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { background-color: #FFF3E0; font-family: sans-serif; padding: 20px; }
+    .card { background-color: white; padding: 15px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-bottom: 20px; }
+    h2 { color: #D84315; text-align: center; font-size: 24px; }
+    p { color: #333; line-height: 1.6; font-size: 18px; }
+    .back-btn { background-color: #333; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px; display: inline-block; margin-bottom: 20px; font-weight: bold; }
+    .god-img { width: 100%; border-radius: 10px; margin-bottom: 15px; }
+    .audio-btn { background-color: #4CAF50; color: white; padding: 12px 20px; border: none; border-radius: 8px; font-size: 16px; margin-right: 10px; }
+    .stop-btn { background-color: #f44336; color: white; padding: 12px 20px; border: none; border-radius: 8px; font-size: 16px; }
+  </style>
+</head>
+<body>
+  <a href="puja.html" class="back-btn">⬅ लिस्ट पर जाएँ</a>
+  <div class="card">
+    <h2>भगवान जगन्नाथ</h2>
+    <img src="jagannath.jpg" alt="जगन्नाथ" class="god-img">
+    <div style="text-align: center;">
+      <button class="audio-btn" onclick="playAudio()">🔊 सुनकर जानें</button>
+      <button class="stop-btn" onclick="stopAudio()">⏹️ रोकें</button>
+    </div>
+    <div id="puja-text">
+      <p><strong>विधि:</strong> पुरी के जगन्नाथ जी की पूजा में 'महाप्रसाद' का बहुत महत्व है। उन्हें तुलसी और चंदन अर्पित करें। 'जय जगन्नाथ' का घोष करें। रथ यात्रा के समय इनका पूजन विशेष फलदायी होता है।</p>
+      <p><strong>शुभ फल:</strong> जगन्नाथ जगत के स्वामी हैं। इनकी पूजा से सभी प्रकार के कष्टों का अंत होता है। यह आरोग्य, लंबी आयु और मोक्ष प्रदान करने वाले देव हैं। इनकी कृपा से घर में कभी अन्न और धन की कमी नहीं होती।</p>
+    </div>
+  </div>
+  <script>
+    function playAudio() {
+      window.speechSynthesis.cancel();
+      var textToRead = document.getElementById("puja-text").innerText;
+      var speech = new SpeechSynthesisUtterance(textToRead);
+      speech.lang = 'hi-IN'; speech.rate = 0.85; speech.pitch = 1.0;
+      window.speechSynthesis.speak(speech);
+    }
+    function stopAudio() { window.speechSynthesis.cancel(); }
+  </script>
+</body>
+</html>

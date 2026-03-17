@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>माता काली पूजा</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { background-color: #FFF3E0; font-family: sans-serif; padding: 20px; }
+    .card { background-color: white; padding: 15px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-bottom: 20px; }
+    h2 { color: #D84315; text-align: center; font-size: 24px; margin-top: 5px; }
+    p { color: #333; line-height: 1.6; font-size: 18px; }
+    .back-btn { background-color: #333; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px; display: inline-block; margin-bottom: 20px; font-weight: bold; }
+    .god-img { width: 100%; border-radius: 10px; margin-bottom: 15px; }
+    .audio-btn { background-color: #4CAF50; color: white; padding: 12px 20px; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; margin-right: 10px; margin-bottom: 15px; }
+    .stop-btn { background-color: #f44336; color: white; padding: 12px 20px; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; margin-bottom: 15px; }
+  </style>
+</head>
+<body>
+  <a href="puja.html" class="back-btn">⬅ लिस्ट पर जाएँ</a>
+  <div class="card">
+    <h2>माता काली की पूजा</h2>
+    <img src="kali_mata.jpg" alt="माता काली" class="god-img">
+    <div style="text-align: center;">
+      <button class="audio-btn" onclick="playAudio()">🔊 सुनकर जानें</button>
+      <button class="stop-btn" onclick="stopAudio()">⏹️ रोकें</button>
+    </div>
+    <div id="puja-text">
+      <p><strong>विधि:</strong> माता काली की पूजा अक्सर मध्यरात्रि या ब्रह्म मुहूर्त में की जाती है। लाल वस्त्र धारण करें, माता को गुड़हल के फूल, कपूर और नारियल अर्पित करें। 'ॐ क्रीं काल्यै नमः' मंत्र का जाप करें।</p>
+      <p><strong>शुभ फल:</strong> माता काली दुष्टों का संहार करने वाली और रक्षक हैं। इनकी पूजा से बुरी शक्तियों, नजर दोष और शत्रुओं का तुरंत नाश होता है। साधक को अदम्य साहस और निर्भयता प्राप्त होती है।</p>
+    </div>
+  </div>
+  <script>
+    function playAudio() {
+      window.speechSynthesis.cancel();
+      var textToRead = document.getElementById("puja-text").innerText;
+      var speech = new SpeechSynthesisUtterance(textToRead);
+      speech.lang = 'hi-IN'; speech.rate = 0.8; speech.pitch = 1.0;
+      window.speechSynthesis.speak(speech);
+    }
+    function stopAudio() { window.speechSynthesis.cancel(); }
+  </script>
+</body>
+</html>

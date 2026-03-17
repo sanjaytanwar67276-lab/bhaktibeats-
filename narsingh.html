@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>भगवान नरसिंह पूजा</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { background-color: #FFF3E0; font-family: sans-serif; padding: 20px; }
+    .card { background-color: white; padding: 15px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-bottom: 20px; }
+    h2 { color: #D84315; text-align: center; font-size: 24px; margin-top: 5px; }
+    p { color: #333; line-height: 1.6; font-size: 18px; }
+    .back-btn { background-color: #333; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px; display: inline-block; margin-bottom: 20px; font-weight: bold; }
+    .god-img { width: 100%; border-radius: 10px; margin-bottom: 15px; }
+    .audio-btn { background-color: #4CAF50; color: white; padding: 12px 20px; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; margin-right: 10px; margin-bottom: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
+    .stop-btn { background-color: #f44336; color: white; padding: 12px 20px; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; margin-bottom: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
+  </style>
+</head>
+<body>
+
+  <a href="puja.html" class="back-btn">⬅ लिस्ट पर जाएँ</a>
+
+  <div class="card">
+    <h2>भगवान नरसिंह जी की पूजा</h2>
+    <img src="narsingh.jpg" alt="भगवान नरसिंह" class="god-img">
+    
+    <div style="text-align: center;">
+      <button class="audio-btn" onclick="playAudio()">🔊 सुनकर जानें</button>
+      <button class="stop-btn" onclick="stopAudio()">⏹️ रोकें</button>
+    </div>
+
+    <div id="puja-text">
+      <p><strong>विधि:</strong> भगवान नरसिंह की पूजा विशेष रूप से गोधूलि बेला (सूर्यास्त का समय) में की जाती है। इन्हें लाल फूल, चंदन, अक्षत और पंचामृत चढ़ाएं। भोग में गुड़ और चना अर्पित करना बहुत शुभ होता है। 'ॐ नृं नृसिंहाय नमः' या नरसिंह कवच का पाठ करें।</p>
+      <p><strong>शुभ फल:</strong> जैसे भगवान नरसिंह ने भक्त प्रह्लाद की रक्षा की थी, वैसे ही वे अपने भक्तों की हर विपत्ति से रक्षा करते हैं। इनकी पूजा से अचानक आने वाले संकट, छिपे हुए शत्रु और गहरे से गहरे डर का नाश होता है। यह परम सुरक्षा प्रदान करते हैं।</p>
+    </div>
+  </div>
+
+  <script>
+    function playAudio() {
+      window.speechSynthesis.cancel();
+      var textToRead = document.getElementById("puja-text").innerText;
+      var speech = new SpeechSynthesisUtterance(textToRead);
+      speech.lang = 'hi-IN'; speech.rate = 0.85; 
+      window.speechSynthesis.speak(speech);
+    }
+    function stopAudio() { window.speechSynthesis.cancel(); }
+  </script>
+
+</body>
+</html>
+

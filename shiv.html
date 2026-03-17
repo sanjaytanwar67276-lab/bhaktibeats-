@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>भगवान शिव पूजा</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { background-color: #FFF3E0; font-family: sans-serif; padding: 20px; }
+    .card { background-color: white; padding: 15px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-bottom: 20px; }
+    h2 { color: #D84315; text-align: center; font-size: 24px; margin-top: 5px; }
+    p { color: #333; line-height: 1.6; font-size: 18px; }
+    .back-btn { background-color: #333; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px; display: inline-block; margin-bottom: 20px; font-weight: bold; }
+    .god-img { width: 100%; border-radius: 10px; margin-bottom: 15px; }
+    
+    /* Audio Buttons ki Design */
+    .audio-btn { background-color: #4CAF50; color: white; padding: 12px 20px; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; margin-right: 10px; margin-bottom: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
+    .stop-btn { background-color: #f44336; color: white; padding: 12px 20px; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; margin-bottom: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
+  </style>
+</head>
+<body>
+
+  <a href="puja.html" class="back-btn">⬅ लिस्ट पर जाएँ</a>
+
+  <div class="card">
+    <h2>भगवान शिव जी की पूजा</h2>
+    
+    <img src="shiva.jpg" alt="भगवान शिव" class="god-img">
+    
+    <div style="text-align: center;">
+      <button class="audio-btn" onclick="playAudio()">🔊 सुनकर जानें</button>
+      <button class="stop-btn" onclick="stopAudio()">⏹️ रोकें</button>
+    </div>
+
+    <div id="puja-text">
+      <p><strong>विधि:</strong> प्रात: काल स्नान करके शिवलिंग पर जल, कच्चा दूध, बेलपत्र, धतूरा और भस्म अर्पित करें। 'ॐ नमः शिवाय' मंत्र का जाप करें और धूप-दीप जलाकर आरती करें।</p>
+      <p><strong>शुभ फल:</strong> भगवान शिव बहुत ही कृपालु और भोलेनाथ हैं। इनकी पूजा से मन को असीम शांति मिलती है, सभी रोग-कष्ट दूर होते हैं और व्यक्ति को हर कार्य में सफलता व मोक्ष की प्राप्ति होती है।</p>
+    </div>
+  </div>
+
+  <script>
+    function playAudio() {
+      // Pehle se chal rahi aawaz ko rok dega
+      window.speechSynthesis.cancel();
+      
+      // Jo text padhna hai use select karega
+      var textToRead = document.getElementById("puja-text").innerText;
+      var speech = new SpeechSynthesisUtterance(textToRead);
+      
+      // Bhasha Hindi set karega aur bolne ki speed aaram se rakhega
+      speech.lang = 'hi-IN';
+      speech.rate = 1.0; 
+      
+      // Bolna shuru karega
+      window.speechSynthesis.speak(speech);
+    }
+
+    function stopAudio() {
+      // Aawaz ko beech mein rok dega
+      window.speechSynthesis.cancel();
+    }
+  </script>
+
+</body>
+</html>

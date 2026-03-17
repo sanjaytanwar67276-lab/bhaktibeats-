@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>भगवान कार्तिकेय पूजा</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { background-color: #FFF3E0; font-family: sans-serif; padding: 20px; }
+    .card { background-color: white; padding: 15px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-bottom: 20px; }
+    h2 { color: #D84315; text-align: center; font-size: 24px; margin-top: 5px; }
+    p { color: #333; line-height: 1.6; font-size: 18px; }
+    .back-btn { background-color: #333; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px; display: inline-block; margin-bottom: 20px; font-weight: bold; }
+    .god-img { width: 100%; border-radius: 10px; margin-bottom: 15px; }
+    .audio-btn { background-color: #4CAF50; color: white; padding: 12px 20px; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; margin-right: 10px; margin-bottom: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
+    .stop-btn { background-color: #f44336; color: white; padding: 12px 20px; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; margin-bottom: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
+  </style>
+</head>
+<body>
+
+  <a href="puja.html" class="back-btn">⬅ लिस्ट पर जाएँ</a>
+
+  <div class="card">
+    <h2>भगवान कार्तिकेय (मुरुगन) की पूजा</h2>
+    <img src="kartikeya.jpg" alt="भगवान कार्तिकेय" class="god-img">
+    
+    <div style="text-align: center;">
+      <button class="audio-btn" onclick="playAudio()">🔊 सुनकर जानें</button>
+      <button class="stop-btn" onclick="stopAudio()">⏹️ रोकें</button>
+    </div>
+
+    <div id="puja-text">
+      <p><strong>विधि:</strong> मंगलवार या षष्ठी तिथि को सुबह जल्दी उठकर स्नान करें। शिव-पार्वती के पुत्र कार्तिकेय जी (स्कंद) को लाल पुष्प, कुमकुम, और दीप अर्पित करें। नैवेद्य में फल और मीठा चढ़ाएं। 'ॐ शरवणभवाय नमः' या 'ॐ कार्तिकेयाय नमः' मंत्र का 108 बार जाप करें।</p>
+      <p><strong>शुभ फल:</strong> भगवान कार्तिकेय देवताओं के सेनापति हैं। इनकी पूजा करने से आत्मविश्वास और नेतृत्व क्षमता (Leadership) बढ़ती है। जीवन के हर संघर्ष और शत्रु पर विजय प्राप्त होती है। मंगल दोष और क्रोध से शांति मिलती है।</p>
+    </div>
+  </div>
+
+  <script>
+    function playAudio() {
+      window.speechSynthesis.cancel();
+      var textToRead = document.getElementById("puja-text").innerText;
+      var speech = new SpeechSynthesisUtterance(textToRead);
+      speech.lang = 'hi-IN'; speech.rate = 0.85; 
+      window.speechSynthesis.speak(speech);
+    }
+    function stopAudio() { window.speechSynthesis.cancel(); }
+  </script>
+
+</body>
+</html>

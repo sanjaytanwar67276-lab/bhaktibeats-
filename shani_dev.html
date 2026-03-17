@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>शनि देव पूजा</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { background-color: #FFF3E0; font-family: sans-serif; padding: 20px; }
+    .card { background-color: white; padding: 15px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-bottom: 20px; }
+    h2 { color: #D84315; text-align: center; font-size: 24px; margin-top: 5px; }
+    p { color: #333; line-height: 1.6; font-size: 18px; }
+    .back-btn { background-color: #333; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px; display: inline-block; margin-bottom: 20px; font-weight: bold; }
+    .god-img { width: 100%; border-radius: 10px; margin-bottom: 15px; }
+    .audio-btn { background-color: #4CAF50; color: white; padding: 12px 20px; border: none; border-radius: 8px; font-size: 16px; margin-right: 10px; }
+    .stop-btn { background-color: #f44336; color: white; padding: 12px 20px; border: none; border-radius: 8px; font-size: 16px; }
+  </style>
+</head>
+<body>
+  <a href="puja.html" class="back-btn">⬅ लिस्ट पर जाएँ</a>
+  <div class="card">
+    <h2>शनि देव की पूजा</h2>
+    <img src="shani.jpg" alt="शनि देव" class="god-img">
+    <div style="text-align: center;">
+      <button class="audio-btn" onclick="playAudio()">🔊 सुनकर जानें</button>
+      <button class="stop-btn" onclick="stopAudio()">⏹️ रोकें</button>
+    </div>
+    <div id="puja-text">
+      <p><strong>विधि:</strong> शनिवार के दिन शाम को पीपल के पेड़ के नीचे सरसों के तेल का दीपक जलाएं। नीले या काले वस्त्र पहनें। शनि देव को काले तिल और नीले फूल अर्पित करें। 'ॐ शं शनैश्चराय नमः' मंत्र का जाप करें। इस दिन हनुमान चालीसा का पाठ करना भी शनि दोष को दूर करता है।</p>
+      <p><strong>शुभ फल:</strong> शनि देव कर्मफल दाता और न्याय के देवता हैं। इनकी पूजा से जीवन के संघर्ष कम होते हैं, अनुशासन बढ़ता है और साढ़ेसाती या ढैया के बुरे प्रभाव दूर होते हैं। यह धैर्य और कड़ी मेहनत का फल दिलाने वाले ग्रह हैं।</p>
+    </div>
+  </div>
+  <script>
+    function playAudio() {
+      window.speechSynthesis.cancel();
+      var textToRead = document.getElementById("puja-text").innerText;
+      var speech = new SpeechSynthesisUtterance(textToRead);
+      speech.lang = 'hi-IN';
+      speech.rate = 0.85; // गणेश जी वाली स्पीड
+      speech.pitch = 1.0; // भारीपन हटा दिया, अब आवाज़ साफ़ आएगी
+      window.speechSynthesis.speak(speech);
+    }
+    function stopAudio() { window.speechSynthesis.cancel(); }
+  </script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>भगवान हनुमान पूजा</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { background-color: #FFF3E0; font-family: sans-serif; padding: 20px; }
+    .card { background-color: white; padding: 15px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-bottom: 20px; }
+    h2 { color: #D84315; text-align: center; font-size: 24px; margin-top: 5px; }
+    p { color: #333; line-height: 1.6; font-size: 18px; }
+    .back-btn { background-color: #333; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px; display: inline-block; margin-bottom: 20px; font-weight: bold; }
+    .god-img { width: 100%; border-radius: 10px; margin-bottom: 15px; }
+    .audio-btn { background-color: #4CAF50; color: white; padding: 12px 20px; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; margin-right: 10px; margin-bottom: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
+    .stop-btn { background-color: #f44336; color: white; padding: 12px 20px; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; margin-bottom: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
+  </style>
+</head>
+<body>
+
+  <a href="puja.html" class="back-btn">⬅ लिस्ट पर जाएँ</a>
+
+  <div class="card">
+    <h2>भगवान हनुमान जी की पूजा</h2>
+    <img src="hanuman.jpg" alt="भगवान हनुमान" class="god-img">
+    
+    <div style="text-align: center;">
+      <button class="audio-btn" onclick="playAudio()">🔊 सुनकर जानें</button>
+      <button class="stop-btn" onclick="stopAudio()">⏹️ रोकें</button>
+    </div>
+
+    <div id="puja-text">
+      <p><strong>विधि:</strong> मंगलवार या शनिवार के दिन स्नान कर लाल या नारंगी वस्त्र पहनें। हनुमान जी की मूर्ति पर चमेली के तेल में सिंदूर मिलाकर चोला चढ़ाएं। उन्हें लाल पुष्प, लाल लंगोट, और बूंदी या बेसन के लड्डू का भोग लगाएं। इसके बाद हनुमान चालीसा, बजरंग बाण या सुंदरकांड का पाठ करें और आरती उतारें।</p>
+      <p><strong>शुभ फल:</strong> हनुमान जी संकट मोचन हैं। इनकी उपासना से सभी प्रकार के भय, रोग और दोष दूर होते हैं। व्यक्ति को अपार बल, बुद्धि, विद्या और साहस की प्राप्ति होती है, जिससे वह जीवन की हर कठिन परीक्षा में सफल होता है।</p>
+    </div>
+  </div>
+
+  <script>
+    function playAudio() {
+      window.speechSynthesis.cancel();
+      var textToRead = document.getElementById("puja-text").innerText;
+      var speech = new SpeechSynthesisUtterance(textToRead);
+      speech.lang = 'hi-IN'; speech.rate = 0.85; 
+      window.speechSynthesis.speak(speech);
+    }
+    function stopAudio() { window.speechSynthesis.cancel(); }
+  </script>
+
+</body>
+</html>

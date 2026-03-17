@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>सोमनाथ ज्योतिर्लिंग पूजा</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { background-color: #FFF3E0; font-family: sans-serif; padding: 20px; }
+    .card { background-color: white; padding: 15px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-bottom: 20px; }
+    h2 { color: #D84315; text-align: center; font-size: 24px; margin-top: 5px; }
+    p { color: #333; line-height: 1.6; font-size: 18px; }
+    .back-btn { background-color: #333; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px; display: inline-block; margin-bottom: 20px; font-weight: bold; }
+    .god-img { width: 100%; border-radius: 10px; margin-bottom: 15px; }
+    .audio-btn { background-color: #4CAF50; color: white; padding: 12px 20px; border: none; border-radius: 8px; font-size: 16px; margin-right: 10px; }
+    .stop-btn { background-color: #f44336; color: white; padding: 12px 20px; border: none; border-radius: 8px; font-size: 16px; }
+  </style>
+</head>
+<body>
+  <a href="puja.html" class="back-btn">⬅ लिस्ट पर जाएँ</a>
+  <div class="card">
+    <h2>सोमनाथ ज्योतिर्लिंग की पूजा</h2>
+    <img src="somnath.jpg" alt="सोमनाथ ज्योतिर्लिंग" class="god-img">
+    <div style="text-align: center;">
+      <button class="audio-btn" onclick="playAudio()">🔊 सुनकर जानें</button>
+      <button class="stop-btn" onclick="stopAudio()">⏹️ रोकें</button>
+    </div>
+    <div id="puja-text">
+      <p><strong>विधि:</strong> प्रथम ज्योतिर्लिंग सोमनाथ की पूजा में शुद्ध जल और पंचामृत (दूध, दही, घी, शहद, चीनी) से अभिषेक करें। 'ॐ सोमनाथाय नमः' का जाप करें। सोमनाथ मंदिर गुजरात में स्थित है, यहाँ शिवलिंग की पूजा चंद्रमा के दोषों को दूर करने के लिए विशेष रूप से की जाती है।</p>
+      <p><strong>शुभ फल:</strong> सोमनाथ (चंद्रमा के स्वामी) की पूजा से मानसिक शांति मिलती है और स्वास्थ्य उत्तम रहता है। इनकी कृपा से भक्त का खोया हुआ मान-सम्मान और वैभव पुनः प्राप्त होता है। यह समृद्धि और सुरक्षा प्रदान करने वाला परम पावन रूप है।</p>
+    </div>
+  </div>
+  <script>
+    function playAudio() {
+      window.speechSynthesis.cancel();
+      var textToRead = document.getElementById("puja-text").innerText;
+      var speech = new SpeechSynthesisUtterance(textToRead);
+      speech.lang = 'hi-IN'; speech.rate = 0.85; speech.pitch = 1.0;
+      window.speechSynthesis.speak(speech);
+    }
+    function stopAudio() { window.speechSynthesis.cancel(); }
+  </script>
+</body>
+</html>
