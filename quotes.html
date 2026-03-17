@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>आज का सुविचार</title>
+  <style>
+    body { background-color: #FFF3E0; font-family: sans-serif; padding: 20px; text-align: center; }
+    .header { background: #00897B; color: white; padding: 15px; border-radius: 10px; font-weight: bold; margin-bottom: 20px; }
+    
+    /* सुविचार कार्ड */
+    .quote-card { 
+      background: linear-gradient(135deg, #00897B, #004D40); 
+      color: white; padding: 40px 20px; border-radius: 20px; 
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2); margin-bottom: 25px; 
+      min-height: 150px; display: flex; align-items: center; justify-content: center;
+      font-size: 22px; font-style: italic; line-height: 1.6; border: 5px solid white;
+    }
+    
+    .btn-share { 
+      background: #25D366; color: white; padding: 15px; border: none; 
+      border-radius: 50px; width: 100%; font-size: 18px; font-weight: bold; 
+      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;
+    }
+    .btn-next { background: #00897B; margin-top: 15px; }
+  </style>
+</head>
+<body>
+
+  <div class="header">✨ आज का अनमोल वचन</div>
+
+  <div class="quote-card" id="quote-text">
+    "विश्वास वह शक्ति है जिससे उजड़ी हुई दुनिया में भी प्रकाश किया जा सकता है।"
+  </div>
+
+  <button class="btn-share" onclick="shareOnWhatsApp()">
+    🟢 WhatsApp पर शेयर करें
+  </button>
+
+  <button class="btn-share btn-next" onclick="nextQuote()">
+    🔄 अगला सुविचार देखें
+  </button>
+
+  <script>
+    const quotes = [
+      "परिवर्तन ही संसार का नियम है, जो हुआ वह अच्छा हुआ, जो हो रहा है वह अच्छा हो रहा है।",
+      "फल की अभिलाषा छोड़कर कर्म करने वाला पुरुष ही अपने जीवन को सफल बनाता है।",
+      "क्रोध से भ्रम पैदा होता है, भ्रम से बुद्धि व्यग्र होती है और जब बुद्धि व्यग्र होती है तब तर्क नष्ट हो जाता है।",
+      "मन की शांति से बढ़कर इस दुनिया में कोई भी दौलत नहीं है।",
+      "सत्य कभी नष्ट नहीं हो सकता, बस उसे स्वीकार करने में समय लगता है।",
+      "इंसान अपने विश्वास से निर्मित होता है, जैसा वह विश्वास करता है वैसा ही वह बन जाता है।"
+    ];
+
+    function nextQuote() {
+      let randomIndex = Math.floor(Math.random() * quotes.length);
+      document.getElementById("quote-text").innerText = `"${quotes[randomIndex]}"`;
+    }
+
+    function shareOnWhatsApp() {
+      let text = document.getElementById("quote-text").innerText;
+      let url = "whatsapp://send?text=" + encodeURIComponent("🚩 *आज का सुविचार* 🚩\n\n" + text + "\n\nडाउनलोड करें *भक्ति सागर* ऐप।");
+      window.location.href = url;
+    }
+  </script>
+
+  <p style="font-size: 10px; color: #999; text-align: center; margin-top: 30px;">
+    * सूचना: ये सुविचार महान ग्रंथों और महापुरुषों के विचारों पर आधारित हैं। (See Disclaimer on Home)
+  </p>
+
+</body>
+</html>

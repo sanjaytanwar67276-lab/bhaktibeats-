@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>श्री भक्ति सागर - BhaktiBeats</title>
+  <meta name="description" content="राशि, इष्ट देव, पूजा विधि और सनातन धर्म क्विज़।">
+  
+  <meta property="og:title" content="🚩 श्री भक्ति सागर 🚩">
+  <meta property="og:site_name" content="श्री भक्ति सागर">
+  <meta property="og:description" content="पंचांग, राशि-फल, पूजा विधि और भक्ति क्विज़ - BhaktiBeats">
+  <meta property="og:url" content="https://bhaktibeats.netlify.app">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://bhaktibeats.netlify.app/logo.png">
+
+  <style>
+    /* मुख्य डिज़ाइन */
+    body { 
+      background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%); 
+      font-family: 'Segoe UI', Arial, sans-serif; padding: 0; margin: 0; text-align: center; color: #3e2723;
+    }
+    
+    .live-ticker {
+      background: #FF5722; color: white; padding: 10px 0;
+      font-weight: bold; overflow: hidden; white-space: nowrap;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2); font-size: 14px;
+    }
+
+    .header { 
+      background: linear-gradient(to right, #D84315, #E65100); 
+      color: white; padding: 40px 15px; font-size: 28px; font-weight: bold; 
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2); border-bottom-left-radius: 30px; border-bottom-right-radius: 30px;
+    }
+    
+    .container { padding: 25px 15px; display: flex; flex-direction: column; gap: 18px; max-width: 500px; margin: 0 auto; }
+    
+    .folder { 
+      background: white; padding: 18px; border-radius: 15px; 
+      text-decoration: none; display: flex; align-items: center; text-align: left;
+      box-shadow: 0 8px 15px rgba(0,0,0,0.06); transition: 0.3s;
+      border-left: 5px solid #D84315;
+    }
+    .folder:active { transform: scale(0.97); background: #FFF9C4; }
+    
+    .icon { font-size: 30px; margin-right: 15px; min-width: 45px; text-align: center; }
+    .text-content { flex: 1; }
+    .folder h2 { color: #D84315; margin: 0; font-size: 18px; }
+    .folder p { color: #757575; margin: 3px 0 0; font-size: 12px; }
+
+    .whatsapp-btn {
+      background: #25D366; color: white; padding: 16px; border-radius: 50px;
+      text-decoration: none; display: flex; align-items: center; justify-content: center;
+      font-weight: bold; margin: 25px auto; width: 85%; font-size: 17px;
+      box-shadow: 0 6px 15px rgba(37, 211, 102, 0.4);
+    }
+
+    footer { padding: 30px; color: #a1887f; font-size: 13px; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+  <div class="live-ticker">
+    <marquee scrollamount="5">🚩 जय श्री राम! अपनी राशि, इष्ट देव और दैनिक पंचांग जानने के लिए नीचे क्लिक करें... 🚩</marquee>
+  </div>
+
+  <div class="header">🚩 श्री भक्ति सागर 🚩</div>
+  
+  <div class="container">
+    <a href="puja.html" class="folder">
+      <div class="icon">🔱</div>
+      <div class="text-content"><h2>संपूर्ण पूजा विधि</h2><p>सभी देवी-देवताओं की पूजन सामग्री और मंत्र</p></div>
+    </a>
+
+    <a href="fasts.html" class="folder" style="border-left-color: #FB8C00;">
+      <div class="icon">🥣</div>
+      <div class="text-content"><h2>व्रत विधि और लाभ</h2><p>व्रत रखने के फायदे और सही विधि</p></div>
+    </a>
+
+    <a href="name_info.html" class="folder" style="border-left-color: #FFB300;">
+      <div class="icon">🕉️</div>
+      <div class="text-content"><h2>राशि और इष्ट देव</h2><p>अपनी राशि के अनुसार जानें अपने इष्ट देव</p></div>
+    </a>
+
+    <a href="panchang.html" class="folder" style="border-left-color: #BF360C;">
+      <div class="icon">📅</div>
+      <div class="text-content"><h2>आज का पंचांग</h2><p>सटीक मुहूर्त, तिथि और नक्षत्र</p></div>
+    </a>
+
+    <a href="quiz.html" class="folder" style="border-left-color: #9C27B0;">
+      <div class="icon">🧩</div>
+      <div class="text-content"><h2>भक्ति क्विज़ (100+)</h2><p>सनातन धर्म के बारे में अपना ज्ञान परखें</p></div>
+    </a>
+  </div>
+
+  <script>
+    function shareOnWhatsApp() {
+      var msg = "*🚩 श्री भक्ति सागर 🚩*\n\n" +
+                "नमस्ते! मैंने सभी भक्तों के लिए यह अद्भुत ऐप बनाया है। इसमें आपको मिलेगा:\n\n" +
+                "✅ *राशि और इष्ट देव:* अपनी राशि के हिसाब से अपने इष्ट देव जानें।\n" +
+                "✅ *पूजा विधि:* सभी देवी-देवताओं की पूजन सामग्री और मंत्र।\n" +
+                "✅ *व्रत कथा:* व्रतों के फायदे और उनकी सही विधि।\n" +
+                "✅ *दैनिक पंचांग:* तिथि, मुहूर्त और नक्षत्र की सटीक जानकारी।\n" +
+                "✅ *भक्ति क्विज़:* खेलें और जानें कि आपको अपने *सनातन धर्म* के बारे में कितना पता है।\n\n" +
+                "अभी नीचे दिए गए लिंक पर क्लिक करके देखें:\n" +
+                "👉 https://bhaktibeats.netlify.app";
+      
+      window.location.href = "whatsapp://send?text=" + encodeURIComponent(msg);
+    }
+  </script>
+
+  <a href="javascript:void(0)" onclick="shareOnWhatsApp()" class="whatsapp-btn">
+    <span style="font-size:22px; margin-right:10px;">🟢</span> दोस्तों को WhatsApp पर भेजें
+  </a>
+
+  <footer>© 2026 श्री भक्ति सागर - BhaktiBeats</footer>
+
+</body>
+</html>

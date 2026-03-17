@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>दैनिक पंचांग</title>
+  <style>
+    body { background-color: #FFF3E0; font-family: sans-serif; padding: 20px; text-align: center; margin:0; }
+    .header { background: #BF360C; color: white; padding: 15px; font-weight: bold; font-size: 20px; position: sticky; top:0; z-index:100; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+    .date-box { font-size: 20px; color: #BF360C; font-weight: bold; margin: 20px 0; padding: 12px; border: 2px solid #BF360C; border-radius: 10px; display: inline-block; background: white; }
+    .panchang-card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: left; border-left: 8px solid #BF360C; margin-bottom: 20px; }
+    .item { margin-bottom: 12px; border-bottom: 1px dashed #eee; padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+    .label { color: #E65100; font-weight: bold; font-size: 15px; }
+    .val { color: #333; font-size: 16px; font-weight: 500; }
+    .btn-audio { background: #4CAF50; color: white; padding: 15px; border: none; border-radius: 10px; width: 100%; font-weight: bold; font-size: 18px; cursor: pointer; }
+    .footer-note { font-size: 11px; color: #888; margin-top: 15px; line-height: 1.4; }
+  </style>
+</head>
+<body>
+
+  <div class="header">🌞 दैनिक पंचांग (2026)</div>
+  
+  <div class="date-box" id="display-date">तारीख लोड हो रही है...</div>
+
+  <div class="panchang-card">
+    <div class="item"><span class="label">सूर्योदय:</span> <span class="val" id="sunrise">06:22 AM</span></div>
+    <div class="item"><span class="label">सूर्यास्त:</span> <span class="val" id="sunset">06:28 PM</span></div>
+    <div class="item"><span class="label">तिथि:</span> <span class="val" id="tithi">एकादशी / द्वादशी</span></div>
+    <div class="item"><span class="label">पक्ष:</span> <span class="val" id="paksh">कृष्ण पक्ष</span></div>
+    <div class="item"><span class="label">नक्षत्र:</span> <span class="val" id="nakshatra">धनिष्ठा</span></div>
+    <div class="item"><span class="label">राहुकाल:</span> <span class="val" id="rahukaal">07:50 - 09:20 AM</span></div>
+    <div class="item" style="border:none;"><span class="label" style="color:green;">अभिजीत मुहूर्त:</span> <span class="val" id="muhurat" style="color:green; font-weight:bold;">12:05 - 12:54 PM</span></div>
+  </div>
+
+  <button class="btn-audio" onclick="speakPanchang()">🔊 आज का पंचांग सुनें</button>
+
+  <div class="footer-note">
+    * यह गणना लखनऊ (उ.प्र.) के अक्षांश पर आधारित है। <br>
+    * पंचांग की सटीक गणना के लिए स्थानीय कैलेंडर का उपयोग करें।
+  </div>
+
+  <script>
+    // आज की तारीख प्राप्त करें
+    const now = new Date();
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    document.getElementById("display-date").innerText = now.toLocaleDateString('hi-IN', options);
+
+    // स्मार्ट लॉजिक: महीने के हिसाब से सूर्योदय/सूर्यास्त में मामूली बदलाव
+    const month = now.getMonth(); // 0 = Jan, 2 = March
+    const day = now.getDate();
+
+    function updatePanchang() {
+      let sunRiseTime = "06:20 AM";
+      let sunSetTime = "06:30 PM";
+
+      // मौसम के अनुसार सूर्य के समय में बदलाव (सिर्फ एक अनुमान)
+      if (month >= 2 && month <= 5) { // गर्मी (March - June)
+          sunRiseTime = "05:45 AM"; sunSetTime = "06:50 PM";
+      } else if (month >= 10 || month <= 1) { // सर्दी (Nov - Feb)
+          sunRiseTime = "06:55 AM"; sunSetTime = "05:40 PM";
+      }
+
+      document.getElementById("sunrise").innerText = sunRiseTime;
+      document.getElementById("sunset").innerText = sunSetTime;
+      
+      // राहुकाल का अनुमानित समय (दिन के हिसाब से)
+      const days = ["16:30 - 18:00", "07:30 - 09:00", "15:00 - 16:30", "12:00 - 13:30", "13:30 - 15:00", "10:30 - 12:00", "09:00 - 10:30"];
+      document.getElementById("rahukaal").innerText = days[now.getDay()] + " (लगभग)";
+    }
+
+    updatePanchang();
+
+    function speakPanchang() {
+      window.speechSynthesis.cancel();
+      let dStr = document.getElementById("display-date").innerText;
+      let tithi = document.getElementById("tithi").innerText;
+      let rahukaal = document.getElementById("rahukaal").innerText;
+      
+      let text = "आज " + dStr + " है. आज " + tithi + " है. आज का राहुकाल " + rahukaal + " तक रहेगा. शुभ कार्यों के लिए अभिजीत मुहूर्त का उपयोग करें.";
+      
+      let msg = new SpeechSynthesisUtterance(text);
+      msg.lang = 'hi-IN';
+      msg.rate = 0.9;
+      window.speechSynthesis.speak(msg);
+    }
+  </script>
+  <p style="font-size: 10px; color: #999; text-align: center; margin: 20px;">
+  * सूचना: इस पेज का डेटा सामान्य मान्यताओं पर आधारित है। पूर्ण शुद्धता का दावा नहीं है। (See Disclaimer on Home)
+</p>
+
+</body>
+</html>
+
