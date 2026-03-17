@@ -1,39 +1,106 @@
 <!DOCTYPE html>
-<html>
+<html lang="hi">
 <head>
-  <title>संपूर्ण पूजा मेन्यू</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    body {
-      background-color: #FFF3E0;
-      font-family: sans-serif;
-      margin: 0;
-      padding: 15px;
-      text-align: center;
-    }
-    h1 {
-      color: #E65100;
-      margin-bottom: 20px;
-      font-size: 24px;
-    }
-    .menu-btn {
-      background-color: white;
-      color: #D84315;
-      padding: 12px;
-      border-radius: 8px;
-      display: block;
-      margin-bottom: 10px;
-      text-decoration: none;
-      font-size: 18px;
-      font-weight: bold;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      border: 1px solid #FFCC80;
-    }
-    .back-btn {
-      background-color: #333;
-      color: white;
-      padding: 10px 15px;
-      text-decoration: none;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>संपूर्ण पूजा विधि - श्री भक्ति सागर</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .menu-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            padding: 15px;
+        }
+        .menu-item {
+            flex-direction: column;
+            text-align: center;
+            padding: 15px 5px;
+            min-height: 110px;
+        }
+        .icon { font-size: 30px; margin-bottom: 8px; margin-right: 0; }
+        h3 { font-size: 15px; margin: 0; color: #d35400; }
+        
+        /* सर्च बॉक्स का स्टाइल */
+        .search-box {
+            width: 85%;
+            padding: 12px;
+            margin: 15px auto;
+            display: block;
+            border-radius: 25px;
+            border: 1px solid #ff8c00;
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🔱 देवी-देवता पूजन विधि 🔱</h1>
+    </div>
+
+    <input type="text" id="searchInput" class="search-box" placeholder="भगवान का नाम खोजें..." onkeyup="filterMenu()">
+
+    <div class="menu-grid" id="menuGrid">
+        <div class="menu-item" onclick="window.location.href='narsingh.html'">
+            <div class="icon">🦁</div><h3>नरसिंह भगवान</h3>
+        </div>
+        <div class="menu-item" onclick="window.location.href='radha_rani.html'">
+            <div class="icon">🌸</div><h3>राधा रानी</h3>
+        </div>
+        <div class="menu-item" onclick="window.location.href='matsya_avatar.html'">
+            <div class="icon">🐟</div><h3>मत्स्य अवतार</h3>
+        </div>
+        <div class="menu-item" onclick="window.location.href='parshuram.html'">
+            <div class="icon">🪓</div><h3>परशुराम जी</h3>
+        </div>
+        <div class="menu-item" onclick="window.location.href='neelkanth.html'">
+            <div class="icon">🕉️</div><h3>नीलकंठ महादेव</h3>
+        </div>
+        <div class="menu-item" onclick="window.location.href='nag_devta.html'">
+            <div class="icon">🐍</div><h3>नाग देवता</h3>
+        </div>
+        <div class="menu-item" onclick="window.location.href='parvati.html'">
+            <div class="icon">🌺</div><h3>माता पार्वती</h3>
+        </div>
+        <div class="menu-item" onclick="window.location.href='natraj.html'">
+            <div class="icon">💃</div><h3>नटराज</h3>
+        </div>
+        <div class="menu-item" onclick="window.location.href='pashupatinath.html'">
+            <div class="icon">🏔️</div><h3>पशुपतिनाथ</h3>
+        </div>
+        <div class="menu-item" onclick="window.location.href='prajapati.html'">
+            <div class="icon">👑</div><h3>प्रजापति</h3>
+        </div>
+        <div class="menu-item" onclick="window.location.href='rahu_dev.html'">
+            <div class="icon">🌑</div><h3>राहु देव</h3>
+        </div>
+        <div class="menu-item" onclick="window.location.href='ramdev_baba.html'">
+            <div class="icon">🚩</div><h3>रामदेव बाबा</h3>
+        </div>
+        <div class="menu-item" onclick="window.location.href='rama.html'">
+            <div class="icon">🏹</div><h3>श्री राम</h3>
+        </div>
+        </div>
+
+    <button class="whatsapp-btn" style="background:#ff8c00; width:90%; margin:20px auto; display:block;" onclick="window.location.href='index.html'">मुख्य पेज पर वापस जाएं</button>
+
+    <script>
+        // सर्च फिल्टर के लिए छोटा सा कोड
+        function filterMenu() {
+            let input = document.getElementById('searchInput').value.toLowerCase();
+            let items = document.getElementsByClassName('menu-item');
+            for (let i = 0; i < items.length; i++) {
+                if (items[i].innerText.toLowerCase().includes(input)) {
+                    items[i].style.display = "";
+                } else {
+                    items[i].style.display = "none";
+                }
+            }
+        }
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
       border-radius: 5px;
       display: inline-block;
       margin-bottom: 20px;
