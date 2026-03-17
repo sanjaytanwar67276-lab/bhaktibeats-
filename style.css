@@ -1,0 +1,27 @@
+// आज का विचार बोलने के लिए फंक्शन
+function speakQuote(text) {
+    if ('speechSynthesis' in window) {
+        // अगर पहले से कुछ बोल रहा है तो उसे रोकें
+        window.speechSynthesis.cancel();
+        
+        let msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'hi-IN'; // हिंदी भाषा
+        msg.rate = 0.9;     // आवाज की रफ्तार
+        msg.pitch = 1.1;    // आवाज की पिच
+        window.speechSynthesis.speak(msg);
+    } else {
+        alert("क्षमा करें, आपके फोन में आवाज की सुविधा उपलब्ध नहीं है।");
+    }
+}
+
+// WhatsApp पर शेयर करने के लिए
+function shareApp() {
+    let url = "https://bhaktisagr.netlify.app";
+    let text = "राम राम! मैंने यह 'श्री भक्ति सागर' ऐप बनाया है। इसमें आप रोज़ का पंचांग और भक्ति क्विज़ देख सकते हैं। यहाँ देखें: " + url;
+    window.open("whatsapp://send?text=" + encodeURIComponent(text));
+}
+
+// बटन क्लिक होने पर आवाज शुरू करने के लिए (Browser सुरक्षा के लिए ज़रूरी)
+document.addEventListener('click', function() {
+    console.log("App ready for voice");
+}, { once: true });
