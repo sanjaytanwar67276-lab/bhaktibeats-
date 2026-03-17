@@ -1,27 +1,64 @@
-// आज का विचार बोलने के लिए फंक्शन
-function speakQuote(text) {
-    if ('speechSynthesis' in window) {
-        // अगर पहले से कुछ बोल रहा है तो उसे रोकें
-        window.speechSynthesis.cancel();
-        
-        let msg = new SpeechSynthesisUtterance(text);
-        msg.lang = 'hi-IN'; // हिंदी भाषा
-        msg.rate = 0.9;     // आवाज की रफ्तार
-        msg.pitch = 1.1;    // आवाज की पिच
-        window.speechSynthesis.speak(msg);
-    } else {
-        alert("क्षमा करें, आपके फोन में आवाज की सुविधा उपलब्ध नहीं है।");
-    }
+/* मुख्य स्टाइल */
+body { 
+    background-color: #fff9f0; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    margin: 0; 
+    padding: 0; 
+    color: #333;
 }
 
-// WhatsApp पर शेयर करने के लिए
-function shareApp() {
-    let url = "https://bhaktisagr.netlify.app";
-    let text = "राम राम! मैंने यह 'श्री भक्ति सागर' ऐप बनाया है। इसमें आप रोज़ का पंचांग और भक्ति क्विज़ देख सकते हैं। यहाँ देखें: " + url;
-    window.open("whatsapp://send?text=" + encodeURIComponent(text));
+/* हेडर डिज़ाइन */
+.header { 
+    background: linear-gradient(135deg, #ff4500, #ff8c00); 
+    color: white; 
+    text-align: center; 
+    padding: 25px 10px; 
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
 }
 
-// बटन क्लिक होने पर आवाज शुरू करने के लिए (Browser सुरक्षा के लिए ज़रूरी)
-document.addEventListener('click', function() {
-    console.log("App ready for voice");
-}, { once: true });
+.header h1 { margin: 0; font-size: 24px; }
+
+/* मेनू लिस्ट */
+.menu-grid { 
+    padding: 20px 15px; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 15px; 
+}
+
+/* बटन/फोल्डर स्टाइल */
+.menu-item { 
+    background: white; 
+    padding: 18px; 
+    border-radius: 15px; 
+    display: flex; 
+    align-items: center; 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.08); 
+    border-left: 6px solid #ff4500; 
+    cursor: pointer; 
+    transition: transform 0.2s;
+}
+
+.menu-item:active { transform: scale(0.98); }
+
+.icon { font-size: 32px; margin-right: 20px; }
+
+.text h3 { margin: 0; color: #d35400; font-size: 19px; }
+.text p { margin: 5px 0 0; color: #777; font-size: 14px; }
+
+/* व्हाट्सएप बटन */
+.share-container { text-align: center; padding-bottom: 30px; }
+.whatsapp-btn { 
+    background-color: #25D366; 
+    color: white; 
+    border: none; 
+    padding: 16px; 
+    border-radius: 50px; 
+    width: 85%; 
+    font-size: 18px; 
+    font-weight: bold; 
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
+}
