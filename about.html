@@ -1,50 +1,69 @@
 <!DOCTYPE html>
-<html>
+<html lang="hi">
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>डेवलपर और YouTube</title>
-  <style>
-    body { background-color: #FFF3E0; font-family: sans-serif; padding: 20px; text-align: center; }
-    .profile-card { 
-      background: white; padding: 30px 20px; border-radius: 20px; 
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1); border-top: 8px solid #D84315;
-    }
-    .dev-name { color: #D84315; font-size: 24px; font-weight: bold; margin: 15px 0 5px; }
-    .dev-desc { color: #666; font-size: 15px; margin-bottom: 25px; line-height: 1.5; }
-    
-    /* YouTube बटन स्टाइल */
-    .yt-btn { 
-      background: #FF0000; color: white; padding: 15px 25px; border: none; 
-      border-radius: 50px; text-decoration: none; font-size: 18px; 
-      font-weight: bold; display: inline-flex; align-items: center; gap: 10px;
-      box-shadow: 0 4px 10px rgba(255, 0, 0, 0.3);
-      transition: transform 0.2s;
-    }
-    .yt-btn:active { transform: scale(0.95); }
-    
-    .back-link { display: block; margin-top: 30px; color: #D84315; text-decoration: none; font-weight: bold; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>श्री भक्ति सागर - Bhakti Sagar</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <div class="profile-card">
-    <div style="font-size: 60px;">📽️</div>
-    
-    <div class="dev-name">नमस्ते, हमसे जुड़ें</div>
-    <p class="dev-desc">
-      धर्म और भक्ति से जुड़ी और भी सुंदर वीडियो देखने के लिए हमारे YouTube चैनल को सब्सक्राइब करें। आपके सहयोग से ही यह "भक्ति सागर" ऐप सफल होगा।
-    </p>
+    <div class="app-container">
+        <div class="header">
+            <h1>🚩 श्री भक्ति सागर 🚩</h1>
+        </div>
 
-    <a href="https://www.youtube.com/@Kajaltanwer-eo5jo" class="yt-btn" target="_blank">
-      🔴 YouTube: सब्सक्राइब करें
-    </a>
+        <div class="menu-grid">
+            
+            <div class="menu-item" onclick="window.location.href='puja.html'">
+                <div class="icon">🔱</div>
+                <div class="text">
+                    <h3>संपूर्ण पूजा विधि</h3>
+                    <p>सभी देवी-देवताओं की पूजन सामग्री और मंत्र</p>
+                </div>
+            </div>
 
-    <p style="margin-top: 20px; font-size: 14px; color: #888;">
-      चैनल: @Kajaltanwer-eo5jo
-    </p>
-  </div>
+            <div class="menu-item" onclick="window.location.href='fasts.html'">
+                <div class="icon">🥣</div>
+                <div class="text">
+                    <h3>व्रत विधि और लाभ</h3>
+                    <p>व्रत रखने के फायदे और सही विधि</p>
+                </div>
+            </div>
 
-  <a href="index.html" class="back-link">⬅ होम पेज पर वापस जाएँ</a>
+            <div class="menu-item" onclick="window.location.href='panchang.html'">
+                <div class="icon">📅</div>
+                <div class="text">
+                    <h3>आज का पंचांग</h3>
+                    <p>सटीक मुहूर्त, तिथि और नक्षत्र</p>
+                </div>
+            </div>
 
+            <div class="menu-item" onclick="window.location.href='quiz.html'">
+                <div class="icon">🧩</div>
+                <div class="text">
+                    <h3>भक्ति क्विज़ (100+)</h3>
+                    <p>सनातन धर्म के बारे में अपना ज्ञान परखें</p>
+                </div>
+            </div>
+
+            <div class="menu-item about-btn" onclick="window.location.href='about.html'">
+                <div class="icon">ℹ️</div>
+                <div class="text">
+                    <h3>हमारे बारे में</h3>
+                    <p>ऐप और डेवलपर की जानकारी</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="share-container">
+            <button class="whatsapp-btn" onclick="shareApp()">
+                🟢 दोस्तों को WhatsApp पर भेजें
+            </button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
