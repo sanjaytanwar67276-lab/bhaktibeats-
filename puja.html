@@ -3,37 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>संपूर्ण पूजा विधि - श्री भक्ति सागर</title>
+    <title>संपूर्ण पूजा सूची - श्री भक्ति सागर</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        .menu-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            padding: 15px;
+        .list-container { padding: 15px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .item-btn { 
+            background: white; padding: 12px; border-radius: 10px; 
+            text-align: center; border: 1px solid #ffd1a1; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            font-size: 14px; font-weight: bold; color: #d35400;
+            cursor: pointer; text-decoration: none;
         }
-        .menu-item {
-            flex-direction: column;
-            text-align: center;
-            padding: 15px 5px;
-            min-height: 110px;
-        }
-        .icon { font-size: 30px; margin-bottom: 8px; margin-right: 0; }
-        h3 { font-size: 15px; margin: 0; color: #d35400; }
-        
-        /* सर्च बॉक्स का स्टाइल */
-        .search-box {
-            width: 85%;
-            padding: 12px;
-            margin: 15px auto;
-            display: block;
-            border-radius: 25px;
-            border: 1px solid #ff8c00;
-            outline: none;
-        }
+        .item-btn:active { background: #fff4e6; transform: scale(0.95); }
+        .section-title { width: 100%; grid-column: span 2; padding: 10px; background: #ff8c00; color: white; border-radius: 5px; margin-top: 10px; text-align: center; }
     </style>
 </head>
 <body>
+    <div class="header">
+        <h1>🔱 संपूर्ण पूजा विधि सूची 🔱</h1>
+    </div>
+
+    <div class="list-container">
+        <div class="section-title">प्रमुख देवता</div>
+        <div class="item-btn" onclick="window.location.href='shiv.html'">भगवान शिव</div>
+        <div class="item-btn" onclick="window.location.href='vishnu.html'">भगवान विष्णु</div>
+        <div class="item-btn" onclick="window.location.href='rama.html'">भगवान श्री राम</div>
+        <div class="item-btn" onclick="window.location.href='krishna.html'">भगवान श्री कृष्ण</div>
+        <div class="item-btn" onclick="window.location.href='ganesh.html'">श्री गणेश</div>
+        <div class="item-btn" onclick="window.location.href='hanuman.html'">भगवान हनुमान</div>
+
+        <div class="section-title">दशावतार एवं अन्य</div>
+        <div class="item-btn" onclick="window.location.href='matsya_avatar.html'">मत्स्य अवतार</div>
+        <div class="item-btn" onclick="window.location.href='narsingh.html'">नरसिंह अवतार</div>
+        <div class="item-btn" onclick="window.location.href='parshuram.html'">परशुराम जी</div>
+        <div class="item-btn" onclick="window.location.href='vaman.html'">वामन अवतार</div>
+
+        <div class="section-title">देवी शक्तियां</div>
+        <div class="item-btn" onclick="window.location.href='durga.html'">माता दुर्गा</div>
+        <div class="item-btn" onclick="window.location.href='lakshmi.html'">माता लक्ष्मी</div>
+        <div class="item-btn" onclick="window.location.href='parvati.html'">माता पार्वती</div>
+        <div class="item-btn" onclick="window.location.href='saraswati.html'">माता सरस्वती</div>
+        <div class="item-btn" onclick="window.location.href='radha_rani.html'">राधा रानी</div>
+        <div class="item-btn" onclick="window.location.href='santoshi_mata.html'">माता संतोषी</div>
+
+        <div class="section-title">सिद्ध स्थान व अन्य</div>
+        <div class="item-btn" onclick="window.location.href='khatu_shyam.html'">खाटू श्याम</div>
+        <div class="item-btn" onclick="window.location.href='ramdev_baba.html'">रामदेव बाबा</div>
+        <div class="item-btn" onclick="window.location.href='sai_baba.html'">साईं बाबा</div>
+    </div>
+
+    <button class="whatsapp-btn" style="background:#ff8c00; width:90%; margin:20px auto; display:block;" onclick="window.location.href='index.html'">मुख्य पेज पर वापस जाएं</button>
+
+    <script src="script.js"></script>
+</body>
+</html>
     <div class="header">
         <h1>🔱 देवी-देवता पूजन विधि 🔱</h1>
     </div>
