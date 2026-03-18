@@ -1,24 +1,31 @@
-// आवाज़ (Speech) के लिए फंक्शन
+// 1. आवाज़ (Speech) के लिए मुख्य फंक्शन
 function speak(text) {
-    if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel(); // पुराने को रोकें
-        const msg = new SpeechSynthesisUtterance(text);
-        msg.lang = 'hi-IN'; // हिंदी
-        msg.rate = 1.0; 
-        msg.pitch = 1.1;
-        window.speechSynthesis.speak(msg);
-    }
+    // अगर ब्राउज़र में पहले से कुछ बोल रहा है, तो उसे रोकें
+    window.speechSynthesis.cancel();
+
+    const synth = window.speechSynthesis;
+    const utterThis = new SpeechSynthesisUtterance(text);
+    
+    utterThis.lang = 'hi-IN'; // हिंदी भाषा (India)
+    utterThis.rate = 1.0;     // आवाज़ की गति (Speed)
+    utterThis.pitch = 1.0;    // आवाज़ का भारीपन
+    
+    synth.speak(utterThis);
 }
 
-// व्हाट्सएप शेयर फंक्शन
+// 2. YouTube चैनल खोलने के लिए फंक्शन
+function openYouTube() {
+    // यहाँ अपने चैनल का असली लिंक डालें
+    const youtubeUrl = "https://www.youtube.com/@YourChannelID"; 
+    window.open(youtubeUrl, '_blank');
+}
+
+// 3. व्हाट्सएप पर ऐप शेयर करने के लिए
 function shareApp() {
     const appUrl = "https://bhaktisagr.netlify.app";
-    const text = "जय श्री राम! मैंने यह 'श्री भक्ति सागर' ऐप बनाया है। इसमें आप रोज़ का पंचांग, क्विज़ और भक्ति जानकारी देख सकते हैं। यहाँ देखें: " + appUrl;
-    window.open("whatsapp://send?text=" + encodeURIComponent(text));
+    const message = "🚩 *श्री भक्ति सागर* 🚩\nसभी देवी-देवताओं की पूजा विधि और व्रत कथा के लिए इस ऐप को देखें:\n" + appUrl;
+    window.open("whatsapp://send?text=" + encodeURIComponent(message));
 }
 
-// बटन पर क्लिक करने पर आवाज़ देने के लिए इवेंट (Browser सुरक्षा के लिए)
-document.addEventListener('DOMContentLoaded', () => {
-    console.log("Bhakti Sagar App is Ready!");
-    // आप चाहें तो यहाँ कोई डिफ़ॉल्ट स्वागत मैसेज डाल सकते हैं
-});
+// पेज लोड होने पर कंसोल में मैसेज (चेक करने के लिए)
+console.log("Bhakti Sagar Script Loaded Successfully!");
