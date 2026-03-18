@@ -1,24 +1,25 @@
+// आवाज़ (Voice) का फंक्शन
 function speak(text) {
-    // अगर पहले से कुछ बोल रहा है तो उसे रोकें
-    window.speechSynthesis.cancel();
-
     if ('speechSynthesis' in window) {
-        var msg = new SpeechSynthesisUtterance();
-        msg.text = text;
-        msg.lang = 'hi-IN'; // हिंदी भाषा सेट करें
-        msg.rate = 0.9;     // आवाज़ की रफ़्तार (नॉर्मल)
-        msg.pitch = 1.0;    // आवाज़ का भारीपन
-
-        // ब्राउज़र की परमिशन चेक करने के लिए
-        window.speechSynthesis.speak(msg);
-    } else {
-        alert("क्षमा करें, आपके फोन में आवाज़ की सुविधा उपलब्ध नहीं है।");
+        // पुरानी आवाज़ रोकें
+        window.speechSynthesis.cancel();
+        const synth = window.speechSynthesis;
+        const utterThis = new SpeechSynthesisUtterance(text);
+        utterThis.lang = 'hi-IN'; // हिंदी भाषा
+        utterThis.rate = 1.0; 
+        synth.speak(utterThis);
     }
 }
 
-// यह हिस्सा बहुत ज़रूरी है: मोबाइल पर पहली बार टच करने पर आवाज़ एक्टिवेट करने के लिए
-document.body.addEventListener('click', function() {
-    // एक खाली आवाज़ चलायें ताकि ब्राउज़र 'Unlock' हो जाए
-    var silentMsg = new SpeechSynthesisUtterance("");
-    window.speechSynthesis.speak(silentMsg);
-}, { once: true });
+// YouTube चैनल खोलने का फंक्शन
+function openYouTube() {
+    const channelHandle = "@Kajaltanwer-eo5jo";
+    window.open("https://www.youtube.com/" + channelHandle, '_blank');
+}
+
+// WhatsApp शेयर फंक्शन
+function shareApp() {
+    const appUrl = window.location.origin;
+    const message = "🚩 *श्री भक्ति सागर* 🚩\n\nपूजा विधि और 40+ व्रत कथा के लिए इस ऐप को देखें:\n" + appUrl;
+    window.open("https://api.whatsapp.com/send?text=" + encodeURIComponent(message));
+}
