@@ -3,120 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>संपूर्ण पूजा सूची - श्री भक्ति सागर</title>
+    <title>पूजा सूची - श्री भक्ति सागर</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        body { background-color: #fffaf5; margin: 0; padding: 0; }
-        .search-container { position: sticky; top: 0; background: #fffaf5; padding: 15px; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .search-box { width: 100%; padding: 15px; border-radius: 30px; border: 2px solid #ff8c00; font-size: 16px; outline: none; box-sizing: border-box; }
-        .list-container { padding: 0 15px 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .section-title { grid-column: span 2; padding: 12px; background: linear-gradient(90deg, #ff8c00, #ff4500); color: white; border-radius: 10px; margin-top: 20px; text-align: center; font-weight: bold; font-size: 16px; }
-        .item-btn { background: white; padding: 15px 8px; border-radius: 12px; text-align: center; border: 1px solid #ffe0b2; box-shadow: 0 2px 5px rgba(0,0,0,0.05); font-size: 14px; font-weight: bold; color: #d35400; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-        .item-btn:active { background: #fff3e0; transform: scale(0.95); }
-        .footer-nav { padding: 20px; text-align: center; }
-        .main-back-btn { background: #333; color: white; border: none; padding: 18px; border-radius: 50px; width: 95%; font-size: 18px; font-weight: bold; cursor: pointer; }
+        .search-container { position: sticky; top: 0; background: #fffaf5; padding: 10px; z-index: 100; }
+        .search-box { width: 100%; padding: 12px; border-radius: 25px; border: 2px solid #ff8c00; outline: none; box-sizing: border-box; }
+        .list-container { padding: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .section-title { grid-column: span 2; padding: 10px; background: #ff8c00; color: white; border-radius: 8px; text-align: center; font-weight: bold; margin-top: 15px; }
+        .item-btn { background: white; padding: 15px 5px; border-radius: 10px; text-align: center; border: 1px solid #ffe0b2; font-size: 14px; font-weight: bold; color: #d35400; cursor: pointer; }
     </style>
 </head>
 <body>
-    <div class="header"><h1>🚩 संपूर्ण पूजा विधि 🚩</h1></div>
-
-    <div class="search-container">
-        <input type="text" id="searchInput" class="search-box" placeholder="🔍 भगवान का नाम खोजें..." onkeyup="filterMenu()">
-    </div>
-
+    <div class="search-container"><input type="text" id="searchInput" class="search-box" placeholder="🔍 भगवान खोजें..." onkeyup="filterMenu()"></div>
     <div class="list-container" id="menuGrid">
-        
-        <div class="section-title">प्रमुख देवता एवं पूजन विधि</div>
-        <div class="item-btn" onclick="speak('भगवान शिव की पूजा विधि'); location.href='shiv.html'">भगवान शिव</div>
-        <div class="item-btn" onclick="speak('भगवान विष्णु की पूजा विधि'); location.href='vishnu.html'">भगवान विष्णु</div>
-        <div class="item-btn" onclick="speak('भगवान ब्रह्मा की पूजा विधि'); location.href='brahma.html'">भगवान ब्रह्मा</div>
-        <div class="item-btn" onclick="speak('श्री गणेश की पूजा विधि'); location.href='ganesh.html'">श्री गणेश</div>
-        <div class="item-btn" onclick="speak('हनुमान जी की पूजा विधि'); location.href='hanuman.html'">हनुमान जी</div>
-        <div class="item-btn" onclick="speak('कार्तिकेय जी की पूजा विधि'); location.href='kartikeya.html'">कार्तिकेय जी</div>
-        <div class="item-btn" onclick="speak('काल भैरव की पूजा विधि'); location.href='bhairav.html'">काल भैरव</div>
-        <div class="item-btn" onclick="speak('बटुक भैरव की पूजा विधि'); location.href='batuk_bhairav.html'">बटुक भैरव</div>
-
-        <div class="section-title">दशावतार एवं पूजन विधि</div>
-        <div class="item-btn" onclick="speak('मत्स्य अवतार की पूजन विधि'); location.href='matsya.html'">मत्स्य अवतार</div>
-        <div class="item-btn" onclick="speak('कूर्म अवतार की पूजन विधि'); location.href='kurma.html'">कूर्म अवतार</div>
-        <div class="item-btn" onclick="speak('वराह अवतार की पूजन विधि'); location.href='varah.html'">वराह अवतार</div>
-        <div class="item-btn" onclick="speak('नरसिंह अवतार की पूजन विधि'); location.href='narsingh.html'">नरसिंह अवतार</div>
-        <div class="item-btn" onclick="speak('वामन अवतार की पूजन विधि'); location.href='vaman.html'">वामन अवतार</div>
-        <div class="item-btn" onclick="speak('परशुराम जी की पूजन विधि'); location.href='parshuram.html'">परशुराम जी</div>
-        <div class="item-btn" onclick="speak('श्री राम की पूजन विधि'); location.href='rama.html'">श्री राम</div>
-        <div class="item-btn" onclick="speak('श्री कृष्ण की पूजन विधि'); location.href='krishna.html'">श्री कृष्ण</div>
-        <div class="item-btn" onclick="speak('भगवान बुद्ध की पूजन विधि'); location.href='buddha.html'">भगवान बुद्ध</div>
-        <div class="item-btn" onclick="speak('कल्कि अवतार की पूजन विधि'); location.href='kalki.html'">कल्कि अवतार</div>
-
-        <div class="section-title">देवी शक्तियां एवं पूजन विधि</div>
-        <div class="item-btn" onclick="speak('माता दुर्गा की पूजा विधि'); location.href='durga.html'">माता दुर्गा</div>
-        <div class="item-btn" onclick="speak('माता पार्वती की पूजा विधि'); location.href='parvati.html'">माता पार्वती</div>
-        <div class="item-btn" onclick="speak('माता लक्ष्मी की पूजा विधि'); location.href='lakshmi.html'">माता लक्ष्मी</div>
-        <div class="item-btn" onclick="speak('माता सरस्वती की पूजा विधि'); location.href='saraswati.html'">माता सरस्वती</div>
-        <div class="item-btn" onclick="speak('माता काली की पूजा विधि'); location.href='kali.html'">माता काली</div>
-        <div class="item-btn" onclick="speak('श्री राधा रानी की पूजा विधि'); location.href='radha.html'">श्री राधा रानी</div>
-        <div class="item-btn" onclick="speak('गायत्री माता की पूजा विधि'); location.href='gayatri.html'">गायत्री माता</div>
-        <div class="item-btn" onclick="speak('संतोषी माता की पूजा विधि'); location.href='santoshi.html'">संतोषी माता</div>
-        <div class="item-btn" onclick="speak('शीतला माता की पूजा विधि'); location.href='sheetla.html'">शीतला माता</div>
-        <div class="item-btn" onclick="speak('गंगा मैया की पूजा विधि'); location.href='ganga.html'">गंगा मैया</div>
-        <div class="item-btn" onclick="speak('यमुना मैया की पूजा विधि'); location.href='yamuna.html'">यमुना मैया</div>
-        <div class="item-btn" onclick="speak('तुलसी माता की पूजा विधि'); location.href='tulsi.html'">तुलसी माता</div>
-        <div class="item-btn" onclick="speak('अन्नपूर्णा माता की पूजा विधि'); location.href='annapurna.html'">अन्नपूर्णा माता</div>
-        <div class="item-btn" onclick="speak('कामाख्या देवी की पूजा विधि'); location.href='kamakhya.html'">कामाख्या देवी</div>
-
-        <div class="section-title">नवग्रह एवं देव पूजन विधि</div>
-        <div class="item-btn" onclick="speak('सूर्य देव की पूजा विधि'); location.href='surya.html'">सूर्य देव</div>
-        <div class="item-btn" onclick="speak('चंद्र देव की पूजा विधि'); location.href='chandra.html'">चंद्र देव</div>
-        <div class="item-btn" onclick="speak('मंगल देव की पूजा विधि'); location.href='mangal.html'">मंगल देव</div>
-        <div class="item-btn" onclick="speak('बुध देव की पूजा विधि'); location.href='budh.html'">बुध देव</div>
-        <div class="item-btn" onclick="speak('बृहस्पति देव की पूजा विधि'); location.href='guru.html'">बृहस्पति देव</div>
-        <div class="item-btn" onclick="speak('शुक्र देव की पूजा विधि'); location.href='shukra.html'">शुक्र देव</div>
-        <div class="item-btn" onclick="speak('शनि देव की पूजा विधि'); location.href='shani.html'">शनि देव</div>
-        <div class="item-btn" onclick="speak('राहु देव की पूजा विधि'); location.href='rahu.html'">राहु देव</div>
-        <div class="item-btn" onclick="speak('केतु देव की पूजा विधि'); location.href='ketu.html'">केतु देव</div>
-
-        <div class="section-title">सिद्ध पुरुष एवं लोक देवता</div>
-        <div class="item-btn" onclick="speak('खाटू श्याम जी की पूजा विधि'); location.href='khatu_shyam.html'">खाटू श्याम जी</div>
-        <div class="item-btn" onclick="location.href='sai_baba.html'">साईं बाबा</div>
-        <div class="item-btn" onclick="location.href='ramdev_baba.html'">रामदेव पीर</div>
-        <div class="item-btn" onclick="location.href='goga_ji.html'">गोगा जी चौहान</div>
-        <div class="item-btn" onclick="location.href='jhulelal.html'">झूलेलाल जी</div>
-        <div class="item-btn" onclick="location.href='salasar.html'">सालासर बालाजी</div>
-        <div class="item-btn" onclick="location.href='mehandipur.html'">मेहंदीपुर बालाजी</div>
-        <div class="item-btn" onclick="location.href='tirupati.html'">तिरुपति बालाजी</div>
-        <div class="item-btn" onclick="location.href='vaishno_devi.html'">वैष्णो देवी</div>
-
-        <div class="section-title">अन्य महत्वपूर्ण पूजन विधि</div>
-        <div class="item-btn" onclick="speak('इंद्र देव की पूजा विधि'); location.href='indra.html'">इंद्र देव</div>
-        <div class="item-btn" onclick="speak('अग्नि देव की पूजा विधि'); location.href='agni.html'">अग्नि देव</div>
-        <div class="item-btn" onclick="speak('वायु देव की पूजा विधि'); location.href='vayu.html'">वायु देव</div>
-        <div class="item-btn" onclick="speak('वरुण देव की पूजा विधि'); location.href='varun.html'">वरुण देव</div>
-        <div class="item-btn" onclick="speak('कुबेर देव की पूजा विधि'); location.href='kuber.html'">कुबेर देव</div>
-        <div class="item-btn" onclick="speak('यमराज की पूजा विधि'); location.href='yamraj.html'">यमराज</div>
-        <div class="item-btn" onclick="speak('विश्वकर्मा जी की पूजा विधि'); location.href='vishwakarma.html'">विश्वकर्मा जी</div>
-        <div class="item-btn" onclick="speak('चित्रगुप्त जी की पूजा विधि'); location.href='chitragupta.html'">चित्रगुप्त जी</div>
-        <div class="item-btn" onclick="speak('धन्वंतरि देव की पूजा विधि'); location.href='dhanvantari.html'">धन्वंतरि देव</div>
-        <div class="item-btn" onclick="speak('अश्विनी कुमार की पूजा विधि'); location.href='ashwini.html'">अश्विनी कुमार</div>
-    </div>
-
-    <div class="footer-nav">
-        <button class="main-back-btn" onclick="location.href='index.html'">🏠 मुख्य मेनू पर वापस जाएं</button>
-    </div>
-
+        <div class="section-title">प्रमुख देवता एवं पूजा विधि</div>
+        <div class="item-btn" onclick="speak('शिव पूजा विधि'); location.href='shiv.html'">भगवान शिव</div>
+        <div class="item-btn" onclick="speak('विष्णु पूजा विधि'); location.href='vishnu.html'">भगवान विष्णु</div>
+        <div class="item-btn" onclick="speak('ब्रह्मा पूजा विधि'); location.href='brahma.html'">भगवान ब्रह्मा</div>
+        <div class="item-btn" onclick="speak('गणेश पूजा विधि'); location.href='ganesh.html'">श्री गणेश</div>
+        <div class="item-btn" onclick="speak('हनुमान पूजा विधि'); location.href='hanuman.html'">हनुमान जी</div>
+        <div class="section-title">दशावतार एवं पूजा विधि</div>
+        <div class="item-btn" onclick="speak('मत्स्य अवतार'); location.href='matsya.html'">1. मत्स्य अवतार</div>
+        <div class="item-btn" onclick="speak('कूर्म अवतार'); location.href='kurma.html'">2. कूर्म अवतार</div>
+        <div class="item-btn" onclick="speak('वराह अवतार'); location.href='varah.html'">3. वराह अवतार</div>
+        <div class="item-btn" onclick="speak('नरसिंह अवतार'); location.href='narsingh.html'">4. नरसिंह अवतार</div>
+        <div class="item-btn" onclick="speak('वामन अवतार'); location.href='vaman.html'">5. वामन अवतार</div>
+        <div class="item-btn" onclick="speak('परशुराम अवतार'); location.href='parshuram.html'">6. परशुराम</div>
+        <div class="item-btn" onclick="speak('राम अवतार'); location.href='rama.html'">7. श्री राम</div>
+        <div class="item-btn" onclick="speak('कृष्ण अवतार'); location.href='krishna.html'">8. श्री कृष्ण</div>
+        <div class="item-btn" onclick="speak('बुद्ध अवतार'); location.href='buddha.html'">9. बुद्ध</div>
+        <div class="item-btn" onclick="speak('कल्कि अवतार'); location.href='kalki.html'">10. कल्कि</div>
+        </div>
+    <button class="whatsapp-btn" style="background:#444; width:90%; margin:20px auto; display:block;" onclick="location.href='index.html'">🏠 मुख्य मेनू</button>
     <script src="script.js"></script>
     <script>
         function filterMenu() {
             let input = document.getElementById('searchInput').value.toLowerCase();
             let items = document.getElementsByClassName('item-btn');
-            let titles = document.getElementsByClassName('section-title');
             for (let i = 0; i < items.length; i++) {
-                items[i].style.display = items[i].innerText.toLowerCase().includes(input) ? "flex" : "none";
-            }
-            for (let j = 0; j < titles.length; j++) {
-                titles[j].style.display = input === "" ? "block" : "none";
+                items[i].style.display = items[i].innerText.toLowerCase().includes(input) ? "block" : "none";
             }
         }
     </script>
 </body>
-            </html>
-            
+</html>
