@@ -1,75 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html lang="hi">
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>व्रत का महत्व</title>
-  <style>
-    body { background-color: #FFF3E0; font-family: sans-serif; padding: 0; margin: 0; }
-    .header { background: #D84315; color: white; padding: 15px; text-align: center; position: sticky; top: 0; z-index: 100; font-weight: bold; }
-    .container { padding: 15px; }
-    .section-head { background: #E65100; color: white; padding: 8px; margin-top: 15px; border-radius: 5px; font-size: 14px; }
-    .vrat-btn { 
-      background: white; padding: 12px; margin: 6px 0; border-radius: 8px; 
-      display: block; text-decoration: none; color: #333; font-weight: bold; 
-      border-left: 5px solid #D84315; box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>व्रत विधि - श्री भक्ति सागर</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="header">40 व्रत महिमा</div>
-  <div class="container">
-    <div class="section-head">साप्ताहिक व्रत</div>
-    <a href="vrat_details.html?vrat=ravivar" class="vrat-btn">1. रविवार व्रत</a>
-    <a href="vrat_details.html?vrat=somvar" class="vrat-btn">2. सोमवार व्रत</a>
-    <a href="vrat_details.html?vrat=mangalvar" class="vrat-btn">3. मंगलवार व्रत</a>
-    <a href="vrat_details.html?vrat=budhvar" class="vrat-btn">4. बुधवार व्रत</a>
-    <a href="vrat_details.html?vrat=guruvar" class="vrat-btn">5. गुरुवार व्रत</a>
-    <a href="vrat_details.html?vrat=shukravar" class="vrat-btn">6. शुक्रवार व्रत</a>
-    <a href="vrat_details.html?vrat=shanivar" class="vrat-btn">7. शनिवार व्रत</a>
-
-    <div class="section-head">एकादशी व्रत</div>
-    <a href="vrat_details.html?vrat=nirjala" class="vrat-btn">8. निर्जला एकादशी</a>
-    <a href="vrat_details.html?vrat=devshayani" class="vrat-btn">9. देवशयनी एकादशी</a>
-    <a href="vrat_details.html?vrat=devuthani" class="vrat-btn">10. देवउठनी एकादशी</a>
-    <a href="vrat_details.html?vrat=mokshada" class="vrat-btn">11. मोक्षदा एकादशी</a>
-    <a href="vrat_details.html?vrat=utpanna" class="vrat-btn">12. उत्पन्ना एकादशी</a>
-    <a href="vrat_details.html?vrat=amalaki" class="vrat-btn">13. आमलकी एकादशी</a>
-    <a href="vrat_details.html?vrat=kamada" class="vrat-btn">14. कामदा एकादशी</a>
-    <a href="vrat_details.html?vrat=papmochani" class="vrat-btn">15. पापमोचनी एकादशी</a>
-    <a href="vrat_details.html?vrat=vijaya" class="vrat-btn">16. विजया एकादशी</a>
-
-    <div class="section-head">शिव व्रत</div>
-    <a href="vrat_details.html?vrat=mahashivratri" class="vrat-btn">17. महाशिवरात्रि</a>
-    <a href="vrat_details.html?vrat=pradosh" class="vrat-btn">18. प्रदोष व्रत</a>
-    <a href="vrat_details.html?vrat=shravan" class="vrat-btn">19. श्रावण सोमवार</a>
-    <a href="vrat_details.html?vrat=solah" class="vrat-btn">20. सोलह सोमवार</a>
-    <a href="vrat_details.html?vrat=masik" class="vrat-btn">21. मासिक शिवरात्रि</a>
-    <a href="vrat_details.html?vrat=teej" class="vrat-btn">22. हरियाली तीज</a>
-
-    <div class="section-head">देवी व्रत</div>
-    <a href="vrat_details.html?vrat=navratri" class="vrat-btn">23. नवरात्रि व्रत</a>
-    <a href="vrat_details.html?vrat=ashtami" class="vrat-btn">24. दुर्गा अष्टमी</a>
-    <a href="vrat_details.html?vrat=mahalaxmi" class="vrat-btn">25. महालक्ष्मी व्रत</a>
-    <a href="vrat_details.html?vrat=vaibhav" class="vrat-btn">26. वैभव लक्ष्मी</a>
-    <a href="vrat_details.html?vrat=santoshi" class="vrat-btn">27. संतोषी माता</a>
-    <a href="vrat_details.html?vrat=amba" class="vrat-btn">28. अंबा नवमी</a>
-    <a href="vrat_details.html?vrat=sheetla" class="vrat-btn">29. शीतला अष्टमी</a>
-    <a href="vrat_details.html?vrat=jaya" class="vrat-btn">30. जया पार्वती</a>
-
-    <div class="section-head">अन्य प्रमुख व्रत</div>
-    <a href="vrat_details.html?vrat=sankashti" class="vrat-btn">31. संकष्टी चतुर्थी</a>
-    <a href="vrat_details.html?vrat=vinayak" class="vrat-btn">32. विनायक चतुर्थी</a>
-    <a href="vrat_details.html?vrat=karwa" class="vrat-btn">33. करवा चौथ</a>
-    <a href="vrat_details.html?vrat=ahoi" class="vrat-btn">34. अहोई अष्टमी</a>
-    <a href="vrat_details.html?vrat=vatsavitri" class="vrat-btn">35. वट सावित्री</a>
-    <a href="vrat_details.html?vrat=nag" class="vrat-btn">36. नाग पंचमी</a>
-    <a href="vrat_details.html?vrat=chhath" class="vrat-btn">37. छठ व्रत</a>
-    <a href="vrat_details.html?vrat=ram" class="vrat-btn">38. राम नवमी</a>
-    <a href="vrat_details.html?vrat=kanha" class="vrat-btn">39. जन्माष्टमी</a>
-    <a href="vrat_details.html?vrat=anant" class="vrat-btn">40. अनंत चतुर्दशी</a>
-  </div>
-  <p style="font-size: 10px; color: #999; text-align: center; margin: 20px;">
-  * सूचना: इस पेज का डेटा सामान्य मान्यताओं पर आधारित है। पूर्ण शुद्धता का दावा नहीं है। (See Disclaimer on Home)
-</p>
+    <div class="header"><h1>🥣 साप्ताहिक एवं मासिक व्रत 🥣</h1></div>
+    <div class="list-container" style="padding:15px; display:flex; flex-direction:column; gap:10px;">
+        <div class="item-btn" onclick="speak('सोमवार व्रत'); location.href='somvar_vrat.html'">सोमवार व्रत</div>
+        <div class="item-btn" onclick="speak('मंगलवार व्रत'); location.href='mangalvar_vrat.html'">मंगलवार व्रत</div>
+        <div class="item-btn" onclick="speak('शुक्रवार संतोषी माता व्रत'); location.href='shukravar_vrat.html'">शुक्रवार व्रत</div>
+        <div class="item-btn" onclick="speak('प्रदोष व्रत'); location.href='pradosh_vrat.html'">प्रदोष व्रत</div>
+        <div class="item-btn" onclick="speak('एकादशी व्रत'); location.href='ekadashi_vrat.html'">एकादशी व्रत</div>
+        </div>
+    <button class="whatsapp-btn" style="background:#444; width:90%; margin:20px auto; display:block;" onclick="location.href='index.html'">🏠 मुख्य मेनू</button>
+    <script src="script.js"></script>
 </body>
 </html>
