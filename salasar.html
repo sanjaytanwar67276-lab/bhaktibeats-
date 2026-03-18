@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <title>सालासर बालाजी पूजा</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { background-color: #FFF3E0; font-family: sans-serif; padding: 20px; margin: 0; }
+    .card { background-color: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+    h2 { color: #E65100; text-align: center; font-size: 24px; border-bottom: 2px solid #FF9800; padding-bottom: 10px; }
+    p { color: #333; line-height: 1.8; font-size: 18px; }
+    .back-btn { background-color: #333; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px; display: inline-block; margin-bottom: 20px; font-weight: bold; }
+    .god-img { width: 100%; border-radius: 10px; margin-bottom: 15px; }
+    .audio-btn { background-color: #FF9800; color: white; padding: 12px 20px; border: none; border-radius: 8px; font-size: 16px; margin-right: 10px; cursor: pointer; }
+    .stop-btn { background-color: #333; color: white; padding: 12px 20px; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <a href="puja.html" class="back-btn">⬅ लिस्ट पर जाएँ</a>
+  <div class="card">
+    <h2>सालासर बालाजी पूजा</h2>
+    <img src="salasar.jpg" alt="सालासर बालाजी" class="god-img">
+    <div style="text-align: center; margin-bottom: 15px;">
+      <button class="audio-btn" onclick="playAudio()">🔊 सुनकर जानें</button>
+      <button class="stop-btn" onclick="stopAudio()">⏹️ रोकें</button>
+    </div>
+    <div id="puja-text">
+      <p><strong>विधि:</strong> सालासर बालाजी (दाढ़ी-मूंछ वाले हनुमान जी) को चूरमे का भोग लगाएं। नारियल पर मौली बांधकर अपनी मन्नत मांगें। सुंदरकांड या बजरंग बाण का पाठ करना यहाँ विशेष फलदायी माना जाता है।</p>
+      <p><strong>शुभ फल:</strong> सालासर बालाजी के दर्शन मात्र से भक्तों के असंभव कार्य सिद्ध हो जाते हैं। यह धाम अटूट विश्वास और मनोकामना पूर्ति का केंद्र है।</p>
+    </div>
+  </div>
+  <script>
+    function playAudio() {
+      window.speechSynthesis.cancel();
+      var speech = new SpeechSynthesisUtterance(document.getElementById("puja-text").innerText);
+      speech.lang = 'hi-IN'; speech.rate = 0.85;
+      window.speechSynthesis.speak(speech);
+    }
+    function stopAudio() { window.speechSynthesis.cancel(); }
+  </script>
+</body>
+</html>

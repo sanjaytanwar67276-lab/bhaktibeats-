@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <title>मेहंदीपुर बालाजी पूजा</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { background-color: #FFEBEE; font-family: sans-serif; padding: 20px; margin: 0; }
+    .card { background-color: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+    h2 { color: #C62828; text-align: center; font-size: 24px; border-bottom: 2px solid #D32F2F; padding-bottom: 10px; }
+    p { color: #333; line-height: 1.8; font-size: 18px; }
+    .back-btn { background-color: #333; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px; display: inline-block; margin-bottom: 20px; font-weight: bold; }
+    .god-img { width: 100%; border-radius: 10px; margin-bottom: 15px; }
+    .audio-btn { background-color: #D32F2F; color: white; padding: 12px 20px; border: none; border-radius: 8px; font-size: 16px; margin-right: 10px; cursor: pointer; }
+    .stop-btn { background-color: #333; color: white; padding: 12px 20px; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <a href="puja.html" class="back-btn">⬅ लिस्ट पर जाएँ</a>
+  <div class="card">
+    <h2>मेहंदीपुर बालाजी पूजा</h2>
+    <img src="mehandipur.jpg" alt="मेहंदीपुर बालाजी" class="god-img">
+    <div style="text-align: center; margin-bottom: 15px;">
+      <button class="audio-btn" onclick="playAudio()">🔊 सुनकर जानें</button>
+      <button class="stop-btn" onclick="stopAudio()">⏹️ रोकें</button>
+    </div>
+    <div id="puja-text">
+      <p><strong>विधि:</strong> बालाजी महाराज को बूंदी के लड्डू का भोग लगाएं। यहाँ 'दरखास्त' और 'अर्जी' लगाने का महत्व है। राम नाम का संकीर्तन करें और हनुमान चालीसा का पाठ करें। मंदिर से निकलते समय पीछे मुड़कर न देखें।</p>
+      <p><strong>शुभ फल:</strong> मेहंदीपुर बालाजी की कृपा से हर प्रकार की नकारात्मक शक्ति, ऊपरी बाधा और संकट का नाश होता है। वे भक्तों की मानसिक और शारीरिक रक्षा करते हैं।</p>
+    </div>
+  </div>
+  <script>
+    function playAudio() {
+      window.speechSynthesis.cancel();
+      var speech = new SpeechSynthesisUtterance(document.getElementById("puja-text").innerText);
+      speech.lang = 'hi-IN'; speech.rate = 0.85;
+      window.speechSynthesis.speak(speech);
+    }
+    function stopAudio() { window.speechSynthesis.cancel(); }
+  </script>
+</body>
+</html>

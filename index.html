@@ -1,35 +1,110 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>श्री भक्ति सागर</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>श्री भक्ति सागर - BhaktiBeats</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* मुख्य डिज़ाइन */
+    body { 
+      background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%); 
+      font-family: 'Segoe UI', Arial, sans-serif; padding: 0; margin: 0; text-align: center; color: #3e2723;
+    }
+    
+    .live-ticker {
+      background: #FF5722; color: white; padding: 10px 0;
+      font-weight: bold; overflow: hidden; white-space: nowrap;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2); font-size: 14px;
+    }
+
+    .header { 
+      background: linear-gradient(to right, #D84315, #E65100); 
+      color: white; padding: 40px 15px; font-size: 28px; font-weight: bold; 
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2); border-bottom-left-radius: 30px; border-bottom-right-radius: 30px;
+    }
+    
+    .container { padding: 25px 15px; display: flex; flex-direction: column; gap: 18px; max-width: 500px; margin: 0 auto; }
+    
+    .folder { 
+      background: white; padding: 18px; border-radius: 15px; 
+      text-decoration: none; display: flex; align-items: center; text-align: left;
+      box-shadow: 0 8px 15px rgba(0,0,0,0.06); transition: 0.3s;
+      border-left: 5px solid #D84315; cursor: pointer;
+    }
+    .folder:active { transform: scale(0.97); background: #FFF9C4; }
+    
+    .icon { font-size: 30px; margin-right: 15px; min-width: 45px; text-align: center; }
+    .text-content { flex: 1; }
+    .folder h2 { color: #D84315; margin: 0; font-size: 18px; }
+    .folder p { color: #757575; margin: 3px 0 0; font-size: 12px; }
+
+    /* YouTube और WhatsApp बटनों का स्टाइल */
+    .btn-container { padding: 10px; text-align: center; }
+    
+    .youtube-btn {
+      background: #FF0000; color: white; padding: 16px; border-radius: 50px;
+      border: none; width: 90%; font-weight: bold; font-size: 17px;
+      box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3); cursor: pointer; margin-bottom: 15px;
+    }
+
+    .whatsapp-btn {
+      background: #25D366; color: white; padding: 16px; border-radius: 50px;
+      border: none; width: 90%; font-weight: bold; font-size: 17px;
+      box-shadow: 0 6px 15px rgba(37, 211, 102, 0.4); cursor: pointer;
+    }
+
+    footer { padding: 30px; color: #a1887f; font-size: 13px; font-weight: bold; }
+  </style>
 </head>
 <body>
-    <div class="header"><h1>🚩 श्री भक्ति सागर 🚩</h1></div>
 
-    <div class="menu-grid" style="display:flex; flex-direction:column; gap:12px; padding:15px;">
-        <div class="menu-item" onclick="speak('संपूर्ण पूजा विधि सूची'); location.href='puja.html'">
-            <div class="icon">🔱</div><h3>संपूर्ण पूजा विधि</h3>
-        </div>
-        <div class="menu-item" onclick="speak('व्रत विधि और लाभ'); location.href='fasts.html'">
-            <div class="icon">🥣</div><h3>व्रत विधि और लाभ</h3>
-        </div>
-        <div class="menu-item" onclick="speak('अपनी राशि और इष्ट देव जानें'); location.href='rashi.html'">
-            <div class="icon">🕉️</div><h3>राशि और इष्ट देव</h3>
-        </div>
-        <div class="menu-item" onclick="speak('आज का पंचांग'); location.href='panchang.html'">
-            <div class="icon">📅</div><h3>आज का पंचांग</h3>
-        </div>
-        <div class="menu-item" onclick="speak('भक्ति क्विज़ शुरू करें'); location.href='quiz.html'">
-            <div class="icon">🧩</div><h3>भक्ति क्विज़ (100+)</h3>
-        </div>
+  <div class="live-ticker">
+    <marquee scrollamount="5">🚩 जय श्री राम! श्री भक्ति सागर ऐप में आपका स्वागत है। अपनी राशि और पूजा विधि जानने के लिए नीचे क्लिक करें... 🚩</marquee>
+  </div>
+
+  <div class="header">🚩 श्री भक्ति सागर 🚩</div>
+  
+  <div class="container">
+    <div class="folder" onclick="speak('संपूर्ण पूजा विधि सूची'); location.href='puja.html'">
+      <div class="icon">🔱</div>
+      <div class="text-content"><h2>संपूर्ण पूजा विधि</h2><p>100+ देवी-देवताओं की पूजन सामग्री और मंत्र</p></div>
     </div>
 
-    <button class="whatsapp-btn" onclick="shareApp()">🟢 दोस्तों को WhatsApp पर भेजें</button>
-    <button class="whatsapp-btn" style="background:#ff0000; margin-top:10px;" onclick="openYouTube()">📺 YouTube चैनल सब्सक्राइब करें</button>
+    <div class="folder" style="border-left-color: #FB8C00;" onclick="speak('40 प्लस व्रत विधि और लाभ'); location.href='fasts.html'">
+      <div class="icon">🥣</div>
+      <div class="text-content"><h2>व्रत विधि और लाभ (40+)</h2><p>सभी महत्वपूर्ण व्रतों की कथा और विधि</p></div>
+    </div>
 
-    <script src="script.js"></script>
+    <div class="folder" style="border-left-color: #FFB300;" onclick="speak('अपनी राशि और इष्ट देव जानें'); location.href='name_info.html'">
+      <div class="icon">🕉️</div>
+      <div class="text-content"><h2>राशि और इष्ट देव</h2><p>अपनी राशि के अनुसार जानें अपने इष्ट देव</p></div>
+    </div>
+
+    <div class="folder" style="border-left-color: #BF360C;" onclick="speak('आज का सटीक पंचांग'); location.href='panchang.html'">
+      <div class="icon">📅</div>
+      <div class="text-content"><h2>आज का पंचांग</h2><p>सटीक मुहूर्त, तिथि और नक्षत्र</p></div>
+    </div>
+
+    <div class="folder" style="border-left-color: #9C27B0;" onclick="speak('भक्ति क्विज़ खेलें'); location.href='quiz.html'">
+      <div class="icon">🧩</div>
+      <div class="text-content"><h2>भक्ति क्विज़ (100+)</h2><p>सनातन धर्म के बारे में अपना ज्ञान परखें</p></div>
+    </div>
+  </div>
+
+  <div class="btn-container">
+    <button onclick="openYouTube()" class="youtube-btn">
+        📺 YouTube: @Kajaltanwer-eo5jo
+    </button>
+
+    <button onclick="shareApp()" class="whatsapp-btn">
+        🟢 दोस्तों को WhatsApp पर भेजें
+    </button>
+  </div>
+
+  <footer>© 2026 श्री भक्ति सागर - BhaktiBeats</footer>
+
+  <script src="script.js"></script>
+
 </body>
 </html>

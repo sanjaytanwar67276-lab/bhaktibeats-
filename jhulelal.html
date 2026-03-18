@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <title>झूलेलाल जी पूजा - श्री भक्ति सागर</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { background-color: #E1F5FE; font-family: sans-serif; padding: 20px; margin: 0; }
+    .card { background-color: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+    h2 { color: #0288D1; text-align: center; font-size: 24px; border-bottom: 2px solid #03A9F4; padding-bottom: 10px; }
+    p { color: #333; line-height: 1.8; font-size: 18px; }
+    .back-btn { background-color: #333; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px; display: inline-block; margin-bottom: 20px; font-weight: bold; }
+    .god-img { width: 100%; border-radius: 10px; margin-bottom: 15px; }
+    .audio-btn { background-color: #03A9F4; color: white; padding: 12px 20px; border: none; border-radius: 8px; font-size: 16px; margin-right: 10px; cursor: pointer; }
+    .stop-btn { background-color: #f44336; color: white; padding: 12px 20px; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <a href="puja.html" class="back-btn">⬅ लिस्ट पर जाएँ</a>
+  <div class="card">
+    <h2>भगवान झूलेलाल पूजा</h2>
+    <img src="jhulelal.jpg" alt="झूलेलाल जी" class="god-img">
+    <div style="text-align: center; margin-bottom: 15px;">
+      <button class="audio-btn" onclick="playAudio()">🔊 सुनकर जानें</button>
+      <button class="stop-btn" onclick="stopAudio()">⏹️ रोकें</button>
+    </div>
+    <div id="puja-text">
+      <p><strong>विधि:</strong> झूलेलाल जी वरुण देव के अवतार हैं। इनकी पूजा में जल का विशेष महत्व है। ज्योति जलाएं और 'अखा' (भीगे चावल और चीनी) का भोग लगाएं। 'आयोलाल झूलेलाल' के जयकारे के साथ पल्लव (प्रार्थना) गाएं।</p>
+      <p><strong>शुभ फल:</strong> इनकी कृपा से व्यापार में तरक्की होती है और जल संबंधी यात्राएं सुरक्षित रहती हैं। जीवन में शीतलता और सुख-समृद्धि का वास होता है।</p>
+    </div>
+  </div>
+  <script>
+    function playAudio() {
+      window.speechSynthesis.cancel();
+      var speech = new SpeechSynthesisUtterance(document.getElementById("puja-text").innerText);
+      speech.lang = 'hi-IN'; speech.rate = 0.85;
+      window.speechSynthesis.speak(speech);
+    }
+    function stopAudio() { window.speechSynthesis.cancel(); }
+  </script>
+</body>
+</html>
