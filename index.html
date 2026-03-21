@@ -104,6 +104,26 @@
 
   <footer>© 2026 श्री भक्ति सागर - BhaktiBeats</footer>
 
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-analytics.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBMMnSv1lHoMgDeNbNQH_Ck82ydudpRjGM",
+      authDomain: "bhaktisagar-b51ea.firebaseapp.com",
+      projectId: "bhaktisagar-b51ea",
+      storageBucket: "bhaktisagar-b51ea.firebasestorage.app",
+      messagingSenderId: "299964128354",
+      appId: "1:299964128354:web:699d5d1118b12ad604053b",
+      measurementId: "G-C6HE5WXBLZ"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    
+    console.log("🔥 Firebase एकदम सही से कनेक्ट हो गया है! जय श्री राम!");
+  </script>
+
   <script src="script.js"></script>
 
 </body>
