@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <title>कामाख्या देवी पूजा</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { background-color: #FFF3E0; font-family: sans-serif; padding: 20px; text-align: center; }
+    .card { background-color: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-top: 20px; }
+    h2 { color: #D84315; font-size: 24px; }
+    p { color: #333; line-height: 1.6; font-size: 18px; text-align: left; }
+    .back-btn { background-color: #333; color: white; padding: 12px 20px; text-decoration: none; border-radius: 5px; display: inline-block; font-weight: bold; width: 90%; margin-bottom: 10px; }
+    .audio-btn { background-color: #4CAF50; color: white; padding: 12px; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; width: 45%; margin: 10px 2%; cursor: pointer; }
+    .stop-btn { background-color: #f44336; color: white; padding: 12px; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; width: 45%; margin: 10px 2%; cursor: pointer; }
+  </style>
+</head>
+<body>
+  
+  <a href="puja.html" class="back-btn">⬅ लिस्ट पर वापस जाएँ</a>
+  
+  <div class="card">
+    <h2>माता कामाख्या देवी की पूजा</h2>
+    
+    <div>
+      <button class="audio-btn" onclick="playAudio()">🔊 सुनें</button>
+      <button class="stop-btn" onclick="stopAudio()">⏹️ रोकें</button>
+    </div>
+    
+    <div id="puja-text">
+      <p><strong>विधि:</strong> माता सती के 51 शक्तिपीठों में से सबसे प्रमुख पीठ कामाख्या है। यहाँ माता के रजस्वला स्वरूप की पूजा होती है। माता को लाल पुष्प (विशेषकर गुड़हल), लाल वस्त्र, सिंदूर और चुनरी अर्पित करें। पूजा के दौरान 'ॐ कामाख्यायै नमः' या नवार्ण मंत्र 'ॐ ऐं ह्रीं क्लीं चामुण्डायै विच्चे' का जाप करना परम फलदायी है।</p>
+      <p><strong>शुभ फल:</strong> माता कामाख्या सभी तांत्रिक और लौकिक शक्तियों की अधिष्ठात्री हैं। इनकी कृपा से जादू-टोना, तंत्र-मंत्र की बाधाएं दूर होती हैं। शत्रुओं पर विजय प्राप्त होती है और असंभव कार्य भी संभव हो जाते हैं।</p>
+    </div>
+  </div>
+
+  <script>
+    function playAudio() {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.resume();
+        var speech = new SpeechSynthesisUtterance(document.getElementById("puja-text").innerText);
+        speech.lang = 'hi-IN'; speech.rate = 0.9;
+        window.speechSynthesis.speak(speech);
+      } else {
+        alert("आपके फोन में आवाज़ की सुविधा उपलब्ध नहीं है।");
+      }
+    }
+    function stopAudio() { window.speechSynthesis.cancel(); }
+  </script>
+</body>
+</html>
