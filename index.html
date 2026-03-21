@@ -39,7 +39,6 @@
     .folder h2 { color: #D84315; margin: 0; font-size: 18px; }
     .folder p { color: #757575; margin: 3px 0 0; font-size: 12px; }
 
-    /* YouTube और WhatsApp बटनों का स्टाइल */
     .btn-container { padding: 10px; text-align: center; }
     
     .youtube-btn {
@@ -107,6 +106,7 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-analytics.js";
+    import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-messaging.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyBMMnSv1lHoMgDeNbNQH_Ck82ydudpRjGM",
@@ -118,13 +118,41 @@
       measurementId: "G-C6HE5WXBLZ"
     };
 
+    // Firebase एक ही बार चालू करें
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
-    
+    const messaging = getMessaging(app);
+
     console.log("🔥 Firebase एकदम सही से कनेक्ट हो गया है! जय श्री राम!");
+
+    // यूज़र से Notification भेजने की परमिशन माँगना
+    function requestNotificationPermission() {
+      console.log('Notification permission माँगी जा रही है...');
+      Notification.requestPermission().then((permission) => {
+        if (permission === 'granted') {
+          console.log('Permission मिल गई! जय श्री राम!');
+          
+          // यहाँ हमें Firebase से 'VAPID Key' डालनी होगी
+          getToken(messaging, { vapidKey: 'YOUR_VAPID_KEY_HERE' }).then((currentToken) => {
+            if (currentToken) {
+              console.log('आपका Device Token: ', currentToken);
+            } else {
+              console.log('Token नहीं मिला।');
+            }
+          }).catch((err) => {
+            console.log('Token लाने में एरर: ', err);
+          });
+        } else {
+          console.log('यूज़र ने Notification बंद कर दिए।');
+        }
+      });
+    }
+
+    // 3 सेकंड बाद परमिशन का पॉप-अप दिखाएं
+    setTimeout(requestNotificationPermission, 3000);
+
   </script>
 
   <script src="script.js"></script>
-
 </body>
 </html>
