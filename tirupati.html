@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <title>तिरुपति बालाजी पूजा</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { background-color: #FFF3E0; font-family: sans-serif; padding: 20px; text-align: center; }
+    .card { background-color: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-top: 20px; }
+    h2 { color: #D84315; font-size: 24px; }
+    p { color: #333; line-height: 1.6; font-size: 18px; text-align: left; }
+    .back-btn { background-color: #333; color: white; padding: 12px 20px; text-decoration: none; border-radius: 5px; display: inline-block; font-weight: bold; width: 90%; margin-bottom: 10px; }
+    .audio-btn { background-color: #4CAF50; color: white; padding: 12px; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; width: 45%; margin: 10px 2%; cursor: pointer; }
+    .stop-btn { background-color: #f44336; color: white; padding: 12px; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; width: 45%; margin: 10px 2%; cursor: pointer; }
+  </style>
+</head>
+<body>
+  
+  <a href="puja.html" class="back-btn">⬅ लिस्ट पर वापस जाएँ</a>
+  
+  <div class="card">
+    <h2>तिरुपति बालाजी की पूजा</h2>
+    
+    <div>
+      <button class="audio-btn" onclick="playAudio()">🔊 सुनें</button>
+      <button class="stop-btn" onclick="stopAudio()">⏹️ रोकें</button>
+    </div>
+    
+    <div id="puja-text">
+      <p><strong>विधि:</strong> भगवान वेंकटेश्वर (तिरुपति बालाजी) श्री विष्णु जी के ही अवतार हैं। इनकी पूजा विशेष रूप से शुक्रवार और शनिवार को की जाती है। इन्हें तुलसी दल, पीले या लाल पुष्प, और चंदन अर्पित करें। प्रसाद के रूप में लड्डू का विशेष महत्व है। पूजा के समय 'ॐ नमो वेंकटेशाय' मंत्र का जाप करें।</p>
+      <p><strong>शुभ फल:</strong> तिरुपति बालाजी कलयुग के साक्षात देव माने जाते हैं। इनकी सच्चे मन से आराधना करने पर असीम धन-संपदा, व्यापार में वृद्धि और हर प्रकार के कर्जों व संकटों से मुक्ति मिलती है।</p>
+    </div>
+  </div>
+
+  <script>
+    function playAudio() {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.resume();
+        var speech = new SpeechSynthesisUtterance(document.getElementById("puja-text").innerText);
+        speech.lang = 'hi-IN'; speech.rate = 0.9;
+        window.speechSynthesis.speak(speech);
+      } else {
+        alert("आपके फोन में आवाज़ की सुविधा उपलब्ध नहीं है।");
+      }
+    }
+    function stopAudio() { window.speechSynthesis.cancel(); }
+  </script>
+</body>
+</html>
