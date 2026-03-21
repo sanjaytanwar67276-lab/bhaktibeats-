@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>तुलसी माता पूजा</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { background-color: #FFF3E0; font-family: sans-serif; padding: 20px; }
+    .card { background-color: white; padding: 15px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-bottom: 20px; }
+    h2 { color: #D84315; text-align: center; font-size: 24px; margin-top: 5px; }
+    p { color: #333; line-height: 1.6; font-size: 18px; }
+    .back-btn { background-color: #333; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px; display: inline-block; margin-bottom: 20px; font-weight: bold; }
+    .god-img { width: 100%; border-radius: 10px; margin-bottom: 15px; }
+    .audio-btn { background-color: #4CAF50; color: white; padding: 12px 20px; border: none; border-radius: 8px; font-size: 16px; margin-right: 10px; }
+    .stop-btn { background-color: #f44336; color: white; padding: 12px 20px; border: none; border-radius: 8px; font-size: 16px; }
+  </style>
+</head>
+<body>
+  <a href="puja.html" class="back-btn">⬅ लिस्ट पर जाएँ</a>
+  <div class="card">
+    <h2>तुलसी माता की पूजा</h2>
+    <img src="tulsi.jpg" alt="तुलसी माता" class="god-img">
+    <div style="text-align: center;">
+      <button class="audio-btn" onclick="playAudio()">🔊 सुनकर जानें</button>
+      <button class="stop-btn" onclick="stopAudio()">⏹️ रोकें</button>
+    </div>
+    <div id="puja-text">
+      <p><strong>विधि:</strong> तुलसी जी की पूजा प्रतिदिन सुबह जल चढ़ाकर और शाम को घी का दीपक जलाकर करें। उन्हें सिंदूर और लाल चुनरी अर्पित करें। 'ॐ नमो भगवते वासुदेवाय' या 'ॐ तुलसी देव्यै नमः' मंत्र का जाप करें। एकादशी और रविवार को तुलसी दल नहीं तोड़ना चाहिए।</p>
+      <p><strong>शुभ फल:</strong> तुलसी माता साक्षात लक्ष्मी का रूप हैं। इनकी पूजा से घर में सुख-समृद्धि आती है, बीमारियाँ दूर होती हैं और भगवान विष्णु की असीम कृपा प्राप्त होती है।</p>
+    </div>
+  </div>
+  <script>
+    function playAudio() {
+      window.speechSynthesis.cancel();
+      var textToRead = document.getElementById("puja-text").innerText;
+      var speech = new SpeechSynthesisUtterance(textToRead);
+      speech.lang = 'hi-IN'; speech.rate = 0.85; speech.pitch = 1.0;
+      window.speechSynthesis.speak(speech);
+    }
+    function stopAudio() { window.speechSynthesis.cancel(); }
+  </script>
+</body>
+</html>

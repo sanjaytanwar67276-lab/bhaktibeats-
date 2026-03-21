@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <title>माता वैष्णो देवी - श्री भक्ति सागर</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { background-color: #FFF3E0; font-family: sans-serif; padding: 20px; margin: 0; }
+    .card { background-color: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 20px; }
+    h2 { color: #C62828; text-align: center; font-size: 26px; margin-top: 10px; border-bottom: 2px solid #C62828; padding-bottom: 10px; }
+    p { color: #3e2723; line-height: 1.8; font-size: 18px; text-align: justify; }
+    .back-btn { background-color: #333; color: white; padding: 12px 20px; text-decoration: none; border-radius: 50px; display: inline-block; margin-bottom: 20px; font-weight: bold; }
+    .god-img { width: 100%; border-radius: 15px; margin-bottom: 20px; }
+    .btn-group { text-align: center; margin-bottom: 20px; }
+    .audio-btn { background-color: #C62828; color: white; padding: 14px 25px; border: none; border-radius: 10px; font-size: 16px; margin-right: 10px; font-weight: bold; cursor: pointer; }
+    .stop-btn { background-color: #333; color: white; padding: 14px 25px; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <a href="puja.html" class="back-btn">⬅ पूजा सूची पर जाएँ</a>
+  
+  <div class="card">
+    <h2>🚩 माता वैष्णो देवी 🚩</h2>
+    <img src="vaishno.jpg" alt="वैष्णो देवी" class="god-img">
+    
+    <div class="btn-group">
+      <button class="audio-btn" onclick="playAudio()">🔊 विधि सुनें</button>
+      <button class="stop-btn" onclick="stopAudio()">⏹️ रोकें</button>
+    </div>
+
+    <div id="puja-text">
+      <p><strong>महिमा:</strong> माता वैष्णो देवी शक्ति का साक्षात स्वरूप हैं, जहाँ महाकाली, महालक्ष्मी और महासरस्वती पिंडी रूप में विराजमान हैं। इन्हें 'त्रिकुटा देवी' भी कहा जाता है।</p>
+      <p><strong>पूजा विधि:</strong> माता को लाल चुनरी, नारियल और सोलह श्रृंगार की सामग्री अर्पित करें। हलवा और चने का भोग लगाएं। 'ॐ ऐं ह्रीं क्लीं चामुण्डायै विच्चे' मंत्र का जाप करें। माता की आरती और जगराता करना विशेष फलदायी है।</p>
+      <p><strong>शुभ फल:</strong> माता के दरबार से कोई खाली हाथ नहीं लौटता। इनकी पूजा से शत्रुओं का नाश होता है, घर में बरकत आती है और जीवन के हर क्षेत्र में सुरक्षा और सफलता प्राप्त होती है।</p>
+    </div>
+  </div>
+
+  <script>
+    function playAudio() {
+      window.speechSynthesis.cancel();
+      var textToRead = document.getElementById("puja-text").innerText;
+      var speech = new SpeechSynthesisUtterance(textToRead);
+      speech.lang = 'hi-IN'; speech.rate = 0.9; speech.pitch = 1.0;
+      window.speechSynthesis.speak(speech);
+    }
+    function stopAudio() { window.speechSynthesis.cancel(); }
+  </script>
+</body>
+</html>

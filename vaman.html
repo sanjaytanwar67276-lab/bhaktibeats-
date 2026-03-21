@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>भगवान वामन पूजा</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { background-color: #FFF3E0; font-family: sans-serif; padding: 20px; }
+    .card { background-color: white; padding: 15px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-bottom: 20px; }
+    h2 { color: #D84315; text-align: center; font-size: 24px; margin-top: 5px; }
+    p { color: #333; line-height: 1.6; font-size: 18px; }
+    .back-btn { background-color: #333; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px; display: inline-block; margin-bottom: 20px; font-weight: bold; }
+    .god-img { width: 100%; border-radius: 10px; margin-bottom: 15px; }
+    .audio-btn { background-color: #4CAF50; color: white; padding: 12px 20px; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; margin-right: 10px; margin-bottom: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
+    .stop-btn { background-color: #f44336; color: white; padding: 12px 20px; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; margin-bottom: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
+  </style>
+</head>
+<body>
+
+  <a href="puja.html" class="back-btn">⬅ लिस्ट पर जाएँ</a>
+
+  <div class="card">
+    <h2>भगवान वामन जी की पूजा</h2>
+    <img src="vaman.jpg" alt="भगवान वामन" class="god-img">
+    
+    <div style="text-align: center;">
+      <button class="audio-btn" onclick="playAudio()">🔊 सुनकर जानें</button>
+      <button class="stop-btn" onclick="stopAudio()">⏹️ रोकें</button>
+    </div>
+
+    <div id="puja-text">
+      <p><strong>विधि:</strong> वामन द्वादशी या एकादशी के दिन स्नान कर पीले वस्त्र पहनें। भगवान वामन (विष्णु जी के ब्रह्मचारी रूप) की प्रतिमा स्थापित कर उन्हें दही, चावल, पीले पुष्प और तुलसी अर्पित करें। इस दिन ब्राह्मणों या जरूरतमंदों को छाता, जूते या अन्न का दान करना बहुत फलदायी माना जाता है। 'ॐ वामनाय नमः' मंत्र का जाप करें।</p>
+      <p><strong>शुभ फल:</strong> वामन भगवान ने बलि का अहंकार नष्ट कर इंद्र को उनका खोया हुआ स्वर्ग वापस दिलाया था। इनकी पूजा से व्यक्ति के अंदर का अहंकार समाप्त होता है। खोया हुआ धन, सम्मान और रुतबा वापस मिलता है तथा आध्यात्मिक उन्नति होती है।</p>
+    </div>
+  </div>
+
+  <script>
+    function playAudio() {
+      window.speechSynthesis.cancel();
+      var textToRead = document.getElementById("puja-text").innerText;
+      var speech = new SpeechSynthesisUtterance(textToRead);
+      speech.lang = 'hi-IN'; speech.rate = 1.0; 
+      window.speechSynthesis.speak(speech);
+    }
+    function stopAudio() { window.speechSynthesis.cancel(); }
+  </script>
+
+</body>
+</html>

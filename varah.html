@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>वराह अवतार पूजा</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { background-color: #FFF3E0; font-family: sans-serif; padding: 20px; }
+    .card { background-color: white; padding: 15px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-bottom: 20px; }
+    h2 { color: #D84315; text-align: center; font-size: 24px; }
+    p { color: #333; line-height: 1.6; font-size: 18px; }
+    .back-btn { background-color: #333; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px; display: inline-block; margin-bottom: 20px; font-weight: bold; }
+    .god-img { width: 100%; border-radius: 10px; margin-bottom: 15px; }
+    .audio-btn { background-color: #4CAF50; color: white; padding: 12px 20px; border: none; border-radius: 8px; font-size: 16px; margin-right: 10px; }
+    .stop-btn { background-color: #f44336; color: white; padding: 12px 20px; border: none; border-radius: 8px; font-size: 16px; }
+  </style>
+</head>
+<body>
+  <a href="puja.html" class="back-btn">⬅ लिस्ट पर जाएँ</a>
+  <div class="card">
+    <h2>वराह अवतार की पूजा</h2>
+    <img src="varaha.jpg" alt="वराह अवतार" class="god-img">
+    <div style="text-align: center;">
+      <button class="audio-btn" onclick="playAudio()">🔊 सुनकर जानें</button>
+      <button class="stop-btn" onclick="stopAudio()">⏹️ रोकें</button>
+    </div>
+    <div id="puja-text">
+      <p><strong>विधि:</strong> भगवान वराह की पूजा में धरती मां का ध्यान करना आवश्यक है। इन्हें फल-फूल और तुलसी अर्पित करें। 'ॐ वराहाय नमः' मंत्र का जाप करें। पूजा के बाद गाय को चारा खिलाना अत्यंत शुभ माना जाता है।</p>
+      <p><strong>शुभ फल:</strong> भगवान वराह ने पृथ्वी को पाताल से निकालकर हिरण्याक्ष का वध किया था। इनकी पूजा से भूमि-भवन संबंधी सुख मिलता है, संपत्ति के विवाद सुलझते हैं और साधक को खोया हुआ सम्मान दोबारा प्राप्त होता है।</p>
+    </div>
+  </div>
+  <script>
+    function playAudio() {
+      window.speechSynthesis.cancel();
+      var textToRead = document.getElementById("puja-text").innerText;
+      var speech = new SpeechSynthesisUtterance(textToRead);
+      speech.lang = 'hi-IN'; speech.rate = 1.0; speech.pitch = 0.8;
+      window.speechSynthesis.speak(speech);
+    }
+    function stopAudio() { window.speechSynthesis.cancel(); }
+  </script>
+</body>
+</html>
