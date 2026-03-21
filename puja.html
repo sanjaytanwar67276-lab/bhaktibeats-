@@ -15,88 +15,94 @@
         .item-btn:active { background: #fff3e0; transform: scale(0.95); }
         .footer-nav { padding: 20px; text-align: center; }
         .main-back-btn { background: #333; color: white; border: none; padding: 18px; border-radius: 50px; width: 95%; font-size: 18px; font-weight: bold; cursor: pointer; }
+        /* सर्च में कुछ न मिलने पर दिखाने के लिए डिज़ाइन */
+        #noResult { grid-column: span 2; display: none; padding: 20px; color: #D84315; text-align: center; font-weight: bold; font-size: 16px; }
     </style>
 </head>
 <body>
-    <div class="header"><h1>🚩 संपूर्ण पूजा विधि 🚩</h1></div>
+    <div class="header" style="background: linear-gradient(to right, #D84315, #E65100); color: white; padding: 10px; text-align: center; margin: 0;">
+        <h1 style="margin: 10px 0;">🚩 संपूर्ण पूजा विधि 🚩</h1>
+    </div>
 
     <div class="search-container">
-        <input type="text" id="searchInput" class="search-box" placeholder="🔍 भगवान का नाम खोजें..." onkeyup="filterMenu()">
+        <input type="text" id="searchInput" class="search-box" placeholder="🔍 भगवान का नाम खोजें (जैसे: Shiv, राम)..." onkeyup="filterMenu()">
     </div>
 
     <div class="list-container" id="menuGrid">
         
         <div class="section-title">प्रमुख देवता एवं पूजन विधि</div>
-        <div class="item-btn" onclick="location.href='shiv.html'">भगवान शिव</div>
-        <div class="item-btn" onclick="location.href='vishnu.html'">भगवान विष्णु</div>
-        <div class="item-btn" onclick="location.href='brahma.html'">भगवान ब्रह्मा</div>
-        <div class="item-btn" onclick="location.href='ganesh.html'">श्री गणेश</div>
-        <div class="item-btn" onclick="location.href='hanuman.html'">हनुमान जी</div>
-        <div class="item-btn" onclick="location.href='kartikeya.html'">कार्तिकेय जी</div>
-        <div class="item-btn" onclick="location.href='bhairav.html'">काल भैरव</div>
-        <div class="item-btn" onclick="location.href='batuk_bhairav.html'">बटुक भैरव</div>
+        <div class="item-btn" data-tags="shiv shiva mahadev bholenath shankar शिव महादेव भोलेनाथ शंकर" onclick="location.href='shiv.html'">भगवान शिव</div>
+        <div class="item-btn" data-tags="vishnu narayan hari विष्णु नारायण हरि" onclick="location.href='vishnu.html'">भगवान विष्णु</div>
+        <div class="item-btn" data-tags="brahma creator ब्रह्मा विधाता" onclick="location.href='brahma.html'">भगवान ब्रह्मा</div>
+        <div class="item-btn" data-tags="ganesh ganpati vinayak gajanan गणेश गणपति विनायक गजानन" onclick="location.href='ganesh.html'">श्री गणेश</div>
+        <div class="item-btn" data-tags="hanuman bajrangbali pawanputra balaji हनुमान बजरंगबली बालाजी" onclick="location.href='hanuman.html'">हनुमान जी</div>
+        <div class="item-btn" data-tags="kartikeya murugan skand कार्तिकेय मुरूगन स्कंद" onclick="location.href='kartikeya.html'">कार्तिकेय जी</div>
+        <div class="item-btn" data-tags="bhairav kaal bhairav mahakal काल भैरव महाकाल" onclick="location.href='bhairav.html'">काल भैरव</div>
+        <div class="item-btn" data-tags="batuk bhairav बटुक भैरव" onclick="location.href='batuk_bhairav.html'">बटुक भैरव</div>
 
         <div class="section-title">दशावतार एवं पूजन विधि</div>
-        <div class="item-btn" onclick="location.href='matsya.html'">मत्स्य अवतार</div>
-        <div class="item-btn" onclick="location.href='kurma.html'">कूर्म अवतार</div>
-        <div class="item-btn" onclick="location.href='varah.html'">वराह अवतार</div>
-        <div class="item-btn" onclick="location.href='narsingh.html'">नरसिंह अवतार</div>
-        <div class="item-btn" onclick="location.href='vaman.html'">वामन अवतार</div>
-        <div class="item-btn" onclick="location.href='parshuram.html'">परशुराम जी</div>
-        <div class="item-btn" onclick="location.href='rama.html'">श्री राम</div>
-        <div class="item-btn" onclick="location.href='krishna.html'">श्री कृष्ण</div>
-        <div class="item-btn" onclick="location.href='buddha.html'">भगवान बुद्ध</div>
-        <div class="item-btn" onclick="location.href='kalki.html'">कल्कि अवतार</div>
+        <div class="item-btn" data-tags="matsya fish matsaya मत्स्य मछली अवतार" onclick="location.href='matsya.html'">मत्स्य अवतार</div>
+        <div class="item-btn" data-tags="kurma kachhua tortoise कूर्म कछुआ अवतार" onclick="location.href='kurma.html'">कूर्म अवतार</div>
+        <div class="item-btn" data-tags="varah pig varaha वराह सूअर अवतार" onclick="location.href='varah.html'">वराह अवतार</div>
+        <div class="item-btn" data-tags="narsingh narasimha नरसिंह अवतार" onclick="location.href='narsingh.html'">नरसिंह अवतार</div>
+        <div class="item-btn" data-tags="vaman vamana वामन बौना अवतार" onclick="location.href='vaman.html'">वामन अवतार</div>
+        <div class="item-btn" data-tags="parshuram parashurama परशुराम जी" onclick="location.href='parshuram.html'">परशुराम जी</div>
+        <div class="item-btn" data-tags="rama ram ramchandra श्री राम रामचंद्र" onclick="location.href='rama.html'">श्री राम</div>
+        <div class="item-btn" data-tags="krishna kanha gopal shyam श्री कृष्ण कान्हा गोपाल श्याम" onclick="location.href='krishna.html'">श्री कृष्ण</div>
+        <div class="item-btn" data-tags="buddha gautam buddhas बुद्ध गौतम बुद्ध" onclick="location.href='buddha.html'">भगवान बुद्ध</div>
+        <div class="item-btn" data-tags="kalki kalyug कल्कि अवतार कलयुग" onclick="location.href='kalki.html'">कल्कि अवतार</div>
 
         <div class="section-title">देवी शक्तियां एवं पूजन विधि</div>
-        <div class="item-btn" onclick="location.href='durga.html'">माता दुर्गा</div>
-        <div class="item-btn" onclick="location.href='parvati.html'">माता पार्वती</div>
-        <div class="item-btn" onclick="location.href='lakshmi.html'">माता लक्ष्मी</div>
-        <div class="item-btn" onclick="location.href='saraswati.html'">माता सरस्वती</div>
-        <div class="item-btn" onclick="location.href='kali.html'">माता काली</div>
-        <div class="item-btn" onclick="location.href='radha.html'">श्री राधा रानी</div>
-        <div class="item-btn" onclick="location.href='gayatri.html'">गायत्री माता</div>
-        <div class="item-btn" onclick="location.href='santoshi.html'">संतोषी माता</div>
-        <div class="item-btn" onclick="location.href='sheetla.html'">शीतला माता</div>
-        <div class="item-btn" onclick="location.href='ganga.html'">गंगा मैया</div>
-        <div class="item-btn" onclick="location.href='yamuna.html'">यमुना मैया</div>
-        <div class="item-btn" onclick="location.href='tulsi.html'">तुलसी माता</div>
-        <div class="item-btn" onclick="location.href='annapurna.html'">अन्नपूर्णा माता</div>
-        <div class="item-btn" onclick="location.href='kamakhya.html'">कामाख्या देवी</div>
+        <div class="item-btn" data-tags="durga maa sherawali ambe navdurga माता दुर्गा शेरावाली अम्बे" onclick="location.href='durga.html'">माता दुर्गा</div>
+        <div class="item-btn" data-tags="parvati gauri uma mata माता पार्वती गौरी उमा" onclick="location.href='parvati.html'">माता पार्वती</div>
+        <div class="item-btn" data-tags="lakshmi laxmi dhan diwali माता लक्ष्मी दिवाली" onclick="location.href='lakshmi.html'">माता लक्ष्मी</div>
+        <div class="item-btn" data-tags="saraswati vidya sharda mata माता सरस्वती विद्या शारदा" onclick="location.href='saraswati.html'">माता सरस्वती</div>
+        <div class="item-btn" data-tags="kali mahakali bhadrakali mata माता काली महाकाली" onclick="location.href='kali.html'">माता काली</div>
+        <div class="item-btn" data-tags="radha radhika rani shyam श्री राधा रानी राधिका" onclick="location.href='radha.html'">श्री राधा रानी</div>
+        <div class="item-btn" data-tags="gayatri vedmata mata गायत्री माता वेदमाता" onclick="location.href='gayatri.html'">गायत्री माता</div>
+        <div class="item-btn" data-tags="santoshi mata संतोषी माता" onclick="location.href='santoshi.html'">संतोषी माता</div>
+        <div class="item-btn" data-tags="sheetla shitala mata शीतला माता" onclick="location.href='sheetla.html'">शीतला माता</div>
+        <div class="item-btn" data-tags="ganga river maiya jaya गंगा मैया" onclick="location.href='ganga.html'">गंगा मैया</div>
+        <div class="item-btn" data-tags="yamuna jamuna maiya यमुना मैया जमुना" onclick="location.href='yamuna.html'">यमुना मैया</div>
+        <div class="item-btn" data-tags="tulsi plant basil mata vrinda तुलसी माता वृंदा" onclick="location.href='tulsi.html'">तुलसी माता</div>
+        <div class="item-btn" data-tags="annapurna food mata अन्नपूर्णा माता" onclick="location.href='annapurna.html'">अन्नपूर्णा माता</div>
+        <div class="item-btn" data-tags="kamakhya devi mata कामाख्या देवी" onclick="location.href='kamakhya.html'">कामाख्या देवी</div>
 
         <div class="section-title">नवग्रह एवं देव पूजन विधि</div>
-        <div class="item-btn" onclick="location.href='surya.html'">सूर्य देव</div>
-        <div class="item-btn" onclick="location.href='chandra.html'">चंद्र देव</div>
-        <div class="item-btn" onclick="location.href='mangal.html'">मंगल देव</div>
-        <div class="item-btn" onclick="location.href='budh.html'">बुध देव</div>
-        <div class="item-btn" onclick="location.href='guru.html'">बृहस्पति देव</div>
-        <div class="item-btn" onclick="location.href='shukra.html'">शुक्र देव</div>
-        <div class="item-btn" onclick="location.href='shani.html'">शनि देव</div>
-        <div class="item-btn" onclick="location.href='rahu.html'">राहु देव</div>
-        <div class="item-btn" onclick="location.href='ketu.html'">केतु देव</div>
+        <div class="item-btn" data-tags="surya sun devita raakar dinakar सूर्य देव दिनकर भास्कर" onclick="location.href='surya.html'">सूर्य देव</div>
+        <div class="item-btn" data-tags="chandra moon dev som चंद्र देव सोम" onclick="location.href='chandra.html'">चंद्र देव</div>
+        <div class="item-btn" data-tags="mangal mars dev मंगल देव" onclick="location.href='mangal.html'">मंगल देव</div>
+        <div class="item-btn" data-tags="budh mercury dev बुध देव" onclick="location.href='budh.html'">बुध देव</div>
+        <div class="item-btn" data-tags="guru brihaspati jupiter dev बृहस्पति देव गुरु" onclick="location.href='guru.html'">बृहस्पति देव</div>
+        <div class="item-btn" data-tags="shukra venus dev शुक्र देव" onclick="location.href='shukra.html'">शुक्र देव</div>
+        <div class="item-btn" data-tags="shani saturn dev शनि देव महाराज" onclick="location.href='shani.html'">शनि देव</div>
+        <div class="item-btn" data-tags="rahu dev राहु देव" onclick="location.href='rahu.html'">राहु देव</div>
+        <div class="item-btn" data-tags="ketu dev केतु देव" onclick="location.href='ketu.html'">केतु देव</div>
 
         <div class="section-title">सिद्ध पुरुष एवं लोक देवता</div>
-        <div class="item-btn" onclick="location.href='khatu_shyam.html'">खाटू श्याम जी</div>
-        <div class="item-btn" onclick="location.href='sai_baba.html'">साईं बाबा</div>
-        <div class="item-btn" onclick="location.href='ramdev_baba.html'">रामदेव पीर</div>
-        <div class="item-btn" onclick="location.href='goga_ji.html'">गोगा जी चौहान</div>
-        <div class="item-btn" onclick="location.href='jhulelal.html'">झूलेलाल जी</div>
-        <div class="item-btn" onclick="location.href='salasar.html'">सालासर बालाजी</div>
-        <div class="item-btn" onclick="location.href='mehandipur.html'">मेहंदीपुर बालाजी</div>
-        <div class="item-btn" onclick="location.href='tirupati.html'">तिरुपति बालाजी</div>
-        <div class="item-btn" onclick="location.href='vaishno_devi.html'">वैष्णो देवी</div>
+        <div class="item-btn" data-tags="khatu shyam baba hare ka sahara खाटू श्याम जी बर्बरीक" onclick="location.href='khatu_shyam.html'">खाटू श्याम जी</div>
+        <div class="item-btn" data-tags="sai baba shirdi sabka malik ek साईं बाबा शिर्डी" onclick="location.href='sai_baba.html'">साईं बाबा</div>
+        <div class="item-btn" data-tags="ramdev peer baba runicha रामदेव पीर रुणिचा" onclick="location.href='ramdev_baba.html'">रामदेव पीर</div>
+        <div class="item-btn" data-tags="goga ji chauhan jaharveer गोगा जी चौहान जाहरवीर" onclick="location.href='goga_ji.html'">गोगा जी चौहान</div>
+        <div class="item-btn" data-tags="jhulelal ji sindhi isht झूलेलाल जी सिंधी" onclick="location.href='jhulelal.html'">झूलेलाल जी</div>
+        <div class="item-btn" data-tags="salasar balaji hanuman सालासर बालाजी" onclick="location.href='salasar.html'">सालासर बालाजी</div>
+        <div class="item-btn" data-tags="mehandipur balaji hanuman मेहंदीपुर बालाजी" onclick="location.href='mehandipur.html'">मेहंदीपुर बालाजी</div>
+        <div class="item-btn" data-tags="tirupati balaji venkateshwara तिरुपति बालाजी वेंकटेश्वर" onclick="location.href='tirupati.html'">तिरुपति बालाजी</div>
+        <div class="item-btn" data-tags="vaishno devi mata katra शेरावाली वैष्णो देवी" onclick="location.href='vaishno_devi.html'">वैष्णो देवी</div>
 
         <div class="section-title">अन्य महत्वपूर्ण पूजन विधि</div>
-        <div class="item-btn" onclick="location.href='indra.html'">इंद्र देव</div>
-        <div class="item-btn" onclick="location.href='agni.html'">अग्नि देव</div>
-        <div class="item-btn" onclick="location.href='vayu.html'">वायु देव</div>
-        <div class="item-btn" onclick="location.href='varun.html'">वरुण देव</div>
-        <div class="item-btn" onclick="location.href='kuber.html'">कुबेर देव</div>
-        <div class="item-btn" onclick="location.href='yamraj.html'">यमराज</div>
-        <div class="item-btn" onclick="location.href='vishwakarma.html'">विश्वकर्मा जी</div>
-        <div class="item-btn" onclick="location.href='chitragupta.html'">चित्रगुप्त जी</div>
-        <div class="item-btn" onclick="location.href='dhanvantari.html'">धन्वंतरि देव</div>
-        <div class="item-btn" onclick="location.href='ashwini.html'">अश्विनी कुमार</div>
+        <div class="item-btn" data-tags="indra dev rain god इंद्र देव देवराज" onclick="location.href='indra.html'">इंद्र देव</div>
+        <div class="item-btn" data-tags="agni dev fire god अग्नि देव" onclick="location.href='agni.html'">अग्नि देव</div>
+        <div class="item-btn" data-tags="vayu dev pawan wind god वायु देव पवन देव" onclick="location.href='vayu.html'">वायु देव</div>
+        <div class="item-btn" data-tags="varun dev water god वरुण देव जल देवता" onclick="location.href='varun.html'">वरुण देव</div>
+        <div class="item-btn" data-tags="kuber dev dhan kuber god of wealth कुबेर देव धनपति" onclick="location.href='kuber.html'">कुबेर देव</div>
+        <div class="item-btn" data-tags="yamraj yam dharmaraj यमराज धर्मराज" onclick="location.href='yamraj.html'">यमराज</div>
+        <div class="item-btn" data-tags="vishwakarma ji devta shilpi विश्वकर्मा जी" onclick="location.href='vishwakarma.html'">विश्वकर्मा जी</div>
+        <div class="item-btn" data-tags="chitragupta ji devta kayastha चित्रगुप्त जी" onclick="location.href='chitragupta.html'">चित्रगुप्त जी</div>
+        <div class="item-btn" data-tags="dhanvantari dev vaidya ayurveda धन्वंतरि देव आयुर्वेद" onclick="location.href='dhanvantari.html'">धन्वंतरि देव</div>
+        <div class="item-btn" data-tags="ashwini kumar dev vaidya अश्विनी कुमार" onclick="location.href='ashwini.html'">अश्विनी कुमार</div>
+        
+        <div id="noResult">क्षमा करें, यह नाम सूची में नहीं है।</div>
     </div>
 
     <div class="footer-nav">
@@ -108,13 +114,33 @@
             let input = document.getElementById('searchInput').value.toLowerCase();
             let items = document.getElementsByClassName('item-btn');
             let titles = document.getElementsByClassName('section-title');
+            let noResult = document.getElementById('noResult');
+            let hasFound = false;
+
             for (let i = 0; i < items.length; i++) {
-                items[i].style.display = items[i].innerText.toLowerCase().includes(input) ? "flex" : "none";
+                // data-tags और बटन के टेक्स्ट दोनों में चेक करें
+                let tags = items[i].getAttribute('data-tags') || "";
+                let text = items[i].innerText.toLowerCase();
+                
+                if (text.includes(input) || tags.toLowerCase().includes(input)) {
+                    items[i].style.display = "flex";
+                    hasFound = true;
+                } else {
+                    items[i].style.display = "none";
+                }
             }
+
+            // टाइटल को सिर्फ तब दिखाएं जब सर्च बार खाली हो
             for (let j = 0; j < titles.length; j++) {
                 titles[j].style.display = input === "" ? "block" : "none";
+            }
+
+            // अगर कुछ न मिले तो मैसेज दिखाएं
+            if(noResult) {
+                noResult.style.display = (input !== "" && !hasFound) ? "block" : "none";
             }
         }
     </script>
 </body>
-</html>
+            </html>
+    
