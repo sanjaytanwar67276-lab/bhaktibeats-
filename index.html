@@ -118,7 +118,7 @@
       measurementId: "G-C6HE5WXBLZ"
     };
 
-    // Firebase एक ही बार चालू करें
+    // Firebase चालू करें
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
     const messaging = getMessaging(app);
@@ -132,8 +132,8 @@
         if (permission === 'granted') {
           console.log('Permission मिल गई! जय श्री राम!');
           
-          // यहाँ हमें Firebase से 'VAPID Key' डालनी होगी
-          getToken(messaging, { vapidKey: 'YOUR_VAPID_KEY_HERE' }).then((currentToken) => {
+          // आपकी VAPID Key यहाँ डाल दी गई है
+          getToken(messaging, { vapidKey: 'BIP0Wmq8QdslNEnXpd3RpXypty4Jj0f0lGUKsYekPe49oj4zMuw5LHjtslszQ-4CIeK3TSaS93-qri1CI4IWIzM' }).then((currentToken) => {
             if (currentToken) {
               console.log('आपका Device Token: ', currentToken);
             } else {
@@ -155,4 +155,5 @@
 
   <script src="script.js"></script>
 </body>
-</html>
+  </html>
+  
