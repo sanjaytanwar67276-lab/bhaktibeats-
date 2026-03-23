@@ -54,6 +54,14 @@
     }
 
     footer { padding: 30px; color: #a1887f; font-size: 13px; font-weight: bold; }
+
+    /* विज्ञापन के डिब्बे का डिज़ाइन */
+    .ad-box {
+      margin: 10px auto; max-width: 500px; min-height: 60px; 
+      background: #FFF9C4; border: 1px dashed #D84315; 
+      border-radius: 10px; display: flex; align-items: center; 
+      justify-content: center; color: #D84315; font-size: 12px; font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -101,6 +109,10 @@
     </button>
   </div>
 
+  <div class="ad-box" id="banner-ad">
+    ADVERTISEMENT
+  </div>
+
   <footer>© 2026 श्री भक्ति सागर - BhaktiBeats</footer>
 
   <script type="module">
@@ -118,42 +130,27 @@
       measurementId: "G-C6HE5WXBLZ"
     };
 
-    // Firebase चालू करें
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
     const messaging = getMessaging(app);
 
-    console.log("🔥 Firebase एकदम सही से कनेक्ट हो गया है! जय श्री राम!");
-
-    // यूज़र से Notification भेजने की परमिशन माँगना
     function requestNotificationPermission() {
-      console.log('Notification permission माँगी जा रही है...');
       Notification.requestPermission().then((permission) => {
         if (permission === 'granted') {
-          console.log('Permission मिल गई! जय श्री राम!');
-          
-          // आपकी VAPID Key यहाँ डाल दी गई है
           getToken(messaging, { vapidKey: 'BIP0Wmq8QdslNEnXpd3RpXypty4Jj0f0lGUKsYekPe49oj4zMuw5LHjtslszQ-4CIeK3TSaS93-qri1CI4IWIzM' }).then((currentToken) => {
             if (currentToken) {
               console.log('आपका Device Token: ', currentToken);
-            } else {
-              console.log('Token नहीं मिला।');
             }
-          }).catch((err) => {
-            console.log('Token लाने में एरर: ', err);
           });
-        } else {
-          console.log('यूज़र ने Notification बंद कर दिए।');
         }
       });
     }
 
-    // 3 सेकंड बाद परमिशन का पॉप-अप दिखाएं
     setTimeout(requestNotificationPermission, 3000);
-
   </script>
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-app-pub-7804167196979720" crossorigin="anonymous"></script>
 
   <script src="script.js"></script>
 </body>
-  </html>
-  
+</html>
