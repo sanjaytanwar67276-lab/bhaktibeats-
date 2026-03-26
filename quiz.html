@@ -1,67 +1,92 @@
-<div id="quiz-box" style="padding: 20px; font-family: sans-serif; text-align: center; border: 2px solid #ff5722; border-radius: 15px; margin: 10px;">
-    <h3 id="question-text" style="color: #333;">सवाल यहाँ दिखेगा...</h3>
-    <div id="options-container" style="display: flex; flex-direction: column; gap: 10px; margin-top: 20px;">
-        </div>
-    <p id="quiz-message" style="margin-top: 20px; font-weight: bold; color: red;"></p>
+<div id="quiz-box" style="padding: 25px; font-family: sans-serif; text-align: center; border: 3px solid #ff5722; border-radius: 20px; margin: 15px; background-color: #fffaf0; box-shadow: 0px 4px 15px rgba(0,0,0,0.1);">
+    
+    <div style="display: flex; justify-content: space-between; margin-bottom: 20px; font-weight: bold; color: #555;">
+        <span id="q-count">प्रश्न: 1 / 5</span>
+        <span style="color: #28a745;">आपका स्कोर: <span id="live-score">0</span></span>
+    </div>
+    
+    <h2 id="question-text" style="color: #2c3e50; font-size: 24px; margin-bottom: 25px;">सवाल लोड हो रहा है...</h2>
+    
+    <div id="options-container" style="display: flex; flex-direction: column; gap: 15px;"></div>
+
+    <div style="margin-top: 30px; padding: 10px; background: #eee; border-radius: 10px; font-size: 14px; color: #666; border-left: 5px solid #ff5722;">
+        ℹ️ <strong>नियम:</strong> हर प्रश्न 1 अंक का है। अगले क्विज को अनलॉक करने के लिए 5 में से कम से कम 4 अंक लाना अनिवार्य है।
+    </div>
+
+    <p id="quiz-message" style="margin-top: 20px; font-size: 18px; font-weight: bold;"></p>
 </div>
 
-<div style="text-align: center; margin-top: 20px;">
-    <button id="next-quiz-btn" disabled style="background: grey; color: white; padding: 10px 20px; border-radius: 5px; border: none; cursor: not-allowed;">
-        अगला क्विज (Locked) 🔒
+<div style="text-align: center; margin-top: 10px;">
+    <button id="next-quiz-btn" disabled style="background: #bdc3c7; color: white; padding: 15px 40px; border-radius: 30px; border: none; font-size: 18px; font-weight: bold; cursor: not-allowed;">
+        अगला क्विज 🔒
     </button>
 </div>
 
 <script>
-// आपके सवालों की लिस्ट (इसे आप बढ़ा सकते हैं)
+// यहाँ अपने 100 सवाल डालें
 const allQuestions = [
-    { q: "हनुमान जी के पिता का क्या नाम था?", a: ["केसरी", "पवन देव", "सुग्रीव", "बाली"], correct: "केसरी" },
-    { q: "रामायण के रचयिता कौन हैं?", a: ["वाल्मीकि", "तुलसीदास", "वेदव्यास", "कालिदास"], correct: "वाल्मीकि" },
-    { q: "अर्जुन के धनुष का क्या नाम था?", a: ["गांडीव", "पिनाक", "शारंग", "विजय"], correct: "गांडीव" },
-    { q: "कौरवों की संख्या कितनी थी?", a: ["100", "50", "105", "101"], correct: "100" },
-    { q: "कृष्ण जी का जन्म कहाँ हुआ था?", a: ["मथुरा", "गोकुल", "द्वारका", "वृंदावन"], correct: "मथुरा" }
+    { q: "राम जी के धनुष का क्या नाम था?", a: ["कोदंड", "गांडीव", "पिनाक", "विजय"], correct: "कोदंड" },
+    { q: "लक्ष्मण जी की पत्नी का नाम क्या था?", a: ["उर्मिला", "मांडवी", "श्रुतकीर्ति", "सिया"], correct: "उर्मिला" },
+    { q: "रावण के विमान का क्या नाम था?", a: ["पुष्पक", "गरुड़", "चेतक", "पवन"], correct: "पुष्पक" },
+    { q: "श्री कृष्ण के गुरु कौन थे?", a: ["सांदीपनि", "वशिष्ठ", "विश्वामित्र", "द्रोणाचार्य"], correct: "सांदीपनि" },
+    { q: "हनुमान जी की माता का नाम क्या था?", a: ["अंजनी", "सुमित्रा", "कैकेयी", "मन्दोदरी"], correct: "अंजनी" }
 ];
 
 let currentQIndex = 0;
 let score = 0;
 let shuffledQuestions = [];
 
-// 1. शफल फंक्शन (सवालों को मिक्स करने के लिए)
 function shuffle(array) {
     return array.sort(() => Math.random() - 0.5);
 }
 
 function startNewQuiz() {
-    shuffledQuestions = shuffle([...allQuestions]); // सवालों को मिक्स किया
+    shuffledQuestions = shuffle([...allQuestions]).slice(0, 5); 
     currentQIndex = 0;
     score = 0;
+    document.getElementById("live-score").innerText = "0";
     showQuestion();
 }
 
 function showQuestion() {
     const qData = shuffledQuestions[currentQIndex];
-    document.getElementById("question-text").innerText = `प्रश्न ${currentQIndex + 1}: ${qData.q}`;
+    document.getElementById("q-count").innerText = `प्रश्न: ${currentQIndex + 1} / 5`;
+    document.getElementById("question-text").innerText = qData.q;
+    
     const optionsDiv = document.getElementById("options-container");
     optionsDiv.innerHTML = "";
 
-    // ऑप्शन्स को भी शफल करें ताकि उत्तर रटा न जा सके
     shuffle([...qData.a]).forEach(opt => {
         const btn = document.createElement("button");
         btn.innerText = opt;
-        btn.style = "padding: 10px; cursor: pointer; border-radius: 5px; border: 1px solid #ccc; background: #f9f9f9;";
-        btn.onclick = () => checkAnswer(opt, qData.correct);
+        btn.style = "padding: 15px; cursor: pointer; border-radius: 10px; border: 1px solid #ddd; background: white; font-size: 18px; font-weight: bold;";
+        btn.onclick = () => checkAnswer(opt, qData.correct, btn);
         optionsDiv.appendChild(btn);
     });
 }
 
-function checkAnswer(selected, correct) {
-    if (selected === correct) score++;
-    
-    currentQIndex++;
-    if (currentQIndex < 5) {
-        showQuestion();
+function checkAnswer(selected, correct, btn) {
+    const allButtons = document.querySelectorAll("#options-container button");
+    allButtons.forEach(b => b.disabled = true);
+
+    if (selected === correct) {
+        score++;
+        document.getElementById("live-score").innerText = score;
+        btn.style.backgroundColor = "#d4edda"; 
+        btn.style.borderColor = "#28a745";
     } else {
-        finishQuiz();
+        btn.style.backgroundColor = "#f8d7da"; 
+        btn.style.borderColor = "#dc3545";
     }
+
+    setTimeout(() => {
+        currentQIndex++;
+        if (currentQIndex < 5) {
+            showQuestion();
+        } else {
+            finishQuiz();
+        }
+    }, 1000);
 }
 
 function finishQuiz() {
@@ -70,19 +95,16 @@ function finishQuiz() {
     
     if (score >= 4) {
         msg.style.color = "green";
-        msg.innerText = `बधाई हो! आपका स्कोर ${score}/5 है। अगला क्विज खुल गया!`;
+        msg.innerHTML = `शानदार! आपका कुल स्कोर: ${score} / 5 <br> अगला क्विज अनलॉक हो गया है।`;
         nextBtn.disabled = false;
-        nextBtn.style.background = "#4CAF50";
+        nextBtn.style.background = "#28a745";
         nextBtn.style.cursor = "pointer";
-        nextBtn.innerText = "अगला क्विज खेलें 🔓";
     } else {
         msg.style.color = "red";
-        msg.innerText = `आपका स्कोर ${score}/5 है। अगले क्विज के लिए आपको कम से कम 4 अंक लाना अनिवार्य है। फिर से प्रयास करें!`;
-        // बटन लॉक ही रहेगा
+        msg.innerHTML = `आपका स्कोर: ${score} / 5 <br> अगले क्विज के लिए 4 अंक जरूरी हैं। कृपया दोबारा प्रयास करें।`;
     }
 }
 
-// क्विज शुरू करें
 startNewQuiz();
-     </script>
-     
+    </script>
+    
