@@ -57,13 +57,22 @@
         <div class="rules-box">📢 <strong>नियम:</strong> हर सवाल 1 नंबर का है। अगली सीढ़ी चढ़ने के लिए 5 में से 4 नंबर लाना अनिवार्य है।</div>
     </div>
 
+    <div id="result-screen">
+        <h2 id="res-msg" style="font-size: 26px;"></h2>
+        <button id="retry-btn" class="action-btn retry-btn" onclick="retryLevel()">🔄 दोबारा प्रयास करें (नए सवाल)</button>
+        <button id="next-lvl-btn" class="action-btn next-lvl-btn" onclick="startLevel()">अगली सीढ़ी चढ़ें 🧗‍♂️</button>
+    </div>
+</div>
+
 <div id="shiva-darshan">
     <div class="darshan-title">🙏 ॐ नमः शिवाय 🙏</div>
     <h2 style="color: white; margin-top: 0;">हर हर महादेव!</h2>
-    <p class="darshan-msg">बधाई हो! आपने ज्ञान की 20 सीढ़ियाँ पार कर ली हैं और आप मंदिर के शिखर तक पहुँच गए हैं।</p>
+    <p class="darshan-msg">बधाई हो! आपने ज्ञान की 20 सीढ़ियाँ पार कर ली हैं और आप साक्षात केदारनाथ धाम के शिखर तक पहुँच गए हैं।</p>
     
     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Kedarnath_Temple_at_Kedarnath_valley.jpg/800px-Kedarnath_Temple_at_Kedarnath_valley.jpg" alt="Kedarnath Temple" style="width: 100%; border-radius: 15px; margin-top: 20px; border: 3px solid gold; box-shadow: 0px 0px 20px #ff9800;">
+
 </div>
+
 <script>
 // 100 सवालों का खजाना
 const masterQuestions = [
