@@ -3,67 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>श्री भक्ति सागर क्विज</title>
+    <title>श्री भक्ति सागर - ज्ञान की सीढ़ियां</title>
     <style>
-        body { background-color: #000; margin: 0; padding: 10px; display: flex; flex-direction: column; align-items: center; }
+        body { background-color: #0d0d0d; margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; font-family: sans-serif; color: white; }
         
-        #quiz-container {
-            width: 100%;
-            max-width: 500px;
-            background: #111;
-            border: 3px solid #ff5722;
-            border-radius: 20px;
-            padding: 25px;
-            text-align: center;
-            color: white;
-            box-shadow: 0 0 20px rgba(255, 87, 34, 0.4);
-        }
+        /* Journey Header */
+        #journey-header { text-align: center; margin-bottom: 20px; width: 100%; max-width: 500px; }
+        #journey-text { color: #ff9800; font-size: 20px; font-weight: bold; margin-bottom: 10px; }
+        .stairs-info { font-size: 24px; color: #00ff00; font-weight: bold; }
+        .progress-bg { width: 100%; background: #333; height: 15px; border-radius: 10px; margin-top: 10px; overflow: hidden; border: 1px solid #555; }
+        #progress-bar { width: 5%; background: linear-gradient(90deg, #ff5722, #4caf50); height: 100%; transition: 0.5s; }
 
+        /* Quiz Box */
+        #quiz-container { width: 100%; max-width: 500px; background: #1a1a1a; border: 3px solid #ff5722; border-radius: 20px; padding: 25px; text-align: center; box-shadow: 0 0 20px rgba(255, 87, 34, 0.4); box-sizing: border-box; }
         .header-info { display: flex; justify-content: space-between; font-size: 20px; font-weight: bold; margin-bottom: 25px; }
-        #q-text { font-size: 32px; margin-bottom: 30px; line-height: 1.4; color: #fff; font-weight: bold; }
+        #q-text { font-size: 28px; margin-bottom: 30px; line-height: 1.5; font-weight: bold; }
 
-        .option-btn {
-            width: 100%;
-            padding: 18px;
-            margin-bottom: 15px;
-            font-size: 22px;
-            font-weight: bold;
-            background: #222;
-            color: white;
-            border: 2px solid #444;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .rules-box {
-            background: #222;
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 30px;
-            font-size: 18px;
-            color: #ffff00;
-            border: 1px solid #333;
-            text-align: left;
-        }
-
-        #result-screen { display: none; margin-top: 20px; }
-        .retry-btn { background: #ff5722; color: white; padding: 15px 30px; border: none; border-radius: 10px; font-size: 22px; font-weight: bold; cursor: pointer; margin-top: 15px; }
+        /* Options */
+        .option-btn { width: 100%; padding: 18px; margin-bottom: 15px; font-size: 20px; font-weight: bold; background: #262626; color: white; border: 2px solid #555; border-radius: 12px; cursor: pointer; transition: 0.2s; }
         
-        #next-level-btn {
-            margin-top: 20px;
-            padding: 20px 50px;
-            font-size: 24px;
-            font-weight: bold;
-            border-radius: 40px;
-            border: none;
-            background: #333;
-            color: #666;
-            cursor: not-allowed;
-        }
+        /* Rules & Results */
+        .rules-box { background: #222; padding: 15px; border-radius: 10px; margin-top: 30px; font-size: 16px; color: #ffff00; border: 1px solid #444; text-align: left; line-height: 1.4; }
+        #result-screen { display: none; margin-top: 20px; }
+        
+        /* Action Buttons */
+        .action-btn { padding: 15px 30px; border: none; border-radius: 10px; font-size: 22px; font-weight: bold; cursor: pointer; margin-top: 15px; width: 100%; }
+        .retry-btn { background: #ff4444; color: white; }
+        .next-lvl-btn { background: #28a745; color: white; display: none; }
+
+        /* Shiva Darshan Screen */
+        #shiva-darshan { display: none; text-align: center; padding: 30px; background: #111; border: 4px solid #ffd700; border-radius: 20px; max-width: 500px; width: 100%; box-shadow: 0 0 40px rgba(255, 215, 0, 0.5); box-sizing: border-box; }
+        .darshan-title { font-size: 40px; color: #ffd700; margin-bottom: 10px; text-shadow: 2px 2px 10px #ff0000; }
+        .darshan-msg { font-size: 22px; color: #00ff00; font-weight: bold; line-height: 1.5; }
     </style>
 </head>
 <body>
+
+<div id="journey-header">
+    <div id="journey-text">🛕 पूरी क्विज पार करने पर आप शिव मंदिर तक पहुँच जाएंगे!</div>
+    <div class="stairs-info">सीढ़ी: <span id="current-level-text">1</span> / 20 🧗‍♂️</div>
+    <div class="progress-bg"><div id="progress-bar"></div></div>
+</div>
 
 <div id="quiz-container">
     <div class="header-info">
@@ -74,47 +54,71 @@
     <div id="quiz-area">
         <div id="q-text">सवाल लोड हो रहा है...</div>
         <div id="options-box"></div>
-        
-        <div class="rules-box">
-            📢 <strong>नियम:</strong> हर सवाल 1 नंबर का है। अगले लेवल के लिए 5 में से 4 नंबर लाना अनिवार्य है।
-        </div>
+        <div class="rules-box">📢 <strong>नियम:</strong> हर सवाल 1 नंबर का है। अगली सीढ़ी चढ़ने के लिए 5 में से 4 नंबर लाना अनिवार्य है।</div>
     </div>
 
     <div id="result-screen">
-        <h2 id="res-msg" style="font-size: 28px;"></h2>
-        <button class="retry-btn" onclick="startQuiz()">🔄 दोबारा प्रयास करें</button>
+        <h2 id="res-msg" style="font-size: 26px;"></h2>
+        <button id="retry-btn" class="action-btn retry-btn" onclick="retryLevel()">🔄 दोबारा प्रयास करें</button>
+        <button id="next-lvl-btn" class="action-btn next-lvl-btn" onclick="startLevel()">अगली सीढ़ी चढ़ें 🧗‍♂️</button>
     </div>
 </div>
 
-<button id="next-level-btn" disabled>अगला लेवल 🔒</button>
+<div id="shiva-darshan">
+    <div class="darshan-title">🙏 ॐ नमः शिवाय 🙏</div>
+    <h2 style="color: white; margin-top: 0;">हर हर महादेव!</h2>
+    <p class="darshan-msg">बधाई हो! आपने ज्ञान की 20 सीढ़ियाँ पार कर ली हैं और आप मंदिर के शिखर तक पहुँच गए हैं।</p>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Shiva_Statue_at_Murudeshwar.jpg/800px-Shiva_Statue_at_Murudeshwar.jpg" alt="Lord Shiva" style="width: 100%; border-radius: 15px; margin-top: 20px; border: 2px solid gold;">
+</div>
 
 <script>
-// यहाँ आप अपने 100 सवाल इसी तरह जोड़ते जाएँ
+// आपके 100 सवालों का खजाना (यहाँ अपने सारे सवाल भरें)
 const masterQuestions = [
     { q: "राम जी के पिता का नाम क्या था?", a: ["दशरथ", "जनक", "पांडु", "धृतराष्ट्र"], c: "दशरथ" },
     { q: "हनुमान जी किसके अवतार थे?", a: ["शिव", "विष्णु", "ब्रह्मा", "इंद्र"], c: "शिव" },
     { q: "गीता का उपदेश किसने दिया?", a: ["कृष्ण", "अर्जुन", "भीष्म", "करण"], c: "कृष्ण" },
     { q: "सूर्य पुत्र किसे कहा जाता है?", a: ["कर्ण", "अर्जुन", "भीम", "नकुल"], c: "कर्ण" },
     { q: "लंका का राजा कौन था?", a: ["रावण", "विभीषण", "कुम्भकरण", "बाली"], c: "रावण" },
-    // और सवाल यहाँ जोड़ें...
+    { q: "महाभारत का युद्ध कहाँ हुआ था?", a: ["कुरुक्षेत्र", "पानीपत", "हस्तिनापुर", "मथुरा"], c: "कुरुक्षेत्र" },
+    // भाई, यहाँ पूरे 100 सवाल इसी तरह जोड़ लेना...
 ];
 
+let currentLevel = 1; // यूजर लेवल 1 से शुरू करेगा
+const totalLevels = 20; // कुल 20 सीढ़ियाँ (20x5 = 100 सवाल)
 let score = 0;
 let currentIdx = 0;
 let quizSet = [];
 
-function startQuiz() {
+function startLevel() {
+    // 20 लेवल पूरे होने पर दर्शन करवाएं
+    if (currentLevel > totalLevels) {
+        document.getElementById("journey-header").style.display = "none";
+        document.getElementById("quiz-container").style.display = "none";
+        document.getElementById("shiva-darshan").style.display = "block";
+        return;
+    }
+
     score = 0;
     currentIdx = 0;
+    
+    // UI अपडेट करें
+    document.getElementById("current-level-text").innerText = currentLevel;
+    document.getElementById("progress-bar").style.width = ((currentLevel / totalLevels) * 100) + "%";
     document.getElementById("live-score").innerText = "0";
+    
     document.getElementById("quiz-area").style.display = "block";
     document.getElementById("result-screen").style.display = "none";
-    document.getElementById("next-level-btn").style.background = "#333";
-    document.getElementById("next-level-btn").disabled = true;
+    document.getElementById("retry-btn").style.display = "none";
+    document.getElementById("next-lvl-btn").style.display = "none";
 
-    // 100 में से 5 रैंडम सवाल उठाना
-    quizSet = masterQuestions.sort(() => Math.random() - 0.5).slice(0, 5);
+    // हर बार 100 में से कोई भी नए 5 सवाल उठाएगा (ताकि रट न सके)
+    quizSet = [...masterQuestions].sort(() => Math.random() - 0.5).slice(0, 5);
     showQuestion();
+}
+
+// अगर फेल हो जाए तो यही लेवल दोबारा लेकिन नए सवालों के साथ
+function retryLevel() {
+    startLevel(); // इससे लेवल वही रहेगा, पर सवाल बदल जाएंगे
 }
 
 function showQuestion() {
@@ -142,36 +146,44 @@ function checkAns(selected, correct, btn) {
     if(selected === correct) {
         score++;
         document.getElementById("live-score").innerText = score;
-        btn.style.background = "#28a745";
+        btn.style.background = "#28a745"; // सही पर हरा
+        btn.style.borderColor = "#fff";
     } else {
-        btn.style.background = "#dc3545";
+        btn.style.background = "#dc3545"; // गलत पर लाल
+        btn.style.borderColor = "#fff";
     }
 
     setTimeout(() => {
         currentIdx++;
         if(currentIdx < 5) showQuestion();
-        else finish();
+        else finishLevel();
     }, 1000);
 }
 
-function finish() {
+function finishLevel() {
     document.getElementById("quiz-area").style.display = "none";
     document.getElementById("result-screen").style.display = "block";
     let resMsg = document.getElementById("res-msg");
-    let nextBtn = document.getElementById("next-level-btn");
 
     if(score >= 4) {
-        resMsg.innerHTML = `<span style="color:#00ff00;">अदभुत! स्कोर: ${score}/5</span><br>अगला लेवल खुल गया!`;
-        nextBtn.disabled = false;
-        nextBtn.style.background = "#28a745";
-        nextBtn.style.color = "white";
-        nextBtn.innerText = "अगला लेवल खेलें 🔓";
+        currentLevel++; // पास होने पर सीढ़ी बढ़ा दी
+        resMsg.innerHTML = `<span style="color:#00ff00;">अदभुत! स्कोर: ${score}/5</span><br>आपने यह सीढ़ी पार कर ली!`;
+        document.getElementById("next-lvl-btn").style.display = "block";
+        
+        // अगर आखिरी सीढ़ी थी
+        if(currentLevel > totalLevels) {
+            document.getElementById("next-lvl-btn").innerText = "मंदिर में प्रवेश करें 🙏";
+        } else {
+            document.getElementById("next-lvl-btn").innerText = `अगली सीढ़ी चढ़ें (Level ${currentLevel}) 🧗‍♂️`;
+        }
     } else {
-        resMsg.innerHTML = `<span style="color:#ff4444;">स्कोर: ${score}/5</span><br>पास होने के लिए 4 अंक चाहिए।`;
+        resMsg.innerHTML = `<span style="color:#ff4444;">स्कोर: ${score}/5</span><br>पैर फिसल गया! अगली सीढ़ी के लिए 4 अंक चाहिए।`;
+        document.getElementById("retry-btn").style.display = "block";
     }
 }
 
-startQuiz();
+// गेम शुरू करें
+startLevel();
 </script>
 
 </body>
