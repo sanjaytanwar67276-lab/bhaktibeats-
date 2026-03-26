@@ -170,4 +170,32 @@
 
   <script src="script.js"></script>
 </body>
+  <div id="terms-popup" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:9999; display:flex; align-items:center; justify-content:center; padding:20px; box-sizing:border-box;">
+    <div style="background:#fff; padding:20px; border-radius:10px; max-width:500px; text-align:center; font-family:sans-serif;">
+        <h2 style="color:#ff5722;">⚠️ महत्वपूर्ण सूचना (Terms & Conditions)</h2>
+        <div style="height:200px; overflow-y:auto; text-align:left; margin:15px 0; padding:10px; border:1px solid #ddd; font-size:14px; line-height:1.6;">
+            <p><strong>श्री भक्ति सागर ऐप में आपका स्वागत है।</strong></p>
+            <p>1. इस ऐप में दी गई जानकारी केवल धार्मिक और शैक्षिक उद्देश्यों के लिए है।</p>
+            <p>2. हम जानकारी की पूर्ण सटीकता का दावा नहीं करते। मानवीय त्रुटि या टाइपिंग की गलतियां संभव हैं।</p>
+            <p>3. किसी भी मंत्र, विधि या वैज्ञानिक तथ्य को मानने से पहले स्वयं उसकी जांच करें।</p>
+            <p>4. इस ऐप के उपयोग से होने वाली किसी भी प्रकार की हानि या कानूनी विवाद के लिए डेवलपर जिम्मेदार नहीं होगा।</p>
+            <p>5. ऐप का उपयोग करके आप इन शर्तों से सहमत होते हैं।</p>
+        </div>
+        <button onclick="acceptTerms()" style="background:#4CAF50; color:white; border:none; padding:10px 30px; border-radius:5px; cursor:pointer; font-size:16px; font-weight:bold;">मैं सहमत हूँ (I Agree)</button>
+    </div>
+</div>
+
+<script>
+    // चेक करें कि क्या यूजर ने पहले ही सहमति दे दी है
+    window.onload = function() {
+        if(localStorage.getItem("termsAccepted") === "true") {
+            document.getElementById("terms-popup").style.display = "none";
+        }
+    }
+
+    function acceptTerms() {
+        localStorage.setItem("termsAccepted", "true");
+        document.getElementById("terms-popup").style.display = "none";
+    }
+      </script>
 </html>
