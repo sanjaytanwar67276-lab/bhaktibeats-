@@ -199,3 +199,37 @@
     }
       </script>
 </html>
+<script>
+    document.addEventListener('contextmenu', event => event.preventDefault());
+
+    document.onkeydown = function(e) {
+        if (e.keyCode == 123 || 
+           (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) || 
+           (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0))) {
+            return triggerAlarm();
+        }
+    };
+
+    function sendAlertToOwner() {
+        console.log("Sending alert to developer...");
+    }
+
+    function triggerAlarm() {
+        sendAlertToOwner(); 
+        document.body.innerHTML = `
+            <div style="height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background-color: #0d0d0d; color: red; font-family: sans-serif; text-align: center; padding: 20px;">
+                <h1 style="font-size: 60px; margin: 0;">🚨</h1>
+                <h1 style="font-size: 40px; color: #ff4444; text-shadow: 0 0 10px red;">HACKING ATTEMPT BLOCKED</h1>
+                <h2 style="font-size: 22px; color: #ff9800;">आपकी इस गैर-कानूनी गतिविधि को रोक दिया गया है।</h2>
+                <p style="color: #00ff00; font-size: 18px; font-weight: bold; margin-top: 20px; border: 1px solid #00ff00; padding: 10px; border-radius: 5px;">
+                    ✓ डेवलपर को आपकी लोकेशन और आईपी (IP) के साथ सूचना भेज दी गई है।
+                </p>
+            </div>
+        `;
+        return false;
+    }
+</script>
+
+</body>
+</html>
+
