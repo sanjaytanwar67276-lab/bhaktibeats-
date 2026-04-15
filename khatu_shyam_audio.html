@@ -11,22 +11,32 @@
     
     .container { padding: 15px; display: flex; flex-direction: column; gap: 15px; max-width: 500px; margin: 0 auto; text-align: left;}
     
-    /* आईडी के माध्यम से नेविगेशन को आसान बनाने के लिए */
-    .section-title { font-size: 18px; color: #1565C0; font-weight: bold; margin-top: 10px; border-bottom: 2px solid #90CAF9; padding-bottom: 5px; scroll-margin-top: 70px; }
-    
-    .smart-card { background: white; padding: 15px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); border-top: 4px solid #1976D2;}
+    .smart-card { background: white; padding: 15px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); border-top: 4px solid #1976D2; margin-bottom: 5px;}
     .smart-card h3 { margin: 0 0 10px 0; font-size: 16px; color: #424242; }
     
-    iframe { width: 100%; height: 90px; border-radius: 10px; border: none; box-shadow: inset 0 2px 5px rgba(0,0,0,0.2); background-color: #f5f5f5; }
+    /* YouTube hidden smart player */
+    iframe { width: 100%; height: 90px; border-radius: 10px; border: none; background: #f5f5f5; box-shadow: inset 0 2px 5px rgba(0,0,0,0.2); }
     
-    .lyrics-btn { background: #FF9800; color: white; border: none; padding: 10px; border-radius: 8px; width: 100%; font-weight: bold; font-size: 14px; margin-top: 10px; cursor: pointer; box-shadow: 0 2px 5px rgba(255, 152, 0, 0.4); display: flex; align-items: center; justify-content: center; gap: 5px;}
-    
-    /* लिरिक्स बॉक्स को कराओके के लिए तैयार करें */
-    .lyrics-box { display: none; background: #FFF9C4; padding: 15px; border-radius: 8px; margin-top: 10px; font-size: 14px; line-height: 1.8; color: #3E2723; border: 1px dashed #FBC02D; max-height: 180px; overflow-y: auto; scroll-behavior: smooth;}
-    
-    /* कराओके इफेक्ट के लिए क्लास */
-    .karaoke-line { color: #A1887F; opacity: 0.7; transition: 0.3s;}
-    .karaoke-active { color: #D84315; font-weight: bold; opacity: 1; transform: scale(1.02); display: inline-block; background: #FFF3E0; padding: 0 5px; border-radius: 5px; }
+    /* Manual + Auto Scroll Lyrics Box */
+    .lyrics-box { 
+      display: none; 
+      background: #FFF9C4; 
+      padding: 15px; 
+      border-radius: 8px; 
+      margin-top: 10px; 
+      font-size: 15px; 
+      line-height: 2; 
+      color: #3E2723; 
+      border: 1px dashed #FBC02D; 
+      max-height: 250px; 
+      overflow-y: auto; 
+      scroll-behavior: smooth; 
+    }
+
+    .lyrics-line { display: block; padding: 5px 0; transition: all 0.3s ease; color: #757575; }
+    .active-line { color: #D84315; font-weight: bold; font-size: 17px; transform: scale(1.02); background: #FFF3E0; border-radius: 5px; padding: 2px 8px; }
+
+    .lyrics-btn { background: #FF9800; color: white; border: none; padding: 12px; border-radius: 8px; width: 100%; font-weight: bold; cursor: pointer; margin-top: 10px; box-shadow: 0 2px 5px rgba(255, 152, 0, 0.4); }
     
     .ad-banner { background: #E0E0E0; text-align: center; padding: 10px; font-size: 12px; color: #757575; border-radius: 8px; margin: 5px 0; border: 1px dashed #BDBDBD; }
   </style>
@@ -38,123 +48,135 @@
     <span>श्री खाटू श्याम जी 🏹</span>
   </div>
 
-  <div class="container">
-
-    <div class="section-title" id="bhajan">🎵 सुपरहिट भजन संग्रह</div>
+  <div class="container" id="bhajan">
     
     <div class="smart-card">
       <h3>▶ जिस घर में खाटू वाले की तस्वीर</h3>
+      <iframe src="https://www.youtube.com/embed/aID3TR-25Vo?rel=0&playsinline=1" allowfullscreen loading="lazy"></iframe>
       
-      <iframe src="https://www.youtube.com/embed/aID3TR-25Vo?rel=0" id="player1" allowfullscreen loading="lazy"></iframe>
+      <button class="lyrics-btn" onclick="startKaraoke('lyrics1', bhajan1Timing)">📖 भजन के बोल (Auto-Scroll) शुरू करें</button>
       
-      <button class="lyrics-btn" onclick="toggleKaraoke('lyrics1', 'player1', bhajan1Timing)">📖 भजन के बोल (कराओके स्क्रॉल) पढ़ें</button>
-      
-      <div id="lyrics1" class="lyrics-box synced-lyrics">
-        <p class="karaoke-line">जिस घर में खाटू वाले की,</p>
-        <p class="karaoke-line">तस्वीर लगाई जाती है</p>
-        <p class="karaoke-line">उस घर में बाबा श्याम की,</p>
-        <p class="karaoke-line">तकदीर जगाई जाती है</p>
-        <p class="karaoke-line">जब सारा घर सो जाता है,</p>
-        <p class="karaoke-line">मेरा श्याम जागता रहता है</p>
-        <p class="karaoke-line">वहाँ श्याम का पहरा रहता है...</p>
-        <p class="karaoke-line">(धुन चल रही है...)</p>
-        <p class="karaoke-line">जिस घर में खाटू वाले की,</p>
-        <p class="karaoke-line">तस्वीर लगाई जाती है...</p>
+      <div id="lyrics1" class="lyrics-box">
+        <span class="lyrics-line">जिस घर में खाटू वाले की,</span>
+        <span class="lyrics-line">तस्वीर लगाई जाती है</span>
+        <span class="lyrics-line">उस घर में बाबा श्याम की,</span>
+        <span class="lyrics-line">तकदीर जगाई जाती है</span>
+        <span class="lyrics-line">जब सारा घर सो जाता है,</span>
+        <span class="lyrics-line">मेरा श्याम जागता रहता है</span>
+        <span class="lyrics-line">वहाँ श्याम का पहरा रहता है...</span>
       </div>
     </div>
 
-    <div class="ad-banner">AdMob Banner लगाएँ</div>
+    <div class="ad-banner">यहाँ आपका AdMob Banner Ad दिखेगा</div>
 
     <div class="smart-card">
       <h3>▶ हारे का सहारा, बाबा श्याम हमारा</h3>
-      <iframe src="https://www.youtube.com/embed/y-DXw5jY-2c?rel=0" allowfullscreen loading="lazy"></iframe>
-      <button class="lyrics-btn">📖 सिर्फ बोल पढ़ें</button>
+      <iframe src="https://www.youtube.com/embed/y-DXw5jY-2c?rel=0&playsinline=1" allowfullscreen loading="lazy"></iframe>
+      
+      <button class="lyrics-btn" onclick="startKaraoke('lyrics2', bhajan2Timing)">📖 भजन के बोल (Auto-Scroll) शुरू करें</button>
+      
+      <div id="lyrics2" class="lyrics-box">
+        <span class="lyrics-line">हारे का सहारा, बाबा श्याम हमारा...</span>
+        <span class="lyrics-line">जपता फिरूं मैं नाम तुम्हारा...</span>
+        <span class="lyrics-line">तेरी सोनी सूरत पे दिल हूँ मैं हारा</span>
+        <span class="lyrics-line">हारे का सहारा बाबा श्याम हमारा...</span>
+      </div>
     </div>
 
-    <div class="section-title" id="aarti" style="margin-top: 30px;">🙏 आरती</div>
-    <div class="smart-card"><h3>▶ श्री श्याम आरती (ओम जय श्री श्याम हरे)</h3>...</div>
+    <div class="smart-card">
+      <h3>▶ मेरा आपकी कृपा से सब काम हो रहा है</h3>
+      <iframe src="https://www.youtube.com/embed/rr7k9jvssTM?rel=0&playsinline=1" allowfullscreen loading="lazy"></iframe>
+      
+      <button class="lyrics-btn" onclick="startKaraoke('lyrics3', bhajan3Timing)">📖 भजन के बोल (Auto-Scroll) शुरू करें</button>
+      
+      <div id="lyrics3" class="lyrics-box">
+        <span class="lyrics-line">मेरा आपकी कृपा से, सब काम हो रहा है</span>
+        <span class="lyrics-line">करते हो तुम कन्हैया, मेरा नाम हो रहा है</span>
+        <span class="lyrics-line">पतवार के बिना ही, मेरी नाव चल रही है</span>
+        <span class="lyrics-line">हैरान है जमाना, मंजिल भी मिल रही है...</span>
+      </div>
+    </div>
 
-    <div class="section-title" id="stuti" style="margin-top: 30px;">📖 स्तुति</div>
-    <div class="smart-card"><h3>▶ श्री श्याम स्तुति / वंदना</h3>...</div>
+    <div class="ad-banner">यहाँ आपका AdMob Banner Ad दिखेगा</div>
+
+    <div class="smart-card">
+      <h3>▶ दीनानाथ मेरी बात छानी कोनी तेरे से</h3>
+      <iframe src="https://www.youtube.com/embed/XJyLqtFQUKc?rel=0&playsinline=1" allowfullscreen loading="lazy"></iframe>
+      <button class="lyrics-btn" onclick="toggleSimpleLyrics('lyrics4')">📖 भजन के बोल (Lyrics) पढ़ें</button>
+      <div id="lyrics4" class="lyrics-box">
+        <span class="lyrics-line">दीनानाथ मेरी बात, छानी कोनी तेरे से</span>
+        <span class="lyrics-line">आंखड़ली चुराकर बाबा, जासी कठे मेरे से</span>
+        <span class="lyrics-line">खाटू वाले श्याम तेरी, शरण में आ गयो</span>
+      </div>
+    </div>
+
+    <div class="smart-card">
+      <h3>▶ श्याम चूड़ी बेचने आया</h3>
+      <iframe src="https://www.youtube.com/embed/srcTyl-iQfw?rel=0&playsinline=1" allowfullscreen loading="lazy"></iframe>
+      <button class="lyrics-btn" onclick="toggleSimpleLyrics('lyrics5')">📖 भजन के बोल (Lyrics) पढ़ें</button>
+      <div id="lyrics5" class="lyrics-box">
+        <span class="lyrics-line">मनिहारी का भेस बनाया</span>
+        <span class="lyrics-line">श्याम चूड़ी बेचने आया</span>
+        <span class="lyrics-line">छलिया का भेस बनाया, श्याम चूड़ी बेचने आया</span>
+      </div>
+    </div>
 
   </div>
 
   <script>
-    // **1. टाइमिंग का अंदाज़ा (आपको हर भजन के लिए यह इंटरनेट से ढूंढकर सही करना होगा)**
-    // यह फ़ॉर्मेट है: [{समय-सेकंड-में, लाइन-नंबर}, ...]
-    var bhajan1Timing = [
-      { time: 0, line: 0 },   // जिस घर में खाटू...
-      { time: 5, line: 1 },   // तस्वीर लगाई...
-      { time: 10, line: 2 },  // उस घर में बाबा...
-      { time: 15, line: 3 },  // तकदीर जगाई...
-      { time: 21, line: 4 },  // जब सारा घर सो...
-      { time: 26, line: 5 },  // मेरा श्याम जागता...
-      { time: 31, line: 6 },  // वहाँ श्याम का...
-      { time: 36, line: 7 },  // (धुन चल रही है...)
-      { time: 42, line: 8 },  // जिस घर में खाटू...
-      { time: 47, line: 9 },  // तस्वीर लगाई...
-    ];
-
-    var karaokeInterval = null;
+    // टाइमिंग (सेकंड में): आपको हर गाने के हिसाब से यह सेट करना होगा
+    var bhajan1Timing = [0, 6, 12, 18, 24, 30, 36];
+    var bhajan2Timing = [0, 8, 16, 24];
+    var bhajan3Timing = [0, 7, 14, 21];
+    
+    var activeTimer = null;
     var currentTime = 0;
 
-    function toggleKaraoke(lyricsId, playerId, timingData) {
-      var lyricsBox = document.getElementById(lyricsId);
-      var player = document.getElementById(playerId);
+    // ऑटो-स्क्रॉल लिरिक्स फंक्शन
+    function startKaraoke(lyricsId, timing) {
+      var box = document.getElementById(lyricsId);
+      var lines = box.getElementsByClassName('lyrics-line');
       
-      // पुराने इंटरवल को साफ़ करें
-      if (karaokeInterval) {
-        clearInterval(karaokeInterval);
-        karaokeInterval = null;
-        currentTime = 0;
-      }
+      if (box.style.display === "none" || box.style.display === "") {
+        // बाकी सब बॉक्स बंद करें
+        var allBoxes = document.getElementsByClassName('lyrics-box');
+        for(var b=0; b<allBoxes.length; b++) allBoxes[b].style.display = "none";
+        if(activeTimer) clearInterval(activeTimer);
 
-      // लिरिक्स बॉक्स को खोलें/बंद करें (जैसा अभी होता है)
-      if (lyricsBox.style.display === "none" || lyricsBox.style.display === "") {
-        lyricsBox.style.display = "block";
-        
-        // कराओके टाइमर शुरू करें
-        karaokeInterval = setInterval(function() {
-          currentTime++; // हर सेकंड समय बढ़ाएं
-          checkLyrics(currentTime, lyricsId, timingData);
-        }, 1000); // 1 सेकंड का इंटरवल
-        
-      } else {
-        lyricsBox.style.display = "none";
-        // जब बॉक्स बंद हो, तो कराओके रुक जाए
+        box.style.display = "block";
         currentTime = 0;
+        
+        activeTimer = setInterval(function() {
+          currentTime++;
+          syncLyrics(currentTime, lines, timing, box);
+        }, 1000);
+      } else {
+        box.style.display = "none";
+        clearInterval(activeTimer);
       }
     }
 
-    function checkLyrics(currentTime, lyricsId, timingData) {
-      var lyricsBox = document.getElementById(lyricsId);
-      var lines = lyricsBox.getElementsByClassName('karaoke-line');
-      
-      // टाइमिंग डेटा में चेक करें कि इस सेकंड पर कौनसी लाइन चलनी चाहिए
-      var currentLineIndex = -1;
-      for (var i = 0; i < timingData.length; i++) {
-        if (currentTime >= timingData[i].time) {
-          currentLineIndex = timingData[i].line;
-        } else {
-          break; // अगर वर्तमान समय टाइमिंग से कम है, तो रुकें
-        }
+    // सिंपल लिरिक्स फंक्शन (बिना टाइमर के)
+    function toggleSimpleLyrics(lyricsId) {
+      var box = document.getElementById(lyricsId);
+      if (box.style.display === "none" || box.style.display === "") {
+        box.style.display = "block";
+      } else {
+        box.style.display = "none";
       }
+    }
 
-      // अगर कोई लाइन मिली, तो उसे हाईलाइट करें और बॉक्स को स्क्रॉल करें
-      if (currentLineIndex !== -1 && lines[currentLineIndex]) {
-        // पुरानी हाईलाइट को हटाएँ
-        for (var j = 0; j < lines.length; j++) {
-          lines[j].classList.remove('karaoke-active');
+    function syncLyrics(now, lines, timing, box) {
+      for (var i = 0; i < timing.length; i++) {
+        if (now >= timing[i]) {
+          for (var j = 0; j < lines.length; j++) {
+            lines[j].classList.remove('active-line');
+          }
+          if (lines[i]) {
+            lines[i].classList.add('active-line');
+            lines[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
         }
-        // नई लाइन को हाईलाइट करें
-        lines[currentLineIndex].classList.add('karaoke-active');
-        
-        // बॉक्स को धीरे-धीरे स्क्रॉल करें ताकि हाईलाइटेड लाइन ऊपर की तरफ रहे
-        var scrollPos = lines[currentLineIndex].offsetTop - lyricsBox.offsetTop - 20; // थोड़ा ऑफसेट ताकि बिल्कुल ऊपर न चिपके
-        lyricsBox.scrollTo({
-          top: scrollPos,
-          behavior: 'smooth'
-        });
       }
     }
   </script>
