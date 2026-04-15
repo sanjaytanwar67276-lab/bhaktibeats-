@@ -8,12 +8,52 @@
     body { background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%); font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 0; text-align: center; color: #3e2723; }
     .header { background: linear-gradient(to right, #E91E63, #C2185B); color: white; padding: 15px; font-size: 20px; font-weight: bold; display: flex; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.2); border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; }
     .back-btn { color: white; text-decoration: none; font-size: 16px; background: rgba(255,255,255,0.2); padding: 8px 15px; border-radius: 10px; margin-right: 15px; }
-    .container { padding: 20px 15px; display: flex; flex-direction: column; gap: 15px; max-width: 500px; margin: 0 auto; }
     
-    .god-folder { background: white; padding: 15px; border-radius: 15px; display: flex; align-items: center; box-shadow: 0 5px 10px rgba(0,0,0,0.05); text-decoration: none; color: inherit; border-left: 5px solid; cursor: pointer; }
-    .g-icon { font-size: 35px; margin-right: 15px; min-width: 50px; text-align: center; }
-    .g-text h2 { margin: 0; font-size: 18px; color: #D84315; text-align: left;}
-    .g-text p { margin: 3px 0 0; font-size: 12px; color: #757575; text-align: left;}
+    .container { padding: 20px 15px; display: flex; flex-direction: column; gap: 20px; max-width: 500px; margin: 0 auto; }
+    
+    /* नया भगवान कार्ड डिज़ाइन */
+    .god-option-card { background: white; padding: 18px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.06); text-align: left; border-left: 5px solid;}
+    
+    .card-title { display: flex; align-items: center; gap: 10px; margin-bottom: 12px;}
+    .g-icon { font-size: 30px; width: 40px; text-align: center; }
+    .g-text h2 { margin: 0; font-size: 19px; color: #333; }
+    .g-text p { margin: 2px 0 0; font-size: 12px; color: #757575; }
+
+    /* उप-ऑप्शन बटन रो */
+    .sub-options-row { display: flex; gap: 10px; justify-content: flex-start; margin-top: 15px; flex-wrap: wrap; }
+    
+    /* उप-ऑप्शन बटन्स (स्मार्ट लिंकिंग के लिए) */
+    .sub-btn { text-decoration: none; font-size: 13px; font-weight: bold; padding: 8px 15px; border-radius: 20px; border: 1px solid; transition: 0.2s; }
+    .sub-btn:active { transform: scale(0.95); }
+
+    /* स्पेसिफिक भगवान के लिए रंग */
+    /* खाटू श्याम जी (#2196F3) */
+    .shyam-card { border-left-color: #2196F3;}
+    .shyam-card h2 { color: #1976D2;}
+    .shyam-card .sub-btn { border-color: #2196F3; color: #2196F3; background: white; }
+    .shyam-card .sub-btn:hover { background: #E3F2FD; }
+
+    /* शिव जी (#4CAF50) */
+    .shiv-card { border-left-color: #4CAF50;}
+    .shiv-card h2 { color: #388E3C;}
+    .shiv-card .sub-btn { border-color: #4CAF50; color: #4CAF50; background: white; }
+    
+    /* हनुमान जी (#FF5722) */
+    .hanuman-card { border-left-color: #FF5722;}
+    .hanuman-card h2 { color: #E64A19;}
+    .hanuman-card .sub-btn { border-color: #FF5722; color: #FF5722; background: white; }
+
+    /* राम जी (#FFC107) */
+    .ram-card { border-left-color: #FFC107;}
+    .ram-card h2 { color: #FFA000;}
+    .ram-card .sub-btn { border-color: #FFC107; color: #FF9100; background: white; }
+
+    /* कृष्ण जी (#9C27B0) */
+    .krishna-card { border-left-color: #9C27B0;}
+    .krishna-card h2 { color: #7B1FA2;}
+    .krishna-card .sub-btn { border-color: #9C27B0; color: #7B1FA2; background: white; }
+
+    .ad-banner { background: #FFF9C4; border: 1px dashed #D84315; border-radius: 10px; padding: 10px; font-size: 12px; color: #D84315; font-weight: bold; text-align: center;}
   </style>
 </head>
 <body>
@@ -24,31 +64,47 @@
   </div>
 
   <div class="container">
-    <a href="khatu_shyam_audio.html" class="god-folder" style="border-left-color: #2196F3;">
-      <div class="g-icon">🏹</div>
-      <div class="g-text"><h2>श्री खाटू श्याम जी</h2><p>आरती, स्तुति और मधुर भजन</p></div>
-    </a>
+    
+    <div class="god-option-card shyam-card">
+      <div class="card-title">
+        <div class="g-icon">🏹</div>
+        <div class="g-text"><h2>श्री खाटू श्याम जी</h2><p>हारे का सहारा, बाबा श्याम हमारा</p></div>
+      </div>
+      <div class="sub-options-row">
+        <a href="khatu_shyam_audio.html#bhajan" class="sub-btn">भजन</a>
+        <a href="khatu_shyam_audio.html#aarti" class="sub-btn">आरती</a>
+        <a href="khatu_shyam_audio.html#stuti" class="sub-btn">स्तुति</a>
+      </div>
+    </div>
 
-    <a href="shiv_audio.html" class="god-folder" style="border-left-color: #4CAF50;">
-      <div class="g-icon">🔱</div>
-      <div class="g-text"><h2>भगवान शिव</h2><p>शिव तांडव, आरती और भजन</p></div>
-    </a>
+    <div class="god-option-card shiv-card">
+        <div class="card-title">
+          <div class="g-icon">🔱</div>
+          <div class="g-text"><h2>भगवान शिव (महाकाल)</h2><p>सत्य, शिव, सुंदर</p></div>
+        </div>
+        <div class="sub-options-row">
+          <a href="#" class="sub-btn">भजन</a>
+          <a href="#" class="sub-btn">आरती</a>
+          <a href="#" class="sub-btn">स्तुति</a>
+        </div>
+    </div>
 
-    <a href="hanuman_audio.html" class="god-folder" style="border-left-color: #FF5722;">
-      <div class="g-icon">🐒</div>
-      <div class="g-text"><h2>श्री हनुमान जी</h2><p>चालीसा, संकटमोचन और आरती</p></div>
-    </a>
+    <div class="ad-banner">यहाँ AdMob Banner Ad दिखेगा</div>
 
-    <a href="ram_audio.html" class="god-folder" style="border-left-color: #FFC107;">
-      <div class="g-icon">🕉️</div>
-      <div class="g-text"><h2>श्री राम जी</h2><p>राम स्तुति, आरती और भजन</p></div>
-    </a>
+    <div class="god-option-card hanuman-card">
+        <div class="card-title">
+          <div class="g-icon">🐒</div>
+          <div class="g-text"><h2>श्री हनुमान जी</h2><p>संकटमोचन महाबली</p></div>
+        </div>
+        <div class="sub-options-row">
+          <a href="#" class="sub-btn">चालीसा</a>
+          <a href="#" class="sub-btn">आरती</a>
+          <a href="#" class="sub-btn">भजन</a>
+        </div>
+    </div>
 
-    <a href="krishna_audio.html" class="god-folder" style="border-left-color: #9C27B0;">
-      <div class="g-icon">🦚</div>
-      <div class="g-text"><h2>श्री कृष्ण जी</h2><p>मधुराष्टकम, आरती और भजन</p></div>
-    </a>
-  </div>
+    </div>
 
 </body>
-</html>
+      </html>
+      
