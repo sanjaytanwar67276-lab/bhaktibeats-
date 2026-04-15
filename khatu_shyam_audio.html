@@ -3,167 +3,86 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>श्री खाटू श्याम भजन - Bhakti Sagar</title>
+  <title>Bhakti Sagar - Khatu Shyam</title>
   <style>
     /* Premium Background & Font */
-    body { 
-      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); 
-      font-family: 'Segoe UI', Arial, sans-serif; 
-      margin: 0; 
-      padding: 0; 
-      text-align: center; 
-      color: #2c3e50; 
-    }
+    body { background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 0; text-align: center; color: #333; }
     
     /* Sticky Header */
-    .header { 
-      background: linear-gradient(to right, #1e3c72, #2a5298); 
-      color: white; 
-      padding: 15px; 
-      font-size: 20px; 
-      font-weight: bold; 
-      display: flex; 
-      align-items: center; 
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3); 
-      border-bottom-left-radius: 20px; 
-      border-bottom-right-radius: 20px; 
-      position: sticky; 
-      top: 0; 
-      z-index: 100; 
-    }
-    .back-btn { 
-      color: white; 
-      text-decoration: none; 
-      font-size: 16px; 
-      background: rgba(255,255,255,0.2); 
-      padding: 8px 15px; 
-      border-radius: 10px; 
-      margin-right: 15px; 
-    }
+    .header { background: linear-gradient(to right, #1e3c72, #2a5298); color: white; padding: 15px; font-size: 20px; font-weight: bold; position: sticky; top: 0; z-index: 100; display: flex; align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.3); border-bottom-left-radius: 15px; border-bottom-right-radius: 15px; }
+    .back-btn { color: white; text-decoration: none; font-size: 16px; background: rgba(255,255,255,0.2); padding: 8px 15px; border-radius: 10px; margin-right: 15px; }
     
-    .container { 
-      padding: 15px; 
-      display: flex; 
-      flex-direction: column; 
-      gap: 20px; 
-      max-width: 500px; 
-      margin: 0 auto; 
-      text-align: left;
-    }
+    .container { padding: 15px; max-width: 500px; margin: 0 auto; text-align: left; }
 
-    /* Bhajan Card Design */
-    .smart-card { 
-      background: white; 
-      padding: 20px; 
-      border-radius: 15px; 
-      box-shadow: 0 10px 20px rgba(0,0,0,0.1); 
-      border-top: 5px solid #1e3c72; 
-    }
-    .smart-card h3 { 
-      margin: 0 0 15px 0; 
-      font-size: 18px; 
-      color: #1e3c72; 
-      display: flex;
-      align-items: center;
-    }
+    /* Section Title */
+    .section-title { font-size: 20px; font-weight: bold; color: #1e3c72; margin: 15px 0 10px 0; border-left: 5px solid #FF9800; padding-left: 10px; }
 
-    /* Bada aur Premium Audio Player */
+    /* Smart Card Design */
+    .smart-card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); margin-bottom: 25px; border-top: 5px solid #1e3c72; }
+    .smart-card h3 { margin: 0 0 15px 0; color: #1e3c72; font-size: 18px; display: flex; align-items: center; }
+
+    /* ====== बड़ा और प्रीमियम ऑडियो प्लेयर ====== */
     audio { 
       width: 100%; 
-      height: 60px; 
+      height: 65px;
       outline: none; 
-      background: #f8f9fa; 
-      border-radius: 30px;
+      background: #F4FAFF; 
+      border-radius: 15px;
       margin: 10px 0;
-      box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+      box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+      border: 1px solid #90CAF9;
     }
-    
-    /* Play button ko bada karne ka code */
-    audio::-webkit-media-controls-play-button {
-        transform: scale(1.5); 
-        margin-right: 10px;
+    audio::-webkit-media-controls-play-button,
+    audio::-webkit-media-controls-mute-button {
+        transform: scale(1.6);
+        margin: 0 15px;
+        cursor: pointer;
     }
-    audio::-webkit-media-controls-current-time-display {
+    audio::-webkit-media-controls-current-time-display,
+    audio::-webkit-media-controls-time-remaining-display {
+        font-size: 15px; 
         font-weight: bold;
         color: #1e3c72;
     }
 
-    /* Lyrics Box (Karaoke Style) */
-    .lyrics-box { 
-      display: none; 
-      background: #fffbe6; 
-      padding: 20px; 
-      border-radius: 12px; 
-      margin-top: 15px; 
-      font-size: 16px; 
-      line-height: 2.2; 
-      color: #4b3621; 
-      border: 1px solid #ffe58f; 
-      max-height: 250px; 
-      overflow-y: auto; 
-      scroll-behavior: smooth; 
-    }
-    .lyrics-line { 
-      display: block; 
-      padding: 5px 0; 
-      transition: all 0.3s ease; 
-      color: #8c8c8c; 
-    }
-    .active-line { 
-      color: #e67e22; 
-      font-weight: bold; 
-      font-size: 19px; 
-      transform: scale(1.05); 
-      background: #fff3e0; 
-      border-radius: 8px; 
-      padding-left: 10px;
-    }
+    /* Buttons Grid (Manual and Auto) */
+    .btn-group { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
+    .action-btn { border: none; padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 14px; color: white; transition: 0.3s; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+    .read-btn { background: #607D8B; } 
+    .play-btn { background: linear-gradient(to right, #FF9800, #F57C00); } 
 
-    /* Stylish Button */
-    .lyrics-btn { 
-      background: linear-gradient(to right, #f39c12, #d35400); 
-      color: white; 
-      border: none; 
-      padding: 15px; 
-      border-radius: 10px; 
-      width: 100%; 
-      font-weight: bold; 
-      font-size: 16px;
-      cursor: pointer; 
-      margin-top: 10px; 
-      box-shadow: 0 4px 10px rgba(211, 84, 0, 0.3); 
-    }
-    
-    .ad-banner { 
-      background: #eeeeee; 
-      text-align: center; 
-      padding: 10px; 
-      font-size: 12px; 
-      color: #999; 
-      border-radius: 10px; 
-      border: 1px dashed #ccc; 
-    }
+    /* Lyrics Box */
+    .lyrics-box { display: none; background: #FFFDE7; padding: 15px; border-radius: 12px; margin-top: 15px; border: 1px dashed #FBC02D; max-height: 350px; overflow-y: auto; line-height: 2; font-size: 16px; scroll-behavior: smooth; color: #4E342E; }
+    .lyrics-line { display: block; padding: 5px 0; transition: all 0.3s ease; }
+    .active-line { color: #D84315; font-weight: bold; font-size: 18px; transform: scale(1.02); background: #FFF3E0; border-radius: 5px; padding-left: 8px; }
+
+    /* Ad Banner Space */
+    .ad-banner { background: #E0E0E0; text-align: center; padding: 10px; font-size: 12px; color: #757575; border-radius: 10px; margin-bottom: 20px; border: 1px dashed #BDBDBD; }
   </style>
 </head>
 <body>
 
   <div class="header">
-    <a href="gods_list.html" class="back-btn">⬅ Back</a>
-    <span>Bhakti Sagar - Khatu Shyam</span>
+    <a href="gods_list.html" class="back-btn">⬅ वापस</a>
+    <span>खाटू श्याम जी 🏹</span>
   </div>
 
   <div class="container">
-    
+
+    <div class="section-title">🎵 सुपरहिट भजन</div>
+
     <div class="smart-card">
-      <h3>🏹 तीन बाण के धारी (Original)</h3>
+      <h3>▶ तीन बाण के धारी</h3>
       
-      <audio id="audio_teen_baan" controls preload="auto">
+      <audio id="audio_teen_baan" controls preload="none">
         <source src="https://archive.org/download/20260415_20260415_1802/%E0%A4%A4%E0%A5%80%E0%A4%A8%20%E0%A4%AC%E0%A4%BE%E0%A4%A3%20%E0%A4%9A%E0%A4%B2%E0%A4%BE%E0%A4%93.mp3" type="audio/mpeg">
-        Your browser does not support audio.
       </audio>
-      
-      <button class="lyrics-btn" onclick="startKaraoke('lyrics_teen_baan', 'audio_teen_baan', timing_teen_baan)">📖 Start Auto-Scroll Lyrics</button>
-      
+
+      <div class="btn-group">
+        <button class="action-btn read-btn" onclick="toggleLyrics('lyrics_teen_baan')">📖 सिर्फ बोल पढ़ें</button>
+        <button class="action-btn play-btn" onclick="startAutoScroll('lyrics_teen_baan', 'audio_teen_baan', timing_teen_baan)">🎤 साथ में गाएं</button>
+      </div>
+
       <div id="lyrics_teen_baan" class="lyrics-box">
         <span class="lyrics-line">तीन बाण के धारी, ओ नीले घोड़े वाले।</span>
         <span class="lyrics-line">तेरी महिमा है न्यारी, ओ खाटू वाले॥</span>
@@ -171,53 +90,100 @@
         <span class="lyrics-line">भक्तों के दुःख दूर करे तू, शीश का दानी प्यारा॥</span>
         <span class="lyrics-line">तेरे दर पे जो भी आता, किस्मत अपनी चमकाता।</span>
         <span class="lyrics-line">तीन बाण के धारी, ओ नीले घोड़े वाले॥</span>
+        <span class="lyrics-line">मोर छड़ी हाथों में साजे, गले पुष्प की माला।</span>
+        <span class="lyrics-line">श्याम बहादुर भक्त तुम्हारा, पीता प्रेम का प्याला॥</span>
+        <span class="lyrics-line">कलियुग का है देव निराला, जपता नाम ये जग सारा।</span>
+        <span class="lyrics-line">तीन बाण के धारी, ओ नीले घोड़े वाले॥</span>
+        <span class="lyrics-line">फाल्गुन मेला सजता भारी, आते लाखों नर नारी।</span>
+        <span class="lyrics-line">दर्शन पाकर धन्य हो जाते, जय बोले दुनिया सारी॥</span>
+        <span class="lyrics-line">नैया पार लगा दे बाबा, मैं हूँ दास तुम्हारा।</span>
+        <span class="lyrics-line">तीन बाण के धारी, ओ नीले घोड़े वाले॥</span>
       </div>
     </div>
 
-    <div class="ad-banner">Advertisement Space</div>
+    <div class="ad-banner">यहाँ आपका AdMob Banner Ad दिखेगा</div>
+
+    <div class="section-title">🪔 आरती संग्रह</div>
+
+    <div class="smart-card">
+      <h3>▶ श्री श्याम आरती (ॐ जय श्री श्याम हरे)</h3>
+      
+      <audio id="audio_aarti" controls preload="none">
+        <source src="https://archive.org/download/20260415_20260415_1057/%E0%A4%96%E0%A4%BE%E0%A4%9F%E0%A5%82%20%E0%A4%B6%E0%A5%8D%E0%A4%AF%E0%A4%BE%E0%A4%AE%20%E0%A4%9C%E0%A5%80%20%E0%A4%95%E0%A5%80%20%E0%A4%86%E0%A4%B0%E0%A4%A4%E0%A5%80.mp3" type="audio/mpeg">
+      </audio>
+
+      <div class="btn-group">
+        <button class="action-btn read-btn" onclick="toggleLyrics('lyrics_aarti')">📖 सिर्फ आरती पढ़ें</button>
+        <button class="action-btn play-btn" onclick="startAutoScroll('lyrics_aarti', 'audio_aarti', timing_aarti)">🎤 आरती गाएं</button>
+      </div>
+
+      <div id="lyrics_aarti" class="lyrics-box">
+        <span class="lyrics-line">ॐ जय श्री श्याम हरे, बाबा जय श्री श्याम हरे।</span>
+        <span class="lyrics-line">खाटू धाम विराजत, अनुपम रूप धरे॥ ॐ जय...</span>
+        <span class="lyrics-line">रतन जड़ित सिंहासन, सिर पर चंवर ढुरे।</span>
+        <span class="lyrics-line">तन केसरिया बागो, कुंडल श्रवण पड़े॥ ॐ जय...</span>
+        <span class="lyrics-line">गल पुष्पों की माला, सिर पर मुकुट धरे।</span>
+        <span class="lyrics-line">खेवत धूप दीप नैवेद्य, आरती भक्त करें॥ ॐ जय...</span>
+        <span class="lyrics-line">मोदक खीर चूरमा, सुवर्ण थाल भरे।</span>
+        <span class="lyrics-line">सेवक भोग लगावत, सेवा नित्य करें॥ ॐ जय...</span>
+        <span class="lyrics-line">झांझ कटोरा और घड़ियावल, शंख मृदंग घुरे।</span>
+        <span class="lyrics-line">भक्त आरती गावे, जय-जयकार करें॥ ॐ जय...</span>
+        <span class="lyrics-line">जो ध्यावे फल पावे, सब दुःख से उबरे।</span>
+        <span class="lyrics-line">सेवक जन निज मुख से, श्री श्याम-श्याम उचरे॥ ॐ जय...</span>
+        <span class="lyrics-line">श्री श्याम बिहारी जी की आरती, जो कोई नर गावे।</span>
+        <span class="lyrics-line">कहत भक्त-जन सुनत भक्त-जन, मनवांछित फल पावे॥ ॐ जय...</span>
+      </div>
+    </div>
 
   </div>
 
   <script>
-    // Lyrics sync timing (in seconds)
-    // Aap gaana sunkar in numbers ko thoda adjust kar sakte hain
-    var timing_teen_baan = [0, 6, 12, 18, 24, 30];
+    // टाइमिंग (सेकंड में)
+    var timing_teen_baan = [0, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104];
+    var timing_aarti = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130];
 
-    function startKaraoke(lyricsId, audioId, timing) {
+    var activeTimer = null; 
+
+    // 1. सिर्फ बोल दिखाने के लिए (Manual Mode)
+    function toggleLyrics(id) {
+      var box = document.getElementById(id);
+      if (box.style.display === "block") {
+        box.style.display = "none";
+      } else {
+        box.style.display = "block";
+      }
+    }
+
+    // 2. ऑटो-स्क्रॉल के साथ बजाने के लिए (Auto Mode)
+    function startAutoScroll(lyricsId, audioId, timing) {
       var box = document.getElementById(lyricsId);
       var player = document.getElementById(audioId);
       var lines = box.getElementsByClassName('lyrics-line');
       
-      if (box.style.display === "none" || box.style.display === "") {
-        box.style.display = "block";
-        player.play();
-        
-        // Lyrics highlight logic
-        var karaokeInterval = setInterval(function() {
-          var now = player.currentTime;
-          
-          for (var i = 0; i < timing.length; i++) {
-            if (now >= timing[i]) {
-              // Purane highlight hatao
-              for (var j = 0; j < lines.length; j++) {
-                lines[j].classList.remove('active-line');
-              }
-              // Naya highlight lagao
-              if (lines[i]) {
-                lines[i].classList.add('active-line');
-                // Center mein auto-scroll karo
-                lines[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
-              }
+      // बाकी बॉक्स बंद करो ताकि स्क्रीन साफ़ रहे
+      var allBoxes = document.getElementsByClassName('lyrics-box');
+      for(var b=0; b<allBoxes.length; b++) allBoxes[b].style.display = "none";
+      if(activeTimer) clearInterval(activeTimer);
+      
+      // मौजूदा बॉक्स खोलो और गाना चलाओ
+      box.style.display = "block";
+      player.play();
+
+      activeTimer = setInterval(function() {
+        var now = player.currentTime;
+        for (var i = 0; i < timing.length; i++) {
+          if (now >= timing[i]) {
+            for (var j = 0; j < lines.length; j++) {
+              lines[j].classList.remove('active-line');
+            }
+            if (lines[i]) {
+              lines[i].classList.add('active-line');
+              lines[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
           }
-          
-          // Agar gaana ruk jaye toh interval band kar do
-          if(player.paused) clearInterval(karaokeInterval);
-        }, 500);
-      } else {
-        box.style.display = "none";
-        player.pause();
-      }
+        }
+        if (player.paused) clearInterval(activeTimer); 
+      }, 500);
     }
   </script>
 
