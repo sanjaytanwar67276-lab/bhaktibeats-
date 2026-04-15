@@ -1,156 +1,50 @@
-<!DOCTYPE html>
-<html lang="hi">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>श्री खाटू श्याम भजन - Bhakti Sagar</title>
-  <style>
-    body { background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%); font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 0; text-align: center; color: #3e2723; }
-    
-    /* हेडर डिज़ाइन */
-    .header { background: linear-gradient(to right, #1976D2, #1565C0); color: white; padding: 15px; font-size: 20px; font-weight: bold; display: flex; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.2); border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; position: sticky; top: 0; z-index: 100; }
-    .back-btn { color: white; text-decoration: none; font-size: 16px; background: rgba(255,255,255,0.2); padding: 8px 15px; border-radius: 10px; margin-right: 15px; }
-    
-    .container { padding: 15px; display: flex; flex-direction: column; gap: 15px; max-width: 500px; margin: 0 auto; text-align: left;}
-    .section-title { font-size: 18px; color: #1565C0; font-weight: bold; margin-bottom: 5px; border-bottom: 2px solid #90CAF9; padding-bottom: 5px; }
-    
-    /* स्मार्ट कार्ड डिज़ाइन */
-    .smart-card { background: white; padding: 15px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); border-top: 4px solid #1976D2; margin-bottom: 5px;}
-    .smart-card h3 { margin: 0 0 10px 0; font-size: 16px; color: #424242; }
-    
-    /* सुरक्षित YouTube Player (90px Height) */
-    iframe { width: 100%; height: 90px; border-radius: 10px; border: none; background: #f5f5f5; box-shadow: inset 0 2px 5px rgba(0,0,0,0.2); }
-    
-    /* ऑटो-स्क्रॉल लिरिक्स बॉक्स */
-    .lyrics-box { display: none; background: #FFF9C4; padding: 15px; border-radius: 8px; margin-top: 10px; font-size: 15px; line-height: 2; color: #3E2723; border: 1px dashed #FBC02D; max-height: 250px; overflow-y: auto; scroll-behavior: smooth; }
-    .lyrics-line { display: block; padding: 5px 0; transition: all 0.3s ease; color: #757575; }
-    .active-line { color: #D84315; font-weight: bold; font-size: 17px; transform: scale(1.02); background: #FFF3E0; border-radius: 5px; padding: 2px 8px; }
-
-    /* बटन डिज़ाइन */
-    .lyrics-btn { background: #FF9800; color: white; border: none; padding: 12px; border-radius: 8px; width: 100%; font-weight: bold; cursor: pointer; margin-top: 10px; box-shadow: 0 2px 5px rgba(255, 152, 0, 0.4); }
-    
-    /* विज्ञापन बॉक्स */
-    .ad-banner { background: #E0E0E0; text-align: center; padding: 10px; font-size: 12px; color: #757575; border-radius: 8px; margin: 5px 0; border: 1px dashed #BDBDBD; }
-  </style>
-</head>
-<body>
-
-  <div class="header">
-    <a href="gods_list.html" class="back-btn">⬅ वापस</a>
-    <span>श्री खाटू श्याम जी 🏹</span>
+<div class="smart-card">
+  <h3>▶ तीन बाण के धारी (Bhakti Sagar Original)</h3>
+  
+  <audio id="audio_teen_baan" controls preload="none">
+    <source src="https://archive.org/download/20260415_20260415_1802/%E0%A4%A4%E0%A5%80%E0%A4%A8%20%E0%A4%AC%E0%A4%BE%E0%A4%A3%20%E0%A4%9A%E0%A4%B2%E0%A4%BE%E0%A4%93.mp3" type="audio/mpeg">
+    आपका फोन ऑडियो सपोर्ट नहीं करता।
+  </audio>
+  
+  <button class="lyrics-btn" onclick="startKaraoke('lyrics_teen_baan', 'audio_teen_baan', timing_teen_baan)">📖 भजन के बोल (Auto-Scroll)</button>
+  
+  <div id="lyrics_teen_baan" class="lyrics-box">
+    <span class="lyrics-line">तीन बाण के धारी, ओ नीले घोड़े वाले।</span>
+    <span class="lyrics-line">तेरी महिमा है न्यारी, ओ खाटू वाले॥</span>
+    <span class="lyrics-line">हारे का तू है सहारा, बाबा श्याम हमारा।</span>
+    <span class="lyrics-line">भक्तों के दुःख दूर करे तू, शीश का दानी प्यारा॥</span>
+    <span class="lyrics-line">तेरे दर पे जो भी आता, किस्मत अपनी चमकाता।</span>
+    <span class="lyrics-line">तीन बाण के धारी, ओ नीले घोड़े वाले॥</span>
   </div>
+</div>
+<script>
+  // Karaoke timing (Seconds mein) - Agar line aage-peeche ho toh in numbers ko thoda badal lena
+  var timing_teen_baan = [0, 6, 12, 18, 24, 30];
 
-  <div class="container" id="bhajan">
+  function startKaraoke(lyricsId, audioId, timing) {
+    var box = document.getElementById(lyricsId);
+    var player = document.getElementById(audioId);
+    var lines = box.getElementsByClassName('lyrics-line');
     
-    <div class="section-title">🎵 सुपरहिट भजन संग्रह</div>
-
-    <div class="smart-card">
-      <h3>▶ जिस घर में खाटू वाले की तस्वीर</h3>
+    if (box.style.display === "none" || box.style.display === "") {
+      box.style.display = "block";
+      player.play(); // Button dabate hi gaana chal padega
       
-      <iframe src="https://www.youtube.com/embed/eNfVq9PHTAs?rel=0&playsinline=1" allowfullscreen loading="lazy"></iframe>
-      
-      <button class="lyrics-btn" onclick="startKaraoke('lyrics1', bhajan1Timing)">📖 भजन के बोल (Auto-Scroll) शुरू करें</button>
-      
-      <div id="lyrics1" class="lyrics-box">
-        <span class="lyrics-line">जिस घर में खाटू वाले की, तस्वीर लगाई जाती है</span>
-        <span class="lyrics-line">उस घर में बाबा श्याम की, तकदीर जगाई जाती है</span>
-        <span class="lyrics-line">जब सारा घर सो जाता है, मेरा श्याम जागता रहता है</span>
-        <span class="lyrics-line">वहाँ श्याम का पहरा रहता है...</span>
-        <span class="lyrics-line">भक्तों के हर संकट को, यह खुद ही सहता रहता है</span>
-      </div>
-    </div>
-
-    <div class="ad-banner">यहाँ आपका AdMob Banner Ad दिखेगा</div>
-
-    <div class="smart-card">
-      <h3>▶ हारे का सहारा, बाबा श्याम हमारा</h3>
-      
-      <iframe src="https://www.youtube.com/embed/y-DXw5jY-2c?rel=0&playsinline=1" allowfullscreen loading="lazy"></iframe>
-      
-      <button class="lyrics-btn" onclick="startKaraoke('lyrics2', bhajan2Timing)">📖 भजन के बोल (Auto-Scroll) शुरू करें</button>
-      
-      <div id="lyrics2" class="lyrics-box">
-        <span class="lyrics-line">हारे का सहारा, बाबा श्याम हमारा...</span>
-        <span class="lyrics-line">जपता फिरूं मैं नाम तुम्हारा...</span>
-        <span class="lyrics-line">तेरी सोनी सूरत पे दिल हूँ मैं हारा</span>
-        <span class="lyrics-line">हारे का सहारा बाबा श्याम हमारा...</span>
-      </div>
-    </div>
-
-    <div class="smart-card">
-      <h3>▶ मेरा आपकी कृपा से सब काम हो रहा है</h3>
-      
-      <iframe src="https://www.youtube.com/embed/rr7k9jvssTM?rel=0&playsinline=1" allowfullscreen loading="lazy"></iframe>
-      
-      <button class="lyrics-btn" onclick="toggleSimpleLyrics('lyrics3')">📖 भजन के बोल (Lyrics) पढ़ें</button>
-      
-      <div id="lyrics3" class="lyrics-box">
-        <span class="lyrics-line">मेरा आपकी कृपा से, सब काम हो रहा है</span>
-        <span class="lyrics-line">करते हो तुम कन्हैया, मेरा नाम हो रहा है</span>
-        <span class="lyrics-line">पतवार के बिना ही, मेरी नाव चल रही है</span>
-        <span class="lyrics-line">हैरान है जमाना, मंजिल भी मिल रही है...</span>
-      </div>
-    </div>
-
-  </div>
-
-  <script>
-    // टाइमिंग (सेकंड में): आप अपने नए वीडियो के हिसाब से ये नंबर (Seconds) बदल सकते हैं
-    var bhajan1Timing = [0, 8, 16, 24, 32];
-    var bhajan2Timing = [0, 9, 18, 27];
-    
-    var activeTimer = null;
-    var currentTime = 0;
-
-    // ऑटो-स्क्रॉल लिरिक्स फंक्शन
-    function startKaraoke(lyricsId, timing) {
-      var box = document.getElementById(lyricsId);
-      var lines = box.getElementsByClassName('lyrics-line');
-      
-      if (box.style.display === "none" || box.style.display === "") {
-        // बाकी सब बॉक्स बंद करें ताकि स्क्रीन साफ रहे
-        var allBoxes = document.getElementsByClassName('lyrics-box');
-        for(var b=0; b<allBoxes.length; b++) allBoxes[b].style.display = "none";
-        if(activeTimer) clearInterval(activeTimer);
-
-        box.style.display = "block";
-        currentTime = 0;
-        
-        activeTimer = setInterval(function() {
-          currentTime++;
-          syncLyrics(currentTime, lines, timing, box);
-        }, 1000);
-      } else {
-        box.style.display = "none";
-        clearInterval(activeTimer);
-      }
-    }
-
-    // सिंपल लिरिक्स फंक्शन (बिना टाइमर के, जो बस बोल दिखाएगा)
-    function toggleSimpleLyrics(lyricsId) {
-      var box = document.getElementById(lyricsId);
-      if (box.style.display === "none" || box.style.display === "") {
-        box.style.display = "block";
-      } else {
-        box.style.display = "none";
-      }
-    }
-
-    // लिरिक्स को स्क्रॉल और हाईलाइट करने वाला लॉजिक
-    function syncLyrics(now, lines, timing, box) {
-      for (var i = 0; i < timing.length; i++) {
-        if (now >= timing[i]) {
-          for (var j = 0; j < lines.length; j++) {
-            lines[j].classList.remove('active-line');
-          }
-          if (lines[i]) {
-            lines[i].classList.add('active-line');
-            lines[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setInterval(function() {
+        var now = player.currentTime;
+        for (var i = 0; i < timing.length; i++) {
+          if (now >= timing[i]) {
+            for (var j = 0; j < lines.length; j++) lines[j].classList.remove('active-line');
+            if (lines[i]) {
+              lines[i].classList.add('active-line');
+              lines[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
           }
         }
-      }
+      }, 500);
+    } else {
+      box.style.display = "none";
+      player.pause(); // Band karne par gaana bhi pause ho jayega
     }
-  </script>
-
-</body>
-</html>
+  }
+</script>
