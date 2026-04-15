@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>श्री खाटू श्याम भजन - BhaktiBeats</title>
+  <style>
+    body { background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%); font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 0; text-align: center; color: #3e2723; }
+    
+    /* टॉप हेडर जो स्क्रॉल करने पर भी ऊपर चिपका रहेगा */
+    .header { background: linear-gradient(to right, #1976D2, #1565C0); color: white; padding: 15px; font-size: 20px; font-weight: bold; display: flex; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.2); border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; position: sticky; top: 0; z-index: 100; }
+    .back-btn { color: white; text-decoration: none; font-size: 16px; background: rgba(255,255,255,0.2); padding: 8px 15px; border-radius: 10px; margin-right: 15px; }
+    
+    .container { padding: 15px; display: flex; flex-direction: column; gap: 15px; max-width: 500px; margin: 0 auto; text-align: left;}
+    .section-title { font-size: 18px; color: #1565C0; font-weight: bold; margin-top: 10px; border-bottom: 2px solid #90CAF9; padding-bottom: 5px; }
+    
+    /* स्मार्ट कार्ड डिज़ाइन */
+    .smart-card { background: white; padding: 15px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); border-top: 4px solid #1976D2;}
+    .smart-card h3 { margin: 0 0 10px 0; font-size: 16px; color: #424242; }
+    
+    /* यूट्यूब प्लेयर को ऑडियो प्लेयर जैसा दिखाने का जादू (Height: 90px) */
+    iframe { width: 100%; height: 90px; border-radius: 10px; border: none; box-shadow: inset 0 2px 5px rgba(0,0,0,0.2); background-color: #f5f5f5; }
+    
+    /* लिरिक्स बटन और बॉक्स */
+    .lyrics-btn { background: #FF9800; color: white; border: none; padding: 10px; border-radius: 8px; width: 100%; font-weight: bold; font-size: 14px; margin-top: 10px; cursor: pointer; box-shadow: 0 2px 5px rgba(255, 152, 0, 0.4); }
+    .lyrics-box { display: none; background: #FFF9C4; padding: 15px; border-radius: 8px; margin-top: 10px; font-size: 14px; line-height: 1.8; color: #3E2723; border: 1px dashed #FBC02D; max-height: 200px; overflow-y: auto; }
+    
+    /* विज्ञापन का डिब्बा */
+    .ad-banner { background: #E0E0E0; text-align: center; padding: 10px; font-size: 12px; color: #757575; border-radius: 8px; margin: 5px 0; border: 1px dashed #BDBDBD; }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <a href="gods_list.html" class="back-btn">⬅ वापस</a>
+    <span>श्री खाटू श्याम जी 🏹</span>
+  </div>
+
+  <div class="container">
+
+    <div class="section-title">🎵 5 सुपरहिट भजन (Safe Mode)</div>
+    
+    <div class="smart-card">
+      <h3>▶ जिस घर में खाटू वाले की तस्वीर</h3>
+      <iframe src="https://www.youtube.com/embed/aID3TR-25Vo?rel=0" allowfullscreen loading="lazy"></iframe>
+      <button class="lyrics-btn" onclick="toggleLyrics('lyrics1')">📖 भजन के बोल (Lyrics) पढ़ें</button>
+      <div id="lyrics1" class="lyrics-box">
+        जिस घर में खाटू वाले की, तस्वीर लगाई जाती है<br>
+        उस घर में बाबा श्याम की, तकदीर जगाई जाती है<br>
+        जब सारा घर सो जाता है, मेरा श्याम जागता रहता है<br>
+        वहाँ श्याम का पहरा रहता है...
+      </div>
+    </div>
+
+    <div class="ad-banner">
+      यहाँ आपका AdMob Banner Ad दिखेगा
+    </div>
+
+    <div class="smart-card">
+      <h3>▶ हारे का सहारा, बाबा श्याम हमारा</h3>
+      <iframe src="https://www.youtube.com/embed/y-DXw5jY-2c?rel=0" allowfullscreen loading="lazy"></iframe>
+      <button class="lyrics-btn" onclick="toggleLyrics('lyrics2')">📖 भजन के बोल (Lyrics) पढ़ें</button>
+      <div id="lyrics2" class="lyrics-box">
+        हारे का सहारा, बाबा श्याम हमारा...<br>
+        जपता फिरूं मैं नाम तुम्हारा...<br>
+        तेरी सोनी सूरत पे दिल हूँ मैं हारा<br>
+        हारे का सहारा बाबा श्याम हमारा...
+      </div>
+    </div>
+
+    <div class="smart-card">
+      <h3>▶ मेरा आपकी कृपा से सब काम हो रहा है</h3>
+      <iframe src="https://www.youtube.com/embed/rr7k9jvssTM?rel=0" allowfullscreen loading="lazy"></iframe>
+      <button class="lyrics-btn" onclick="toggleLyrics('lyrics3')">📖 भजन के बोल (Lyrics) पढ़ें</button>
+      <div id="lyrics3" class="lyrics-box">
+        मेरा आपकी कृपा से, सब काम हो रहा है<br>
+        करते हो तुम कन्हैया, मेरा नाम हो रहा है<br>
+        पतवार के बिना ही, मेरी नाव चल रही है<br>
+        हैरान है जमाना, मंजिल भी मिल रही है...
+      </div>
+    </div>
+
+    <div class="smart-card">
+      <h3>▶ दीनानाथ मेरी बात छानी कोनी तेरे से</h3>
+      <iframe src="https://www.youtube.com/embed/XJyLqtFQUKc?rel=0" allowfullscreen loading="lazy"></iframe>
+      <button class="lyrics-btn" onclick="toggleLyrics('lyrics4')">📖 भजन के बोल (Lyrics) पढ़ें</button>
+      <div id="lyrics4" class="lyrics-box">
+        दीनानाथ मेरी बात, छानी कोनी तेरे से<br>
+        आंखड़ली चुराकर बाबा, जासी कठे मेरे से<br>
+        खाटू वाले श्याम तेरी, शरण में आ गयो<br>
+        श्याम प्रभु रूप तेरो, नैना में समां गयो...
+      </div>
+    </div>
+
+    <div class="smart-card">
+      <h3>▶ श्याम चूड़ी बेचने आया</h3>
+      <iframe src="https://www.youtube.com/embed/srcTyl-iQfw?rel=0" allowfullscreen loading="lazy"></iframe>
+      <button class="lyrics-btn" onclick="toggleLyrics('lyrics5')">📖 भजन के बोल (Lyrics) पढ़ें</button>
+      <div id="lyrics5" class="lyrics-box">
+        मनिहारी का भेस बनाया<br>
+        श्याम चूड़ी बेचने आया<br>
+        छलिया का भेस बनाया, श्याम चूड़ी बेचने आया<br>
+        झोली कंधे धरी, उस में चूड़ी भरी<br>
+        गलिओं में शोर मचाया...
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function toggleLyrics(id) {
+      var box = document.getElementById(id);
+      if (box.style.display === "none" || box.style.display === "") {
+        box.style.display = "block";
+      } else {
+        box.style.display = "none";
+      }
+    }
+  </script>
+
+</body>
+        </html>
+        
