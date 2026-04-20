@@ -3,103 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>भजन और आरती संग्रह</title>
+    <title>Bhakti Sagar Player</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #fcecd5; margin: 0; padding: 0; }
-        
-        /* Header Style */
-        .header { background: linear-gradient(to right, #e83e8c, #c2185b); color: white; padding: 15px; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: bold; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; position: relative; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .header .back-btn { position: absolute; left: 15px; background: rgba(255,255,255,0.2); border: none; color: white; padding: 6px 12px; border-radius: 8px; text-decoration: none; font-size: 14px; }
-        
-        .container { padding: 15px; }
-
-        /* Card Styles */
-        .card { background: white; border-radius: 15px; padding: 15px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
-        .card.shyam { border-left: 6px solid #2196F3; }
-        .card.shiv { border-left: 6px solid #4CAF50; }
-        .card.hanuman { border-left: 6px solid #FF5722; }
-
-        .card-header { display: flex; align-items: center; margin-bottom: 15px; }
-        .icon { font-size: 35px; margin-right: 15px; }
-        .title-box h2 { font-size: 20px; margin: 0; }
-        .shyam h2 { color: #2196F3; }
-        .shiv h2 { color: #4CAF50; }
-        .hanuman h2 { color: #FF5722; }
-        .subtitle { font-size: 12px; color: #7f8c8d; margin-top: 3px; }
-
-        /* Buttons Style */
-        .btn-group { display: flex; gap: 10px; flex-wrap: wrap; }
-        .btn { text-decoration: none; padding: 6px 18px; border-radius: 20px; font-size: 15px; font-weight: bold; background: white; transition: 0.2s; }
-        .btn.shyam-btn { color: #2196F3; border: 1px solid #2196F3; }
-        .btn.shiv-btn { color: #4CAF50; border: 1px solid #4CAF50; }
-        .btn.hanuman-btn { color: #FF5722; border: 1px solid #FF5722; }
-        .btn:active { background: #f0f0f0; transform: scale(0.95); }
-
-        /* AdMob Placeholder */
-        .ad-banner { background: #fff9c4; border: 1px dashed #fbc02d; color: #d35400; text-align: center; padding: 15px; margin-bottom: 20px; border-radius: 10px; font-weight: bold; font-size: 14px; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #fdf6e3; padding: 15px; margin: 0; color: #333; }
+        #listView, #playerView { max-width: 600px; margin: auto; }
+        .header-title { text-align: center; color: #d35400; margin-bottom: 20px; font-size: 24px; }
+        .list-box { background: white; padding: 18px 15px; margin-bottom: 12px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border-left: 6px solid #d35400; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        #playerView { display: none; background: white; padding: 25px; border-radius: 20px; box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
+        .back-btn { background: #d35400; color: white; border: none; padding: 10px 20px; border-radius: 10px; margin-bottom: 20px; cursor: pointer; font-weight: bold; }
+        #songTitle { color: #d35400; text-align: center; font-size: 22px; }
+        audio { width: 100%; margin: 20px 0; }
+        .lyrics-box { white-space: pre-wrap; line-height: 1.8; background: #fffaf0; padding: 20px; border-radius: 15px; border: 1px dashed #d35400; font-size: 16px; max-height: 400px; overflow-y: auto; }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <a href="#" class="back-btn">⬅ वापस</a>
-        भजन और आरती संग्रह 🎧
-    </div>
+<div id="listView">
+    <h2 class="header-title" id="mainHeader">🙏 भक्ति सागर 🙏</h2>
+    <div id="listContainer"><p style="text-align:center;">डेटा लोड हो रहा है...</p></div>
+</div>
 
-    <div class="container">
+<div id="playerView">
+    <button class="back-btn" onclick="goBack()">⬅ वापस</button>
+    <h2 id="songTitle">Bhajan Name</h2>
+    <audio id="mainAudio" controls><source id="audioSource" src="" type="audio/mpeg"></audio>
+    <div id="songLyrics" class="lyrics-box"></div>
+</div>
 
-        <div class="card shyam">
-            <div class="card-header">
-                <div class="icon">🏹</div>
-                <div class="title-box">
-                    <h2>श्री खाटू श्याम जी</h2>
-                    <p class="subtitle">हारे का सहारा, बाबा श्याम हमारा</p>
-                </div>
-            </div>
-            <div class="btn-group">
-                <a href="khatu_shyam_audio.html?cat=Khatu Shyam&type=Bhajan" class="btn shyam-btn">भजन</a>
-                <a href="khatu_shyam_audio.html?cat=Khatu Shyam&type=Aarti" class="btn shyam-btn">आरती</a>
-                <a href="khatu_shyam_audio.html?cat=Khatu Shyam&type=Stuti" class="btn shyam-btn">स्तुति</a>
-                <a href="khatu_shyam_audio.html?cat=Khatu Shyam&type=Chalisa" class="btn shyam-btn">चालीसा</a>
-            </div>
-        </div>
+<script>
+    // आपका सही CSV लिंक मैंने यहाँ डाल दिया है
+    const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSw465ooS9QfJ9h6M7UIxIt2giu_XtwS-FLnNrKDP0-XoR_B1YIQylYRILKiMDNJbcBf0Ujn7Ea3x7E/pub?gid=0&single=true&output=csv";
 
-        <div class="card shiv">
-            <div class="card-header">
-                <div class="icon">🔱</div>
-                <div class="title-box">
-                    <h2>भगवान शिव (महाकाल)</h2>
-                    <p class="subtitle">सत्य, शिव, सुंदर</p>
-                </div>
-            </div>
-            <div class="btn-group">
-                <a href="khatu_shyam_audio.html?cat=Shiv Ji&type=Bhajan" class="btn shiv-btn">भजन</a>
-                <a href="khatu_shyam_audio.html?cat=Shiv Ji&type=Aarti" class="btn shiv-btn">आरती</a>
-                <a href="khatu_shyam_audio.html?cat=Shiv Ji&type=Stuti" class="btn shiv-btn">स्तुति</a>
-                <a href="khatu_shyam_audio.html?cat=Shiv Ji&type=Chalisa" class="btn shiv-btn">चालीसा</a>
-            </div>
-        </div>
+    const params = new URLSearchParams(window.location.search);
+    const selectedCat = params.get('cat') || 'Khatu Shyam';
+    const selectedType = params.get('type') || 'Bhajan';
 
-        <div class="ad-banner">
-            यहाँ AdMob Banner Ad दिखेगा
-        </div>
+    document.getElementById('mainHeader').innerText = `🙏 ${selectedCat} ${selectedType} 🙏`;
 
-        <div class="card hanuman">
-            <div class="card-header">
-                <div class="icon">🐒</div>
-                <div class="title-box">
-                    <h2>श्री हनुमान जी</h2>
-                    <p class="subtitle">संकटमोचन महाबली</p>
-                </div>
-            </div>
-            <div class="btn-group">
-                <a href="khatu_shyam_audio.html?cat=Hanuman Ji&type=Chalisa" class="btn hanuman-btn">चालीसा</a>
-                <a href="khatu_shyam_audio.html?cat=Hanuman Ji&type=Aarti" class="btn hanuman-btn">आरती</a>
-                <a href="khatu_shyam_audio.html?cat=Hanuman Ji&type=Bhajan" class="btn hanuman-btn">भजन</a>
-                <a href="khatu_shyam_audio.html?cat=Hanuman Ji&type=Stuti" class="btn hanuman-btn">बाण</a> </div>
-        </div>
+    let songData = [];
 
-    </div>
+    async function loadSheetData() {
+        try {
+            const response = await fetch(csvUrl);
+            const text = await response.text();
+            
+            // CSV को पंक्तियों में तोड़ना
+            const rows = text.split('\n').map(row => {
+                // यह हिस्सा कोमा और कोट्स को सही से हैंडल करता है
+                return row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+            });
+            
+            // कॉलम के नाम ढूँढना (category, title, type, आदि)
+            const headers = rows[0].map(h => h.replace(/"/g, "").trim().toLowerCase());
+            const idxCat = headers.indexOf('category');
+            const idxTitle = headers.indexOf('title');
+            const idxAudio = headers.indexOf('audio_url');
+            const idxLyrics = headers.indexOf('lyrics');
+            const idxType = headers.indexOf('type');
 
+            songData = [];
+            for (let i = 1; i < rows.length; i++) {
+                const r = rows[i];
+                if (r.length < 5) continue;
+
+                const rowCat = r[idxCat]?.replace(/"/g, "").trim();
+                const rowType = r[idxType]?.replace(/"/g, "").trim();
+
+                // जो बटन दबाया है वही डेटा दिखाना
+                if (rowCat === selectedCat && rowType === selectedType) {
+                    songData.push({
+                        title: r[idxTitle]?.replace(/"/g, "").trim() || "No Title",
+                        audio: r[idxAudio]?.replace(/"/g, "").trim() || "",
+                        lyrics: r[idxLyrics]?.replace(/"/g, "").replace(/\\n/g, '\n').trim() || "लिरिक्स उपलब्ध नहीं हैं।"
+                    });
+                }
+            }
+            displayList();
+        } catch (error) {
+            document.getElementById('listContainer').innerHTML = "डेटा लोड नहीं हो पाया।";
+        }
+    }
+
+    function displayList() {
+        const container = document.getElementById('listContainer');
+        container.innerHTML = "";
+        if (songData.length === 0) {
+            container.innerHTML = `<p style='text-align:center;'>अभी कोई ${selectedType} उपलब्ध नहीं है।</p>`;
+            return;
+        }
+        songData.forEach((song, index) => {
+            const div = document.createElement('div');
+            div.className = 'list-box';
+            div.onclick = () => openPlayer(index);
+            div.innerHTML = `<p class="list-title">${song.title}</p><span class="play-icon">▶</span>`;
+            container.appendChild(div);
+        });
+    }
+
+    function openPlayer(index) {
+        const song = songData[index];
+        document.getElementById('listView').style.display = 'none';
+        document.getElementById('playerView').style.display = 'block';
+        document.getElementById('songTitle').innerText = song.title;
+        document.getElementById('songLyrics').innerText = song.lyrics;
+        const audio = document.getElementById('mainAudio');
+        document.getElementById('audioSource').src = song.audio;
+        audio.load();
+        if(song.audio) audio.play();
+    }
+
+    function goBack() {
+        document.getElementById('playerView').style.display = 'none';
+        document.getElementById('listView').style.display = 'block';
+        document.getElementById('mainAudio').pause();
+    }
+
+    loadSheetData();
+</script>
 </body>
 </html>
