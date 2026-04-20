@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bhakti Sagar Simple Player</title>
+    <title>Bhakti Sagar Player</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background-color: #fdf6e3; padding: 15px; margin: 0; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #fdf6e3; padding: 15px; margin: 0; color: #333; }
         #listView, #playerView { max-width: 600px; margin: auto; }
         .header-title { text-align: center; color: #d35400; margin-bottom: 20px; font-size: 24px; font-weight: bold; }
         .list-box { background: white; padding: 18px 15px; margin-bottom: 12px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border-left: 6px solid #d35400; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
@@ -20,23 +20,23 @@
 
 <div id="listView">
     <h2 class="header-title" id="mainHeader">🙏 भक्ति सागर 🙏</h2>
-    <div id="listContainer"><p style="text-align:center;">डेटा लोड हो रहा है...</p></div>
+    <div id="listContainer"><p style="text-align:center;">भजन लोड हो रहे हैं...</p></div>
 </div>
 
 <div id="playerView">
-    <button class="back-btn" onclick="goBack()">⬅ वापस</button>
+    <button class="back-btn" onclick="goBack()">⬅ वापस लिस्ट पर</button>
     <h2 id="songTitle">Bhajan Name</h2>
     <audio id="mainAudio" controls><source id="audioSource" src="" type="audio/mpeg"></audio>
     <div id="songLyrics" class="lyrics-box"></div>
 </div>
 
 <script>
-    // आपका पक्का CSV लिंक
+    // आपका दिया हुआ सही CSV लिंक
     const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSw465ooS9QfJ9h6M7UIxIt2giu_XtwS-FLnNrKDP0-XoR_B1YIQylYRILKiMDNJbcBf0Ujn7Ea3x7E/pub?gid=0&single=true&output=csv";
 
-    // URL से सिर्फ भगवान का नाम (Category) लेगा
     const params = new URLSearchParams(window.location.search);
     const selectedCat = (params.get('cat') || 'Khatu Shyam').toLowerCase().trim();
+    const selectedType = (params.get('type') || '').toLowerCase().trim();
 
     document.getElementById('mainHeader').innerText = `🙏 ${params.get('cat') || 'Khatu Shyam'} 🙏`;
 
@@ -46,22 +46,27 @@
         try {
             const response = await fetch(csvUrl);
             const text = await response.text();
+            // कोमा और कोट्स को सही से हैंडल करने के लिए
             const rows = text.split('\n').map(row => row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/));
             
             songData = [];
             for (let i = 1; i < rows.length; i++) {
                 const r = rows[i];
-                if (r.length < 4) continue;
+                if (r.length < 5) continue;
 
-                // Column B (Index 1) में जो भगवान का नाम है उसे चेक करेगा
+                // Column B (Index 1) = Category, Column F (Index 5) = Type
                 const rowCat = (r[1] || "").replace(/"/g, "").trim().toLowerCase();
+                const rowType = (r[5] || "").replace(/"/g, "").trim().toLowerCase();
 
-                if (rowCat === selectedCat) {
-                    songData.push({
-                        title: r[2]?.replace(/"/g, "").trim() || "No Title",
-                        audio: r[3]?.replace(/"/g, "").trim() || "",
-                        lyrics: r[4]?.replace(/"/g, "").replace(/\\n/g, '\n').trim() || "लिरिक्स उपलब्ध नहीं हैं।"
-                    });
+                // स्मार्ट फिल्टर: कैटेगिरी मिलनी चाहिए, टाइप मिले तो ठीक वरना सब दिखा दो
+                if (rowCat.includes(selectedCat)) {
+                    if (selectedType === "" || rowType.includes(selectedType)) {
+                        songData.push({
+                            title: r[2]?.replace(/"/g, "").trim() || "No Title",
+                            audio: r[3]?.replace(/"/g, "").trim() || "",
+                            lyrics: r[4]?.replace(/"/g, "").replace(/\\n/g, '\n').trim() || "लिरिक्स उपलब्ध नहीं हैं।"
+                        });
+                    }
                 }
             }
             displayList();
