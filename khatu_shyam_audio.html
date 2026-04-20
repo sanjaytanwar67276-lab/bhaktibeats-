@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bhakti Sagar Player</title>
+    <title>Bhakti Sagar Simple Player</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; background-color: #fdf6e3; padding: 15px; margin: 0; }
         #listView, #playerView { max-width: 600px; margin: auto; }
@@ -31,15 +31,14 @@
 </div>
 
 <script>
-    // आपका CSV लिंक
+    // आपका पक्का CSV लिंक
     const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSw465ooS9QfJ9h6M7UIxIt2giu_XtwS-FLnNrKDP0-XoR_B1YIQylYRILKiMDNJbcBf0Ujn7Ea3x7E/pub?gid=0&single=true&output=csv";
 
+    // URL से सिर्फ भगवान का नाम (Category) लेगा
     const params = new URLSearchParams(window.location.search);
-    // URL से आने वाले डेटा को छोटे अक्षरों में बदल रहे हैं
     const selectedCat = (params.get('cat') || 'Khatu Shyam').toLowerCase().trim();
-    const selectedType = (params.get('type') || 'Bhajan').toLowerCase().trim();
 
-    document.getElementById('mainHeader').innerText = `🙏 ${params.get('cat') || 'Khatu Shyam'} ${params.get('type') || 'Bhajan'} 🙏`;
+    document.getElementById('mainHeader').innerText = `🙏 ${params.get('cat') || 'Khatu Shyam'} 🙏`;
 
     let songData = [];
 
@@ -47,20 +46,17 @@
         try {
             const response = await fetch(csvUrl);
             const text = await response.text();
-            // कोमा और कोट्स को सही से पढ़ने के लिए कोडिंग
             const rows = text.split('\n').map(row => row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/));
             
             songData = [];
             for (let i = 1; i < rows.length; i++) {
                 const r = rows[i];
-                if (r.length < 5) continue;
+                if (r.length < 4) continue;
 
-                // शीट के डेटा को छोटे अक्षरों (small letters) में बदलकर चेक कर रहे हैं
+                // Column B (Index 1) में जो भगवान का नाम है उसे चेक करेगा
                 const rowCat = (r[1] || "").replace(/"/g, "").trim().toLowerCase();
-                const rowType = (r[5] || "").replace(/"/g, "").trim().toLowerCase();
 
-                // अब चाहे छोटा अक्षर हो या बड़ा, मैच हो जाएगा
-                if (rowCat === selectedCat && rowType === selectedType) {
+                if (rowCat === selectedCat) {
                     songData.push({
                         title: r[2]?.replace(/"/g, "").trim() || "No Title",
                         audio: r[3]?.replace(/"/g, "").trim() || "",
