@@ -31,14 +31,15 @@
 </div>
 
 <script>
-    // आपका सही CSV लिंक मैंने यहाँ खुद ही जोड़ दिया है
+    // आपका CSV लिंक
     const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSw465ooS9QfJ9h6M7UIxIt2giu_XtwS-FLnNrKDP0-XoR_B1YIQylYRILKiMDNJbcBf0Ujn7Ea3x7E/pub?gid=0&single=true&output=csv";
 
     const params = new URLSearchParams(window.location.search);
-    const selectedCat = params.get('cat') || 'Khatu Shyam';
-    const selectedType = params.get('type') || 'Bhajan';
+    // URL से आने वाले डेटा को छोटे अक्षरों में बदल रहे हैं
+    const selectedCat = (params.get('cat') || 'Khatu Shyam').toLowerCase().trim();
+    const selectedType = (params.get('type') || 'Bhajan').toLowerCase().trim();
 
-    document.getElementById('mainHeader').innerText = `🙏 ${selectedCat} ${selectedType} 🙏`;
+    document.getElementById('mainHeader').innerText = `🙏 ${params.get('cat') || 'Khatu Shyam'} ${params.get('type') || 'Bhajan'} 🙏`;
 
     let songData = [];
 
@@ -46,8 +47,7 @@
         try {
             const response = await fetch(csvUrl);
             const text = await response.text();
-            
-            // CSV parsing
+            // कोमा और कोट्स को सही से पढ़ने के लिए कोडिंग
             const rows = text.split('\n').map(row => row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/));
             
             songData = [];
@@ -55,10 +55,11 @@
                 const r = rows[i];
                 if (r.length < 5) continue;
 
-                // Column B (Index 1) = Category, Column F (Index 5) = Type
-                const rowCat = r[1]?.replace(/"/g, "").trim();
-                const rowType = r[5]?.replace(/"/g, "").trim();
+                // शीट के डेटा को छोटे अक्षरों (small letters) में बदलकर चेक कर रहे हैं
+                const rowCat = (r[1] || "").replace(/"/g, "").trim().toLowerCase();
+                const rowType = (r[5] || "").replace(/"/g, "").trim().toLowerCase();
 
+                // अब चाहे छोटा अक्षर हो या बड़ा, मैच हो जाएगा
                 if (rowCat === selectedCat && rowType === selectedType) {
                     songData.push({
                         title: r[2]?.replace(/"/g, "").trim() || "No Title",
@@ -77,7 +78,7 @@
         const container = document.getElementById('listContainer');
         container.innerHTML = "";
         if (songData.length === 0) {
-            container.innerHTML = `<p style='text-align:center;'>अभी कोई सामग्री उपलब्ध नहीं है।</p>`;
+            container.innerHTML = `<p style='text-align:center;'>क्षमा करें, अभी कोई सामग्री उपलब्ध नहीं है।</p>`;
             return;
         }
         songData.forEach((song, index) => {
