@@ -44,7 +44,7 @@
 </div>
 
 <script>
-    // YAHA APNA GOOGLE SHEET KA CSV LINK PASTE KAREIN
+    // 👇 यहाँ अपना पब्लिश किया हुआ असली CSV लिंक डालें 👇
     const csvUrl = "YAHA_APNA_CSV_LINK_PASTE_KAREIN";
 
     let allBhajans = []; 
@@ -53,22 +53,27 @@
         try {
             const response = await fetch(csvUrl);
             const data = await response.text();
-            const rows = data.split('\n').slice(1);
             
+            // डेटा को लाइनों में तोड़ें
+            const rows = data.split('\n').slice(1);
             allBhajans = []; 
             
             rows.forEach((row) => {
-                // 6 columns: id, category, title, audio, lyrics, type
+                // कॉमा (,) के हिसाब से अलग करें, लेकिन कोट्स ("") के अंदर वाले कॉमा को छोड़ दें
                 const columns = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/); 
-                if (columns.length >= 6) {
-                    const id = columns[0].replace(/"/g, "").trim();
-                    const category = columns[1].replace(/"/g, "").trim();
-                    const title = columns[2].replace(/"/g, "").trim();
-                    const audio = columns[3].replace(/"/g, "").trim();
-                    const lyrics = columns[4].replace(/"/g, "").replace(/\\n/g, '\n').trim();
-                    const type = columns[5].replace(/"/g, "").trim();
+                
+                // अगर कम से कम 5 कॉलम हैं (भले ही 6ठा खाली हो)
+                if (columns.length >= 5) {
+                    const id = columns[0] ? columns[0].replace(/"/g, "").trim() : "";
+                    const category = columns[1] ? columns[1].replace(/"/g, "").trim() : "";
+                    const title = columns[2] ? columns[2].replace(/"/g, "").trim() : "";
+                    const audio = columns[3] ? columns[3].replace(/"/g, "").trim() : "";
+                    const lyrics = columns[4] ? columns[4].replace(/"/g, "").replace(/\\n/g, '\n').trim() : "";
+                    
+                    // 6ठा कॉलम (type) है तो लें, वरना खाली मान लें
+                    const type = columns[5] ? columns[5].replace(/"/g, "").trim() : "";
 
-                    // 🔴 FILTER: यहाँ से तय होगा कि इस पेज पर क्या दिखेगा 🔴
+                    // 🔴 FILTER: खाटू श्याम जी के सिर्फ 'Bhajan'
                     if (category === "Khatu Shyam" && type === "Bhajan") {
                         allBhajans.push({ title, audio, lyrics });
                     }
@@ -78,7 +83,7 @@
             renderList();
 
         } catch (error) {
-            document.getElementById('listContainer').innerHTML = "<p style='text-align:center;'>डेटा लोड करने में समस्या आई।</p>";
+            document.getElementById('listContainer').innerHTML = "<p style='text-align:center; color:red;'>डेटा लोड करने में समस्या आई।</p>";
         }
     }
 
@@ -86,11 +91,13 @@
         const container = document.getElementById('listContainer');
         container.innerHTML = ""; 
 
+        // अगर फ़िल्टर होने के बाद कोई गाना नहीं मिला
         if(allBhajans.length === 0) {
-            container.innerHTML = "<p style='text-align:center;'>अभी कोई डेटा नहीं मिला।</p>";
+            container.innerHTML = "<p style='text-align:center;'>अभी इस केटेगरी में कोई भजन नहीं है।</p>";
             return;
         }
 
+        // लिस्ट बनाएँ
         allBhajans.forEach((item, index) => {
             const box = document.createElement('div');
             box.className = 'list-box';
@@ -107,9 +114,11 @@
     function openPlayer(index) {
         const item = allBhajans[index];
         
+        // लिस्ट छुपाएं, प्लेयर दिखाएं
         document.getElementById('listView').style.display = 'none';
         document.getElementById('playerView').style.display = 'block';
         
+        // प्लेयर में डेटा भरें
         document.getElementById('playerTitle').innerText = item.title;
         document.getElementById('playerLyrics').innerText = item.lyrics;
         
@@ -117,20 +126,24 @@
         document.getElementById('audioSource').src = (item.audio.includes("http")) ? item.audio : "";
         audioPlayer.load(); 
         
+        // अगर ऑडियो लिंक है तो ऑटो-प्ले करें
         if(item.audio.includes("http")) {
             audioPlayer.play();
         }
     }
 
     function goBack() {
+        // प्लेयर छुपाएं, लिस्ट दिखाएं
         document.getElementById('playerView').style.display = 'none';
         document.getElementById('listView').style.display = 'block';
         
+        // गाना बंद करें
         const audioPlayer = document.getElementById('myAudio');
         audioPlayer.pause();
         audioPlayer.currentTime = 0;
     }
 
+    // ऐप लोड होते ही फंक्शन चलाएं
     loadData();
 </script>
 
