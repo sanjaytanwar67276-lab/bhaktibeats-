@@ -3,149 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bhajan List - Bhakti Sagar</title>
+    <title>भजन और आरती संग्रह</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #fdf6e3; padding: 15px; margin: 0; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #fcecd5; margin: 0; padding: 0; }
         
-        /* List View Styles */
-        #listView { max-width: 600px; margin: auto; }
-        .list-box { background: white; padding: 18px 15px; margin-bottom: 12px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border-left: 5px solid #d35400; cursor: pointer; display: flex; align-items: center; justify-content: space-between; transition: 0.3s; }
-        .list-box:active { transform: scale(0.98); background: #f9f9f9; }
-        .list-title { font-size: 18px; color: #2c3e50; font-weight: bold; margin: 0; }
-        .play-icon { font-size: 24px; color: #d35400; }
+        /* Header Style */
+        .header { background: linear-gradient(to right, #e83e8c, #c2185b); color: white; padding: 15px; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: bold; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; position: relative; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .header .back-btn { position: absolute; left: 15px; background: rgba(255,255,255,0.2); border: none; color: white; padding: 6px 12px; border-radius: 8px; text-decoration: none; font-size: 14px; }
+        
+        .container { padding: 15px; }
 
-        /* Player View Styles */
-        #playerView { max-width: 600px; margin: auto; display: none; background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .back-btn { background: #d35400; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-size: 16px; cursor: pointer; margin-bottom: 20px; display: flex; align-items: center; gap: 5px; }
-        .back-btn:active { background: #ba4a00; }
-        #playerTitle { color: #d35400; margin-top: 0; font-size: 22px; text-align: center; }
-        audio { width: 100%; margin: 15px 0; outline: none; }
-        .lyrics-container { white-space: pre-wrap; color: #333; font-size: 16px; line-height: 1.8; background: #fffaf0; padding: 15px; border-radius: 10px; border: 1px dashed #d35400; margin-top: 10px; }
-        
-        .header-title { text-align: center; color: #d35400; margin-bottom: 20px; }
+        /* Card Styles */
+        .card { background: white; border-radius: 15px; padding: 15px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .card.shyam { border-left: 6px solid #2196F3; }
+        .card.shiv { border-left: 6px solid #4CAF50; }
+        .card.hanuman { border-left: 6px solid #FF5722; }
+
+        .card-header { display: flex; align-items: center; margin-bottom: 15px; }
+        .icon { font-size: 35px; margin-right: 15px; }
+        .title-box h2 { font-size: 20px; margin: 0; }
+        .shyam h2 { color: #2196F3; }
+        .shiv h2 { color: #4CAF50; }
+        .hanuman h2 { color: #FF5722; }
+        .subtitle { font-size: 12px; color: #7f8c8d; margin-top: 3px; }
+
+        /* Buttons Style */
+        .btn-group { display: flex; gap: 10px; flex-wrap: wrap; }
+        .btn { text-decoration: none; padding: 6px 18px; border-radius: 20px; font-size: 15px; font-weight: bold; background: white; transition: 0.2s; }
+        .btn.shyam-btn { color: #2196F3; border: 1px solid #2196F3; }
+        .btn.shiv-btn { color: #4CAF50; border: 1px solid #4CAF50; }
+        .btn.hanuman-btn { color: #FF5722; border: 1px solid #FF5722; }
+        .btn:active { background: #f0f0f0; transform: scale(0.95); }
+
+        /* AdMob Placeholder */
+        .ad-banner { background: #fff9c4; border: 1px dashed #fbc02d; color: #d35400; text-align: center; padding: 15px; margin-bottom: 20px; border-radius: 10px; font-weight: bold; font-size: 14px; }
     </style>
 </head>
 <body>
 
-<div id="listView">
-    <h2 class="header-title" id="pageMainTitle">🙏 श्री खाटू श्याम भजन 🙏</h2>
-    <div id="listContainer">
-        <p style="text-align:center;">डेटा लोड हो रहा है...</p>
+    <div class="header">
+        <a href="#" class="back-btn">⬅ वापस</a>
+        भजन और आरती संग्रह 🎧
     </div>
-</div>
 
-<div id="playerView">
-    <button class="back-btn" onclick="goBack()">⬅ वापस लिस्ट पर</button>
-    <h2 id="playerTitle">Title</h2>
-    <audio id="myAudio" controls>
-        <source id="audioSource" src="" type="audio/mpeg">
-    </audio>
-    <div id="playerLyrics" class="lyrics-container">Lyrics Here</div>
-</div>
+    <div class="container">
 
-<script>
-    // 👇 यहाँ अपना पब्लिश किया हुआ असली CSV लिंक डालें 👇
-    const csvUrl = "YAHA_APNA_CSV_LINK_PASTE_KAREIN";
+        <div class="card shyam">
+            <div class="card-header">
+                <div class="icon">🏹</div>
+                <div class="title-box">
+                    <h2>श्री खाटू श्याम जी</h2>
+                    <p class="subtitle">हारे का सहारा, बाबा श्याम हमारा</p>
+                </div>
+            </div>
+            <div class="btn-group">
+                <a href="khatu_shyam_audio.html?cat=Khatu Shyam&type=Bhajan" class="btn shyam-btn">भजन</a>
+                <a href="khatu_shyam_audio.html?cat=Khatu Shyam&type=Aarti" class="btn shyam-btn">आरती</a>
+                <a href="khatu_shyam_audio.html?cat=Khatu Shyam&type=Stuti" class="btn shyam-btn">स्तुति</a>
+                <a href="khatu_shyam_audio.html?cat=Khatu Shyam&type=Chalisa" class="btn shyam-btn">चालीसा</a>
+            </div>
+        </div>
 
-    let allBhajans = []; 
+        <div class="card shiv">
+            <div class="card-header">
+                <div class="icon">🔱</div>
+                <div class="title-box">
+                    <h2>भगवान शिव (महाकाल)</h2>
+                    <p class="subtitle">सत्य, शिव, सुंदर</p>
+                </div>
+            </div>
+            <div class="btn-group">
+                <a href="khatu_shyam_audio.html?cat=Shiv Ji&type=Bhajan" class="btn shiv-btn">भजन</a>
+                <a href="khatu_shyam_audio.html?cat=Shiv Ji&type=Aarti" class="btn shiv-btn">आरती</a>
+                <a href="khatu_shyam_audio.html?cat=Shiv Ji&type=Stuti" class="btn shiv-btn">स्तुति</a>
+                <a href="khatu_shyam_audio.html?cat=Shiv Ji&type=Chalisa" class="btn shiv-btn">चालीसा</a>
+            </div>
+        </div>
 
-    async function loadData() {
-        try {
-            const response = await fetch(csvUrl);
-            const data = await response.text();
-            
-            // डेटा को लाइनों में तोड़ें
-            const rows = data.split('\n').slice(1);
-            allBhajans = []; 
-            
-            rows.forEach((row) => {
-                // कॉमा (,) के हिसाब से अलग करें, लेकिन कोट्स ("") के अंदर वाले कॉमा को छोड़ दें
-                const columns = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/); 
-                
-                // अगर कम से कम 5 कॉलम हैं (भले ही 6ठा खाली हो)
-                if (columns.length >= 5) {
-                    const id = columns[0] ? columns[0].replace(/"/g, "").trim() : "";
-                    const category = columns[1] ? columns[1].replace(/"/g, "").trim() : "";
-                    const title = columns[2] ? columns[2].replace(/"/g, "").trim() : "";
-                    const audio = columns[3] ? columns[3].replace(/"/g, "").trim() : "";
-                    const lyrics = columns[4] ? columns[4].replace(/"/g, "").replace(/\\n/g, '\n').trim() : "";
-                    
-                    // 6ठा कॉलम (type) है तो लें, वरना खाली मान लें
-                    const type = columns[5] ? columns[5].replace(/"/g, "").trim() : "";
+        <div class="ad-banner">
+            यहाँ AdMob Banner Ad दिखेगा
+        </div>
 
-                    // 🔴 FILTER: खाटू श्याम जी के सिर्फ 'Bhajan'
-                    if (category === "Khatu Shyam" && type === "Bhajan") {
-                        allBhajans.push({ title, audio, lyrics });
-                    }
-                }
-            });
+        <div class="card hanuman">
+            <div class="card-header">
+                <div class="icon">🐒</div>
+                <div class="title-box">
+                    <h2>श्री हनुमान जी</h2>
+                    <p class="subtitle">संकटमोचन महाबली</p>
+                </div>
+            </div>
+            <div class="btn-group">
+                <a href="khatu_shyam_audio.html?cat=Hanuman Ji&type=Chalisa" class="btn hanuman-btn">चालीसा</a>
+                <a href="khatu_shyam_audio.html?cat=Hanuman Ji&type=Aarti" class="btn hanuman-btn">आरती</a>
+                <a href="khatu_shyam_audio.html?cat=Hanuman Ji&type=Bhajan" class="btn hanuman-btn">भजन</a>
+                <a href="khatu_shyam_audio.html?cat=Hanuman Ji&type=Stuti" class="btn hanuman-btn">बाण</a> </div>
+        </div>
 
-            renderList();
-
-        } catch (error) {
-            document.getElementById('listContainer').innerHTML = "<p style='text-align:center; color:red;'>डेटा लोड करने में समस्या आई।</p>";
-        }
-    }
-
-    function renderList() {
-        const container = document.getElementById('listContainer');
-        container.innerHTML = ""; 
-
-        // अगर फ़िल्टर होने के बाद कोई गाना नहीं मिला
-        if(allBhajans.length === 0) {
-            container.innerHTML = "<p style='text-align:center;'>अभी इस केटेगरी में कोई भजन नहीं है।</p>";
-            return;
-        }
-
-        // लिस्ट बनाएँ
-        allBhajans.forEach((item, index) => {
-            const box = document.createElement('div');
-            box.className = 'list-box';
-            box.onclick = () => openPlayer(index); 
-
-            box.innerHTML = `
-                <h3 class="list-title">${item.title}</h3>
-                <span class="play-icon">▶</span>
-            `;
-            container.appendChild(box);
-        });
-    }
-
-    function openPlayer(index) {
-        const item = allBhajans[index];
-        
-        // लिस्ट छुपाएं, प्लेयर दिखाएं
-        document.getElementById('listView').style.display = 'none';
-        document.getElementById('playerView').style.display = 'block';
-        
-        // प्लेयर में डेटा भरें
-        document.getElementById('playerTitle').innerText = item.title;
-        document.getElementById('playerLyrics').innerText = item.lyrics;
-        
-        const audioPlayer = document.getElementById('myAudio');
-        document.getElementById('audioSource').src = (item.audio.includes("http")) ? item.audio : "";
-        audioPlayer.load(); 
-        
-        // अगर ऑडियो लिंक है तो ऑटो-प्ले करें
-        if(item.audio.includes("http")) {
-            audioPlayer.play();
-        }
-    }
-
-    function goBack() {
-        // प्लेयर छुपाएं, लिस्ट दिखाएं
-        document.getElementById('playerView').style.display = 'none';
-        document.getElementById('listView').style.display = 'block';
-        
-        // गाना बंद करें
-        const audioPlayer = document.getElementById('myAudio');
-        audioPlayer.pause();
-        audioPlayer.currentTime = 0;
-    }
-
-    // ऐप लोड होते ही फंक्शन चलाएं
-    loadData();
-</script>
+    </div>
 
 </body>
 </html>
