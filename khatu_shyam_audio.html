@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bhakti Sagar Player</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background-color: #fdf6e3; padding: 15px; margin: 0; color: #333; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #fdf6e3; padding: 15px; margin: 0; }
         #listView, #playerView { max-width: 600px; margin: auto; }
-        .header-title { text-align: center; color: #d35400; margin-bottom: 20px; font-size: 24px; }
+        .header-title { text-align: center; color: #d35400; margin-bottom: 20px; font-size: 24px; font-weight: bold; }
         .list-box { background: white; padding: 18px 15px; margin-bottom: 12px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border-left: 6px solid #d35400; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
         #playerView { display: none; background: white; padding: 25px; border-radius: 20px; box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
         .back-btn { background: #d35400; color: white; border: none; padding: 10px 20px; border-radius: 10px; margin-bottom: 20px; cursor: pointer; font-weight: bold; }
@@ -19,8 +19,8 @@
 <body>
 
 <div id="listView">
-    <h2 class="header-title" id="mainHeader">🙏 भक्ति सागर 🙏</h2>
-    <div id="listContainer"><p style="text-align:center;">डेटा लोड हो रहा है...</p></div>
+    <h2 class="header-title">🙏 भक्ति सागर 🙏</h2>
+    <div id="listContainer"><p style="text-align:center;">डेटा आ रहा है...</p></div>
 </div>
 
 <div id="playerView">
@@ -31,14 +31,11 @@
 </div>
 
 <script>
-    // आपका सही CSV लिंक मैंने यहाँ डाल दिया है
     const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSw465ooS9QfJ9h6M7UIxIt2giu_XtwS-FLnNrKDP0-XoR_B1YIQylYRILKiMDNJbcBf0Ujn7Ea3x7E/pub?gid=0&single=true&output=csv";
 
     const params = new URLSearchParams(window.location.search);
-    const selectedCat = params.get('cat') || 'Khatu Shyam';
-    const selectedType = params.get('type') || 'Bhajan';
-
-    document.getElementById('mainHeader').innerText = `🙏 ${selectedCat} ${selectedType} 🙏`;
+    let selectedCat = (params.get('cat') || '').trim().toLowerCase();
+    let selectedType = (params.get('type') || '').trim().toLowerCase(); 
 
     let songData = [];
 
@@ -46,14 +43,9 @@
         try {
             const response = await fetch(csvUrl);
             const text = await response.text();
+            const rows = text.split('\n').map(row => row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/));
             
-            // CSV को पंक्तियों में तोड़ना
-            const rows = text.split('\n').map(row => {
-                // यह हिस्सा कोमा और कोट्स को सही से हैंडल करता है
-                return row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
-            });
-            
-            // कॉलम के नाम ढूँढना (category, title, type, आदि)
+            // कॉलम के नाम ढूँढना
             const headers = rows[0].map(h => h.replace(/"/g, "").trim().toLowerCase());
             const idxCat = headers.indexOf('category');
             const idxTitle = headers.indexOf('title');
@@ -64,38 +56,51 @@
             songData = [];
             for (let i = 1; i < rows.length; i++) {
                 const r = rows[i];
-                if (r.length < 5) continue;
+                if (r.length < 3) continue;
 
-                const rowCat = r[idxCat]?.replace(/"/g, "").trim();
-                const rowType = r[idxType]?.replace(/"/g, "").trim();
+                const rowCat = (r[idxCat] || "").replace(/"/g, "").trim().toLowerCase();
+                const rowType = (r[idxType] || "").replace(/"/g, "").trim().toLowerCase();
 
-                // जो बटन दबाया है वही डेटा दिखाना
-                if (rowCat === selectedCat && rowType === selectedType) {
-                    songData.push({
-                        title: r[idxTitle]?.replace(/"/g, "").trim() || "No Title",
-                        audio: r[idxAudio]?.replace(/"/g, "").trim() || "",
-                        lyrics: r[idxLyrics]?.replace(/"/g, "").replace(/\\n/g, '\n').trim() || "लिरिक्स उपलब्ध नहीं हैं।"
-                    });
+                // 🔴 सबसे ढीला फिल्टर: अगर category मैच हो जाए तो गाना डाल दो
+                if (selectedCat === "" || rowCat.includes(selectedCat)) {
+                    // अगर type भी मैच हो जाए तो बहुत अच्छा, वरना भी ले लो
+                    if (selectedType === "" || rowType.includes(selectedType)) {
+                        songData.push({
+                            title: r[idxTitle]?.replace(/"/g, "").trim() || "No Title",
+                            audio: r[idxAudio]?.replace(/"/g, "").trim() || "",
+                            lyrics: r[idxLyrics]?.replace(/"/g, "").replace(/\\n/g, '\n').trim() || "लिरिक्स उपलब्ध नहीं हैं।"
+                        });
+                    }
+                }
+            }
+
+            // 🔴 बैकअप: अगर अभी भी कुछ नहीं मिला, तो पूरी लिस्ट दिखा दो
+            if (songData.length === 0) {
+                for (let i = 1; i < rows.length; i++) {
+                    const r = rows[i];
+                    if (r.length > 2) {
+                        songData.push({
+                            title: r[idxTitle]?.replace(/"/g, "").trim() || "No Title",
+                            audio: r[idxAudio]?.replace(/"/g, "").trim() || "",
+                            lyrics: r[idxLyrics]?.replace(/"/g, "").replace(/\\n/g, '\n').trim() || "लिरिक्स उपलब्ध नहीं हैं।"
+                        });
+                    }
                 }
             }
             displayList();
         } catch (error) {
-            document.getElementById('listContainer').innerHTML = "डेटा लोड नहीं हो पाया।";
+            document.getElementById('listContainer').innerHTML = "लिंक में समस्या है।";
         }
     }
 
     function displayList() {
         const container = document.getElementById('listContainer');
         container.innerHTML = "";
-        if (songData.length === 0) {
-            container.innerHTML = `<p style='text-align:center;'>अभी कोई ${selectedType} उपलब्ध नहीं है।</p>`;
-            return;
-        }
         songData.forEach((song, index) => {
             const div = document.createElement('div');
             div.className = 'list-box';
             div.onclick = () => openPlayer(index);
-            div.innerHTML = `<p class="list-title">${song.title}</p><span class="play-icon">▶</span>`;
+            div.innerHTML = `<p class="list-title">${song.title}</p><span style="color:#d35400">▶</span>`;
             container.appendChild(div);
         });
     }
