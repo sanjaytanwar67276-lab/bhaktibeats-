@@ -1,151 +1,100 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bhakti Sagar - Khatu Shyam</title>
-  <style>
-    body { background: #f1f4f9; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 0; text-align: center; color: #333; }
-    
-    /* Header */
-    .header { background: #1e3c72; color: white; padding: 15px; font-size: 20px; font-weight: bold; position: sticky; top: 0; z-index: 100; display: flex; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-    .back-btn { color: white; text-decoration: none; font-size: 16px; background: rgba(255,255,255,0.2); padding: 8px 12px; border-radius: 8px; margin-right: 15px; }
-
-    /* Category Tabs (यह आपका मेन नया फीचर है) */
-    .tab-container { display: flex; background: white; sticky; top: 60px; z-index: 99; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 10px; }
-    .tab { flex: 1; padding: 15px; cursor: pointer; font-weight: bold; color: #555; border-bottom: 3px solid transparent; transition: 0.3s; }
-    .tab.active { color: #1e3c72; border-bottom: 3px solid #FF9800; background: #f9f9f9; }
-
-    .container { padding: 15px; max-width: 500px; margin: 0 auto; text-align: left;}
-
-    /* Content Sections (By default sections are hidden) */
-    .content-section { display: none; animation: fadeIn 0.5s; }
-    .content-section.active { display: block; }
-
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-    /* Smart Card & Audio */
-    .smart-card { background: white; padding: 15px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); margin-bottom: 20px; border-top: 4px solid #1e3c72; }
-    audio { width: 100%; height: 60px; margin: 10px 0; border-radius: 10px; background: #F4FAFF; border: 1px solid #BBDEFB; }
-
-    /* Buttons */
-    .btn-group { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .action-btn { border: none; padding: 12px; border-radius: 8px; font-weight: bold; color: white; cursor: pointer; font-size: 13px; }
-    .read-btn { background: #78909C; }
-    .play-btn { background: #FF9800; }
-
-    /* Lyrics Box */
-    .lyrics-box { display: none; background: #FFFDE7; padding: 15px; border-radius: 10px; margin-top: 15px; border: 1px dashed #FBC02D; max-height: 300px; overflow-y: auto; line-height: 2; scroll-behavior: smooth; }
-    .active-line { color: #D84315; font-weight: bold; background: #FFF3E0; border-radius: 5px; padding-left: 5px; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khatu Shyam Bhajans - Bhakti Sagar</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #fff5e6; padding: 15px; margin: 0; }
+        .container { max-width: 600px; margin: auto; }
+        .header { text-align: center; color: #d35400; padding: 20px 0; }
+        .bhajan-box { background: white; padding: 20px; margin-bottom: 20px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border-top: 5px solid #d35400; }
+        h3 { color: #2c3e50; margin-top: 0; font-size: 20px; }
+        audio { width: 100%; margin: 15px 0; border-radius: 30px; }
+        .lyrics { white-space: pre-wrap; color: #444; font-size: 16px; line-height: 1.8; background: #fffaf0; padding: 15px; border-radius: 10px; border: 1px dashed #d35400; max-height: 400px; overflow-y: auto; }
+        .loading { text-align: center; font-weight: bold; color: #d35400; margin-top: 50px; }
+    </style>
 </head>
 <body>
 
-  <div class="header">
-    <a href="gods_list.html" class="back-btn">⬅ वापस</a>
-    <span>खाटू श्याम सागर 🏹</span>
-  </div>
-
-  <div class="tab-container">
-    <div class="tab active" onclick="showCategory('aarti', this)">🪔 आरती</div>
-    <div class="tab" onclick="showCategory('bhajan', this)">🎵 भजन</div>
-    <div class="tab" onclick="showCategory('stuti', this)">📖 स्तुति</div>
-  </div>
-
-  <div class="container">
-
-    <div id="aarti" class="content-section active">
-      <div class="smart-card">
-        <h3>🕯️ श्री श्याम आरती</h3>
-        <audio id="audio_aarti" controls preload="none">
-          <source src="https://archive.org/download/20260415_20260415_1057/%E0%A4%96%E0%A4%BE%E0%A4%9F%E0%A5%82%20%E0%A4%B6%E0%A5%8D%E0%A4%AF%E0%A4%BE%E0%A4%AE%20%E0%A4%9C%E0%A5%80%20%E0%A4%95%E0%A5%80%20%E0%A4%86%E0%A4%B0%E0%A4%A4%E0%A5%80.mp3" type="audio/mpeg">
-        </audio>
-        <div class="btn-group">
-          <button class="action-btn read-btn" onclick="toggleLyrics('l_aarti')">📖 सिर्फ पढ़ें</button>
-          <button class="action-btn play-btn" onclick="startAuto('l_aarti', 'audio_aarti', [0, 10, 20, 30])">🎤 साथ गाएं</button>
-        </div>
-        <div id="l_aarti" class="lyrics-box">
-          <span class="lyrics-line">ॐ जय श्री श्याम हरे... (पूरी आरती यहाँ आएगी)</span>
-        </div>
-      </div>
+<div class="container" id="bhajanList">
+    <div class="header">
+        <h1>🙏 श्री खाटू श्याम भजन 🙏</h1>
+        <p>भजन लोड हो रहे हैं...</p>
     </div>
+</div>
 
-    <div id="bhajan" class="content-section">
-      <div class="smart-card">
-        <h3>▶ तीन बाण के धारी</h3>
-        <audio id="audio_teen" controls preload="none">
-          <source src="https://archive.org/download/20260415_20260415_1802/%E0%A4%A4%E0%A5%80%E0%A4%A8%20%E0%A4%AC%E0%A4%BE%E0%A4%A3%20%E0%A4%9A%E0%A4%B2%E0%A4%BE%E0%A4%93.mp3" type="audio/mpeg">
-        </audio>
-        <div class="btn-group">
-          <button class="action-btn read-btn" onclick="toggleLyrics('l_teen')">📖 सिर्फ पढ़ें</button>
-          <button class="action-btn play-btn" onclick="startAuto('l_teen', 'audio_teen', [0, 8, 16, 24])">🎤 साथ गाएं</button>
-        </div>
-        <div id="l_teen" class="lyrics-box">
-          <span class="lyrics-line">तीन बाण के धारी, ओ नीले घोड़े वाले...</span>
-        </div>
-      </div>
+<script>
+    // Aapka Google Sheet CSV Link
+    const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSw465ooS9QfJ9h6M7UIxIt2giu_XtwS-FLnNrKDP0-XoR_B1YIQylYRILKiMDNJbcBf0Ujn7Ea3x7E/pub?gid=0&single=true&output=csv";
 
-      <div class="smart-card">
-        <h3>▶ हारे का सहारा</h3>
-        <p style="font-size: 12px; color: #777;">(जल्द आ रहा है...)</p>
-      </div>
-    </div>
-
-    <div id="stuti" class="content-section">
-      <div class="smart-card">
-        <h3>📖 श्री श्याम स्तुति</h3>
-        <p>यहाँ आप स्तुति के बोल और ऑडियो डाल सकते हैं।</p>
-      </div>
-    </div>
-
-  </div>
-
-  <script>
-    // केटेगरी स्विच करने का फंक्शन
-    function showCategory(catId, el) {
-      // सारे सेक्शन छुपाओ
-      var sections = document.getElementsByClassName('content-section');
-      for (var i = 0; i < sections.length; i++) sections[i].classList.remove('active');
-      
-      // सारे टैब से 'active' हटाओ
-      var tabs = document.getElementsByClassName('tab');
-      for (var i = 0; i < tabs.length; i++) tabs[i].classList.remove('active');
-      
-      // सेलेक्टेड सेक्शन दिखाओ और टैब को हाईलाइट करो
-      document.getElementById(catId).classList.add('active');
-      el.classList.add('active');
-
-      // जब टैब बदलें तो गाना बंद हो जाए (ऑप्शनल)
-      var allAudios = document.getElementsByTagName('audio');
-      for(var a=0; a<allAudios.length; a++) allAudios[a].pause();
-    }
-
-    function toggleLyrics(id) {
-      var box = document.getElementById(id);
-      box.style.display = (box.style.display === "block") ? "none" : "block";
-    }
-
-    function startAuto(lId, aId, timing) {
-      var box = document.getElementById(lId);
-      var player = document.getElementById(aId);
-      var lines = box.getElementsByClassName('lyrics-line');
-      box.style.display = "block";
-      player.play();
-
-      setInterval(function() {
-        var now = player.currentTime;
-        for (var i = 0; i < timing.length; i++) {
-          if (now >= timing[i]) {
-            for (var j = 0; j < lines.length; j++) lines[j].classList.remove('active-line');
-            if (lines[i]) {
-              lines[i].classList.add('active-line');
-              lines[i].scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
-          }
+    // Pro-level CSV Parser (ताकि बड़ी लिरिक्स से ऐप क्रैश न हो)
+    function parseCSV(str) {
+        const arr = [];
+        let quote = false;
+        let row = 0, col = 0;
+        for (let c = 0; c < str.length; c++) {
+            let cc = str[c], nc = str[c+1];
+            arr[row] = arr[row] || [];
+            arr[row][col] = arr[row][col] || '';
+            if (cc == '"' && quote && nc == '"') { arr[row][col] += cc; ++c; continue; }
+            if (cc == '"') { quote = !quote; continue; }
+            if (cc == ',' && !quote) { ++col; continue; }
+            if (cc == '\n' && !quote) { ++row; col = 0; continue; }
+            if (cc == '\r' && !quote) { continue; }
+            arr[row][col] += cc;
         }
-      }, 500);
+        return arr;
     }
-  </script>
+
+    async function loadBhajans() {
+        try {
+            const response = await fetch(csvUrl);
+            const data = await response.text();
+            
+            const rows = parseCSV(data);
+            const container = document.getElementById('bhajanList');
+            container.innerHTML = '<div class="header"><h1>🙏 श्री खाटू श्याम भजन 🙏</h1></div>';
+
+            let found = false;
+
+            // Heading row (index 0) को छोड़कर बाकी डेटा पढ़ें
+            for (let i = 1; i < rows.length; i++) {
+                const columns = rows[i];
+                if (columns.length >= 5) {
+                    const category = columns[1].trim();
+                    const title = columns[2].trim();
+                    const audio = columns[3].trim();
+                    const lyrics = columns[4].trim();
+
+                    // सिर्फ 'Khatu Shyam' कैटेगरी वाले भजन दिखाएं
+                    if (category === "Khatu Shyam" && title !== "") {
+                        found = true;
+                        const finalAudio = (audio.includes("http")) ? audio : "";
+                        const html = `
+                            <div class="bhajan-box">
+                                <h3>${title}</h3>
+                                ${finalAudio ? `<audio controls><source src="${finalAudio}" type="audio/mpeg"></audio>` : `<p style="color:#d35400; font-size:14px; font-weight:bold;">ऑडियो जल्द आ रहा है...</p>`}
+                                <div class="lyrics">${lyrics}</div>
+                            </div>
+                        `;
+                        container.innerHTML += html;
+                    }
+                }
+            }
+
+            if (!found) {
+                container.innerHTML += "<p style='text-align:center;'>अभी खाटू श्याम जी के भजन शीट में नहीं डाले गए हैं।</p>";
+            }
+
+        } catch (error) {
+            console.error(error);
+            document.getElementById('bhajanList').innerHTML = "<p style='text-align:center; color:red;'>डेटा लोड करने में समस्या आई। कृपया इंटरनेट चेक करें।</p>";
+        }
+    }
+
+    loadBhajans();
+</script>
 
 </body>
 </html>
