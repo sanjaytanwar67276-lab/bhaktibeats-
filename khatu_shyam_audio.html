@@ -3,97 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Khatu Shyam Bhajans - Bhakti Sagar</title>
+    <title>Bhajan List - Bhakti Sagar</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #fff5e6; padding: 15px; margin: 0; }
-        .container { max-width: 600px; margin: auto; }
-        .header { text-align: center; color: #d35400; padding: 20px 0; }
-        .bhajan-box { background: white; padding: 20px; margin-bottom: 20px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border-top: 5px solid #d35400; }
-        h3 { color: #2c3e50; margin-top: 0; font-size: 20px; }
-        audio { width: 100%; margin: 15px 0; border-radius: 30px; }
-        .lyrics { white-space: pre-wrap; color: #444; font-size: 16px; line-height: 1.8; background: #fffaf0; padding: 15px; border-radius: 10px; border: 1px dashed #d35400; max-height: 400px; overflow-y: auto; }
-        .loading { text-align: center; font-weight: bold; color: #d35400; margin-top: 50px; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #fdf6e3; padding: 15px; margin: 0; }
+        
+        /* List View Styles */
+        #listView { max-width: 600px; margin: auto; }
+        .list-box { background: white; padding: 18px 15px; margin-bottom: 12px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border-left: 5px solid #d35400; cursor: pointer; display: flex; align-items: center; justify-content: space-between; transition: 0.3s; }
+        .list-box:active { transform: scale(0.98); background: #f9f9f9; }
+        .list-title { font-size: 18px; color: #2c3e50; font-weight: bold; margin: 0; }
+        .play-icon { font-size: 24px; color: #d35400; }
+
+        /* Player View Styles */
+        #playerView { max-width: 600px; margin: auto; display: none; background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .back-btn { background: #d35400; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-size: 16px; cursor: pointer; margin-bottom: 20px; display: flex; align-items: center; gap: 5px; }
+        .back-btn:active { background: #ba4a00; }
+        #playerTitle { color: #d35400; margin-top: 0; font-size: 22px; text-align: center; }
+        audio { width: 100%; margin: 15px 0; outline: none; }
+        .lyrics-container { white-space: pre-wrap; color: #333; font-size: 16px; line-height: 1.8; background: #fffaf0; padding: 15px; border-radius: 10px; border: 1px dashed #d35400; margin-top: 10px; }
+        
+        .header-title { text-align: center; color: #d35400; margin-bottom: 20px; }
     </style>
 </head>
 <body>
 
-<div class="container" id="bhajanList">
-    <div class="header">
-        <h1>🙏 श्री खाटू श्याम भजन 🙏</h1>
-        <p>भजन लोड हो रहे हैं...</p>
+<div id="listView">
+    <h2 class="header-title" id="pageMainTitle">🙏 श्री खाटू श्याम भजन 🙏</h2>
+    <div id="listContainer">
+        <p style="text-align:center;">डेटा लोड हो रहा है...</p>
     </div>
 </div>
 
+<div id="playerView">
+    <button class="back-btn" onclick="goBack()">⬅ वापस लिस्ट पर</button>
+    <h2 id="playerTitle">Title</h2>
+    <audio id="myAudio" controls>
+        <source id="audioSource" src="" type="audio/mpeg">
+    </audio>
+    <div id="playerLyrics" class="lyrics-container">Lyrics Here</div>
+</div>
+
 <script>
-    // Aapka Google Sheet CSV Link
-    const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSw465ooS9QfJ9h6M7UIxIt2giu_XtwS-FLnNrKDP0-XoR_B1YIQylYRILKiMDNJbcBf0Ujn7Ea3x7E/pub?gid=0&single=true&output=csv";
+    // YAHA APNA GOOGLE SHEET KA CSV LINK PASTE KAREIN
+    const csvUrl = "YAHA_APNA_CSV_LINK_PASTE_KAREIN";
 
-    // Pro-level CSV Parser (ताकि बड़ी लिरिक्स से ऐप क्रैश न हो)
-    function parseCSV(str) {
-        const arr = [];
-        let quote = false;
-        let row = 0, col = 0;
-        for (let c = 0; c < str.length; c++) {
-            let cc = str[c], nc = str[c+1];
-            arr[row] = arr[row] || [];
-            arr[row][col] = arr[row][col] || '';
-            if (cc == '"' && quote && nc == '"') { arr[row][col] += cc; ++c; continue; }
-            if (cc == '"') { quote = !quote; continue; }
-            if (cc == ',' && !quote) { ++col; continue; }
-            if (cc == '\n' && !quote) { ++row; col = 0; continue; }
-            if (cc == '\r' && !quote) { continue; }
-            arr[row][col] += cc;
-        }
-        return arr;
-    }
+    let allBhajans = []; 
 
-    async function loadBhajans() {
+    async function loadData() {
         try {
             const response = await fetch(csvUrl);
             const data = await response.text();
+            const rows = data.split('\n').slice(1);
             
-            const rows = parseCSV(data);
-            const container = document.getElementById('bhajanList');
-            container.innerHTML = '<div class="header"><h1>🙏 श्री खाटू श्याम भजन 🙏</h1></div>';
+            allBhajans = []; 
+            
+            rows.forEach((row) => {
+                // 6 columns: id, category, title, audio, lyrics, type
+                const columns = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/); 
+                if (columns.length >= 6) {
+                    const id = columns[0].replace(/"/g, "").trim();
+                    const category = columns[1].replace(/"/g, "").trim();
+                    const title = columns[2].replace(/"/g, "").trim();
+                    const audio = columns[3].replace(/"/g, "").trim();
+                    const lyrics = columns[4].replace(/"/g, "").replace(/\\n/g, '\n').trim();
+                    const type = columns[5].replace(/"/g, "").trim();
 
-            let found = false;
-
-            // Heading row (index 0) को छोड़कर बाकी डेटा पढ़ें
-            for (let i = 1; i < rows.length; i++) {
-                const columns = rows[i];
-                if (columns.length >= 5) {
-                    const category = columns[1].trim();
-                    const title = columns[2].trim();
-                    const audio = columns[3].trim();
-                    const lyrics = columns[4].trim();
-
-                    // सिर्फ 'Khatu Shyam' कैटेगरी वाले भजन दिखाएं
-                    if (category === "Khatu Shyam" && title !== "") {
-                        found = true;
-                        const finalAudio = (audio.includes("http")) ? audio : "";
-                        const html = `
-                            <div class="bhajan-box">
-                                <h3>${title}</h3>
-                                ${finalAudio ? `<audio controls><source src="${finalAudio}" type="audio/mpeg"></audio>` : `<p style="color:#d35400; font-size:14px; font-weight:bold;">ऑडियो जल्द आ रहा है...</p>`}
-                                <div class="lyrics">${lyrics}</div>
-                            </div>
-                        `;
-                        container.innerHTML += html;
+                    // 🔴 FILTER: यहाँ से तय होगा कि इस पेज पर क्या दिखेगा 🔴
+                    if (category === "Khatu Shyam" && type === "Bhajan") {
+                        allBhajans.push({ title, audio, lyrics });
                     }
                 }
-            }
+            });
 
-            if (!found) {
-                container.innerHTML += "<p style='text-align:center;'>अभी खाटू श्याम जी के भजन शीट में नहीं डाले गए हैं।</p>";
-            }
+            renderList();
 
         } catch (error) {
-            console.error(error);
-            document.getElementById('bhajanList').innerHTML = "<p style='text-align:center; color:red;'>डेटा लोड करने में समस्या आई। कृपया इंटरनेट चेक करें।</p>";
+            document.getElementById('listContainer').innerHTML = "<p style='text-align:center;'>डेटा लोड करने में समस्या आई।</p>";
         }
     }
 
-    loadBhajans();
+    function renderList() {
+        const container = document.getElementById('listContainer');
+        container.innerHTML = ""; 
+
+        if(allBhajans.length === 0) {
+            container.innerHTML = "<p style='text-align:center;'>अभी कोई डेटा नहीं मिला।</p>";
+            return;
+        }
+
+        allBhajans.forEach((item, index) => {
+            const box = document.createElement('div');
+            box.className = 'list-box';
+            box.onclick = () => openPlayer(index); 
+
+            box.innerHTML = `
+                <h3 class="list-title">${item.title}</h3>
+                <span class="play-icon">▶</span>
+            `;
+            container.appendChild(box);
+        });
+    }
+
+    function openPlayer(index) {
+        const item = allBhajans[index];
+        
+        document.getElementById('listView').style.display = 'none';
+        document.getElementById('playerView').style.display = 'block';
+        
+        document.getElementById('playerTitle').innerText = item.title;
+        document.getElementById('playerLyrics').innerText = item.lyrics;
+        
+        const audioPlayer = document.getElementById('myAudio');
+        document.getElementById('audioSource').src = (item.audio.includes("http")) ? item.audio : "";
+        audioPlayer.load(); 
+        
+        if(item.audio.includes("http")) {
+            audioPlayer.play();
+        }
+    }
+
+    function goBack() {
+        document.getElementById('playerView').style.display = 'none';
+        document.getElementById('listView').style.display = 'block';
+        
+        const audioPlayer = document.getElementById('myAudio');
+        audioPlayer.pause();
+        audioPlayer.currentTime = 0;
+    }
+
+    loadData();
 </script>
 
 </body>
