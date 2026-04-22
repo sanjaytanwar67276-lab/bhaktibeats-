@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>भक्ति सागर</title>
     <style>
-        body { font-family: sans-serif; background-color: #fdf6e3; padding: 15px; text-align: center; }
+        body { font-family: sans-serif; background-color: #fdf6e3; padding: 15px; text-align: center; color: #3e2723; }
         .list-box { background: white; padding: 18px; margin-bottom: 12px; border-radius: 12px; border-left: 6px solid #d35400; cursor: pointer; text-align: left; box-shadow: 0 3px 6px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; }
-        #playerView { display: none; background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 100; overflow-y: auto; }
+        #playerView { display: none; background: white; padding: 20px; border-radius: 15px; position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 100; overflow-y: auto; }
         .back-btn { background: #d35400; color: white; border: none; padding: 12px; border-radius: 8px; width: 100%; cursor: pointer; font-weight: bold; margin-bottom: 20px; }
-        .lyrics-container { white-space: pre-wrap; text-align: left; background: #fffaf0; padding: 15px; border-radius: 10px; border: 1px dashed #d35400; margin-top: 15px; line-height: 1.6; }
+        .lyrics-container { white-space: pre-wrap; text-align: left; background: #fffaf0; padding: 15px; border-radius: 10px; border: 1px dashed #d35400; margin-top: 15px; line-height: 1.8; font-size: 16px; }
         h2 { color: #d35400; }
     </style>
 </head>
@@ -17,7 +17,7 @@
 
 <div id="listView">
     <h2 id="pageMainTitle">🙏 लोड हो रहा है... 🙏</h2>
-    <div id="listContainer">कृपया प्रतीक्षा करें...</div>
+    <div id="listContainer">डेटा मंगाया जा रहा है...</div>
 </div>
 
 <div id="playerView">
@@ -28,56 +28,53 @@
 </div>
 
 <script>
-    const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSw465ooS9QfJ9h6M7UIxIt2giu_XtwS-FLnNrKDP0-XoR_B1YIQylYRILKiMDNJbcBf0Ujn7Ea3x7E/pub?output=csv";
+    // 🔴 आपकी शीट का सटीक डेटा लिंक 🔴
+    const sheetID = "1Sw465ooS9QfJ9h6M7UIxIt2giu_XtwS-FLnNrKDP0-XoR_B1YIQylYRILKiMDNJbcBf0Ujn7Ea3x7E";
+    const jsonUrl = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json`;
 
     const urlParams = new URLSearchParams(window.location.search);
     const selectedCat = (urlParams.get('cat') || "").toLowerCase().trim();
     const selectedType = (urlParams.get('type') || "").toLowerCase().trim();
 
-    document.getElementById('pageMainTitle').innerText = "🙏 " + (urlParams.get('cat') || "भक्ति") + " 🙏";
+    document.getElementById('pageMainTitle').innerText = "🙏 " + (urlParams.get('cat') || "भक्ति") + " संग्रह 🙏";
 
     async function loadData() {
         try {
-            const response = await fetch(csvUrl + "?cache=" + new Date().getTime());
-            const data = await response.text();
-            const rows = data.split(/\r?\n/).slice(1);
+            const response = await fetch(jsonUrl);
+            const text = await response.text();
+            // गूगल के रिस्पॉन्स से फालतू टेक्स्ट हटाकर शुद्ध JSON बनाना
+            const jsonData = JSON.parse(text.substring(47, text.length - 2));
+            const rows = jsonData.table.rows;
             
             let allItems = [];
             rows.forEach(row => {
-                if(!row.trim()) return;
+                const cells = row.c;
+                // कॉलम की मैपिंग: B=1 (Cat), C=2 (Title), D=3 (URL), E=4 (Lyrics), F=5 (Type)
+                const rowCat = cells[1]?.v?.toString().toLowerCase() || "";
+                const rowType = cells[5]?.v?.toString().toLowerCase() || "";
 
-                // 🔴 सबसे पॉवरफुल तरीका: अगर पूरी लाइन में कहीं भी Category और Type शब्द हैं 🔴
-                const rowLower = row.toLowerCase();
-                
-                if (rowLower.includes(selectedCat) && rowLower.includes(selectedType)) {
-                    const cols = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.replace(/^"|"$/g, '').trim());
-                    
-                    if (cols.length >= 4) {
-                        allItems.push({
-                            title: cols[2],
-                            audio: cols[3],
-                            lyrics: (cols[4] || "").replace(/\\n/g, '\n')
-                        });
-                    }
+                if (rowCat.includes(selectedCat) && rowType.includes(selectedType)) {
+                    allItems.push({
+                        title: cells[2]?.v || "No Title",
+                        audio: cells[3]?.v || "",
+                        lyrics: cells[4]?.v || "Lyrics not available."
+                    });
                 }
             });
             renderList(allItems);
         } catch (e) {
-            document.getElementById('listContainer').innerText = "सर्वर से डेटा नहीं मिला।";
+            console.error(e);
+            document.getElementById('listContainer').innerText = "सर्वर एरर! कृपया लिंक चेक करें।";
         }
     }
 
     function renderList(items) {
         const container = document.getElementById('listContainer');
         container.innerHTML = "";
-        
         if (items.length === 0) {
-            container.innerHTML = `<b>कोई डेटा नहीं मिला।</b><br>
-            <small>URL: ${selectedCat} | ${selectedType}</small><br><br>
-            <p style="font-size:12px; color:gray;">कृपया ब्राउज़र का 'Cache' साफ़ करें।</p>`;
+            container.innerHTML = `<b>डेटा नहीं मिला!</b><br><small>URL: ${selectedCat} | ${selectedType}</small>`;
             return;
         }
-
         items.forEach((item, index) => {
             const div = document.createElement('div');
             div.className = 'list-box';
