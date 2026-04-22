@@ -3,110 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bhakti Sagar Player</title>
+    <title>Bhakti Sagar - Player</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background-color: #fdf6e3; padding: 15px; margin: 0; color: #333; }
-        #listView, #playerView { max-width: 600px; margin: auto; }
-        .header-title { text-align: center; color: #d35400; margin-bottom: 20px; font-size: 24px; font-weight: bold; }
-        .list-box { background: white; padding: 18px 15px; margin-bottom: 12px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border-left: 6px solid #d35400; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
-        #playerView { display: none; background: white; padding: 25px; border-radius: 20px; box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
-        .back-btn { background: #d35400; color: white; border: none; padding: 10px 20px; border-radius: 10px; margin-bottom: 20px; cursor: pointer; font-weight: bold; }
-        #songTitle { color: #d35400; text-align: center; font-size: 22px; margin-top: 0; }
-        audio { width: 100%; margin: 20px 0; }
-        .lyrics-box { white-space: pre-wrap; line-height: 1.8; background: #fffaf0; padding: 20px; border-radius: 15px; border: 1px dashed #d35400; font-size: 16px; max-height: 400px; overflow-y: auto; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #fdf6e3; padding: 15px; margin: 0; }
+        #listView { max-width: 600px; margin: auto; }
+        .header-title { text-align: center; color: #d35400; margin-bottom: 20px; font-size: 22px; }
+        .list-box { background: white; padding: 18px 15px; margin-bottom: 12px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border-left: 5px solid #d35400; cursor: pointer; display: flex; align-items: center; justify-content: space-between; }
+        .list-title { font-size: 18px; color: #2c3e50; font-weight: bold; margin: 0; }
+        #playerView { max-width: 600px; margin: auto; display: none; background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .back-btn { background: #d35400; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; margin-bottom: 20px; width: 100%; font-size: 16px; }
+        #playerTitle { color: #d35400; text-align: center; margin-bottom: 15px; }
+        audio { width: 100%; margin-bottom: 20px; }
+        .lyrics-container { white-space: pre-wrap; color: #333; font-size: 16px; line-height: 1.8; background: #fffaf0; padding: 15px; border-radius: 10px; border: 1px dashed #d35400; max-height: 350px; overflow-y: auto; }
+        .no-data { text-align: center; padding: 20px; color: #7f8c8d; font-weight: bold; }
     </style>
 </head>
 <body>
 
 <div id="listView">
-    <h2 class="header-title" id="mainHeader">🙏 भक्ति सागर 🙏</h2>
-    <div id="listContainer"><p style="text-align:center;">भजन लोड हो रहे हैं...</p></div>
+    <h2 class="header-title" id="pageMainTitle">🙏 लोडिंग... 🙏</h2>
+    <div id="listContainer"></div>
 </div>
 
 <div id="playerView">
     <button class="back-btn" onclick="goBack()">⬅ वापस लिस्ट पर</button>
-    <h2 id="songTitle">Bhajan Name</h2>
-    <audio id="mainAudio" controls><source id="audioSource" src="" type="audio/mpeg"></audio>
-    <div id="songLyrics" class="lyrics-box"></div>
+    <h2 id="playerTitle">Title</h2>
+    <audio id="myAudio" controls><source id="audioSource" src="" type="audio/mpeg"></audio>
+    <div id="playerLyrics" class="lyrics-container"></div>
 </div>
 
 <script>
-    // आपका दिया हुआ सही CSV लिंक
+    // AAPKA SAHI CSV LINK
     const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSw465ooS9QfJ9h6M7UIxIt2giu_XtwS-FLnNrKDP0-XoR_B1YIQylYRILKiMDNJbcBf0Ujn7Ea3x7E/pub?gid=0&single=true&output=csv";
 
-    const params = new URLSearchParams(window.location.search);
-    const selectedCat = (params.get('cat') || 'Khatu Shyam').toLowerCase().trim();
-    const selectedType = (params.get('type') || '').toLowerCase().trim();
+    const urlParams = new URLSearchParams(window.location.search);
+    const selectedCat = (urlParams.get('cat') || "Khatu Shyam").trim().toLowerCase();
+    const selectedType = (urlParams.get('type') || "Bhajan").trim().toLowerCase();
 
-    document.getElementById('mainHeader').innerText = `🙏 ${params.get('cat') || 'Khatu Shyam'} 🙏`;
+    document.getElementById('pageMainTitle').innerText = `🙏 ${urlParams.get('cat') || 'Khatu Shyam'} ${urlParams.get('type') || 'Bhajan'} 🙏`;
 
-    let songData = [];
+    let allItems = [];
 
     async function loadData() {
         try {
             const response = await fetch(csvUrl);
-            const text = await response.text();
-            // कोमा और कोट्स को सही से हैंडल करने के लिए
-            const rows = text.split('\n').map(row => row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/));
+            const data = await response.text();
+            const rows = data.split('\n').slice(1);
             
-            songData = [];
-            for (let i = 1; i < rows.length; i++) {
-                const r = rows[i];
-                if (r.length < 5) continue;
+            allItems = [];
+            rows.forEach(row => {
+                const cols = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+                if (cols.length >= 6) {
+                    const rowCat = cols[1].replace(/"/g, "").trim();
+                    const rowType = cols[5].replace(/"/g, "").trim();
 
-                // Column B (Index 1) = Category, Column F (Index 5) = Type
-                const rowCat = (r[1] || "").replace(/"/g, "").trim().toLowerCase();
-                const rowType = (r[5] || "").replace(/"/g, "").trim().toLowerCase();
-
-                // स्मार्ट फिल्टर: कैटेगिरी मिलनी चाहिए, टाइप मिले तो ठीक वरना सब दिखा दो
-                if (rowCat.includes(selectedCat)) {
-                    if (selectedType === "" || rowType.includes(selectedType)) {
-                        songData.push({
-                            title: r[2]?.replace(/"/g, "").trim() || "No Title",
-                            audio: r[3]?.replace(/"/g, "").trim() || "",
-                            lyrics: r[4]?.replace(/"/g, "").replace(/\\n/g, '\n').trim() || "लिरिक्स उपलब्ध नहीं हैं।"
+                    // CASE INSENSITIVE CHECK (Small/Capital ka jhanjhat khatam)
+                    if (rowCat.toLowerCase() === selectedCat && rowType.toLowerCase() === selectedType) {
+                        allItems.push({
+                            title: cols[2].replace(/"/g, "").trim(),
+                            audio: cols[3].replace(/"/g, "").trim(),
+                            lyrics: cols[4].replace(/"/g, "").replace(/\\n/g, '\n').trim()
                         });
                     }
                 }
-            }
-            displayList();
-        } catch (error) {
-            document.getElementById('listContainer').innerHTML = "डेटा लोड नहीं हो पाया।";
+            });
+            renderList();
+        } catch (e) {
+            document.getElementById('listContainer').innerHTML = "<p class='no-data'>Network Error! Sheet load nahi ho payi.</p>";
         }
     }
 
-    function displayList() {
+    function renderList() {
         const container = document.getElementById('listContainer');
         container.innerHTML = "";
-        if (songData.length === 0) {
-            container.innerHTML = `<p style='text-align:center;'>क्षमा करें, अभी कोई सामग्री उपलब्ध नहीं है।</p>`;
+        if (allItems.length === 0) {
+            container.innerHTML = `<p class='no-data'>Abhi koi ${urlParams.get('type')} uplabd nahi hai.</p>`;
             return;
         }
-        songData.forEach((song, index) => {
+        allItems.forEach((item, index) => {
             const div = document.createElement('div');
             div.className = 'list-box';
             div.onclick = () => openPlayer(index);
-            div.innerHTML = `<p class="list-title">${song.title}</p><span style="color:#d35400">▶</span>`;
+            div.innerHTML = `<h3 class="list-title">${item.title}</h3><span>▶</span>`;
             container.appendChild(div);
         });
     }
 
     function openPlayer(index) {
-        const song = songData[index];
+        const item = allItems[index];
         document.getElementById('listView').style.display = 'none';
         document.getElementById('playerView').style.display = 'block';
-        document.getElementById('songTitle').innerText = song.title;
-        document.getElementById('songLyrics').innerText = song.lyrics;
-        const audio = document.getElementById('mainAudio');
-        document.getElementById('audioSource').src = song.audio;
+        document.getElementById('playerTitle').innerText = item.title;
+        document.getElementById('playerLyrics').innerText = item.lyrics;
+        const audio = document.getElementById('myAudio');
+        document.getElementById('audioSource').src = item.audio;
         audio.load();
-        if(song.audio) audio.play();
+        audio.play();
     }
 
     function goBack() {
         document.getElementById('playerView').style.display = 'none';
         document.getElementById('listView').style.display = 'block';
-        document.getElementById('mainAudio').pause();
+        document.getElementById('myAudio').pause();
     }
 
     loadData();
