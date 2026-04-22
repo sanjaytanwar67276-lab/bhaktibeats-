@@ -6,59 +6,65 @@
     <title>भक्ति सागर - प्लेयर</title>
     <style>
         body { font-family: sans-serif; background-color: #fdf6e3; padding: 15px; text-align: center; }
-        .list-box { background: white; padding: 15px; margin-bottom: 10px; border-radius: 10px; border-left: 5px solid #d35400; cursor: pointer; text-align: left; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        #playerView { display: none; background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .back-btn { background: #d35400; color: white; border: none; padding: 10px 20px; border-radius: 8px; margin-bottom: 20px; width: 100%; cursor: pointer; }
-        .lyrics-container { white-space: pre-wrap; text-align: left; background: #fffaf0; padding: 15px; border-radius: 10px; margin-top: 10px; }
+        .list-box { background: white; padding: 18px 15px; margin-bottom: 12px; border-radius: 12px; border-left: 6px solid #d35400; cursor: pointer; text-align: left; box-shadow: 0 3px 6px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; }
+        .list-box:active { transform: scale(0.98); }
+        #playerView { display: none; background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .back-btn { background: #d35400; color: white; border: none; padding: 12px; border-radius: 8px; margin-bottom: 20px; width: 100%; cursor: pointer; font-weight: bold; }
+        .lyrics-container { white-space: pre-wrap; text-align: left; background: #fffaf0; padding: 15px; border-radius: 10px; margin-top: 15px; border: 1px dashed #d35400; max-height: 400px; overflow-y: auto; line-height: 1.6; }
         h2 { color: #d35400; }
+        .no-data { color: #7f8c8d; font-weight: bold; margin-top: 50px; }
     </style>
 </head>
 <body>
 
 <div id="listView">
-    <h2 id="pageMainTitle">लोडिंग...</h2>
-    <div id="listContainer">डेटा लोड हो रहा है, कृपया रुकें...</div>
+    <h2 id="pageMainTitle">श्री भक्ति संग्रह</h2>
+    <div id="listContainer">डेटा लोड हो रहा है...</div>
 </div>
 
 <div id="playerView">
     <button class="back-btn" onclick="goBack()">⬅ वापस लिस्ट पर</button>
     <h2 id="playerTitle">Title</h2>
-    <audio id="myAudio" controls><source id="audioSource" src="" type="audio/mpeg"></audio>
+    <audio id="myAudio" controls style="width: 100%;"><source id="audioSource" src="" type="audio/mpeg"></audio>
     <div id="playerLyrics" class="lyrics-container"></div>
 </div>
 
 <script>
-    // 🔴 1. आपका CSV लिंक 🔴
+    // 1. आपका ताज़ा CSV लिंक
     const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSw465ooS9QfJ9h6M7UIxIt2giu_XtwS-FLnNrKDP0-XoR_B1YIQylYRILKiMDNJbcBf0Ujn7Ea3x7E/pub?gid=0&single=true&output=csv";
 
-    // 🔴 2. URL से नाम पकड़ना 🔴
+    // 2. URL से डेटा लेना (Case-Insensitive बनाने के लिए toLowerCase)
     const urlParams = new URLSearchParams(window.location.search);
     const selectedCat = (urlParams.get('cat') || "").trim().toLowerCase();
     const selectedType = (urlParams.get('type') || "").trim().toLowerCase();
 
-    document.getElementById('pageMainTitle').innerText = "🙏 श्री " + (urlParams.get('cat') || "भक्ति") + " संग्रह 🙏";
+    // टाइटल सेट करना
+    if(selectedCat) {
+        document.getElementById('pageMainTitle').innerText = "🙏 " + urlParams.get('cat') + " " + (urlParams.get('type') || "") + " 🙏";
+    }
 
     let allItems = [];
 
     async function loadData() {
         try {
-            // "v=" डालने से Vercel पुरानी फाइल नहीं दिखा पाएगा
+            // Vercel/Browser Cache से बचने के लिए Math.random() का इस्तेमाल
             const response = await fetch(csvUrl + "&v=" + Math.random());
             const data = await response.text();
             const rows = data.split(/\r?\n/).slice(1);
             
             allItems = [];
             rows.forEach(row => {
-                // स्मार्ट स्प्लिट: जो कोमा और कोट्स को सही से हैंडल करे
+                if(!row.trim()) return;
+
+                // कोमा और कोट्स को सही से हैंडल करने वाला स्प्लिट
                 const cols = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.replace(/^"|"$/g, '').trim());
 
                 if (cols.length >= 6) {
                     const rowCat = cols[1].toLowerCase();
                     const rowType = cols[5].toLowerCase();
 
-                    // अगर URL में कुछ नहीं मिला, तो सब दिखा दो (Testing के लिए)
-                    // वरना मैच करके दिखाओ
-                    if (!selectedCat || (rowCat.includes(selectedCat) && rowType.includes(selectedType))) {
+                    // 🔴 यहाँ बदलाव किया है: .includes() इस्तेमाल किया है जो स्पेलिंग मैच में आसानी करेगा
+                    if (rowCat.includes(selectedCat) && rowType.includes(selectedType)) {
                         allItems.push({
                             title: cols[2],
                             audio: cols[3],
@@ -69,22 +75,27 @@
             });
             renderList();
         } catch (e) {
-            document.getElementById('listContainer').innerHTML = "सर्वर से जुड़ नहीं पाए।";
+            document.getElementById('listContainer').innerHTML = "<p class='no-data'>इंटरनेट या सर्वर एरर।</p>";
         }
     }
 
     function renderList() {
         const container = document.getElementById('listContainer');
         container.innerHTML = "";
+        
         if (allItems.length === 0) {
-            container.innerHTML = "<b>कोई डेटा नहीं मिला।</b><br>Category: " + selectedCat + "<br>Type: " + selectedType;
+            container.innerHTML = `<div class='no-data'>
+                <p>कोई डेटा नहीं मिला।</p>
+                <small>खोजा गया: ${selectedCat} | ${selectedType}</small>
+            </div>`;
             return;
         }
+
         allItems.forEach((item, index) => {
             const div = document.createElement('div');
             div.className = 'list-box';
             div.onclick = () => openPlayer(index);
-            div.innerHTML = "<b>" + item.title + "</b> <span style='float:right'>▶</span>";
+            div.innerHTML = `<span><b>${item.title}</b></span> <span style="font-size:20px;">▶</span>`;
             container.appendChild(div);
         });
     }
@@ -95,10 +106,12 @@
         document.getElementById('playerView').style.display = 'block';
         document.getElementById('playerTitle').innerText = item.title;
         document.getElementById('playerLyrics').innerText = item.lyrics;
+        
         const audio = document.getElementById('myAudio');
-        document.getElementById('audioSource').src = item.audio;
+        const source = document.getElementById('audioSource');
+        source.src = item.audio;
         audio.load();
-        audio.play();
+        audio.play().catch(e => console.log("Auto-play blocked"));
     }
 
     function goBack() {
