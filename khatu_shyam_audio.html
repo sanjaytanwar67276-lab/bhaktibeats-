@@ -15,19 +15,21 @@
 <body>
 
 <div id="listView">
-    <h2 id="pageMainTitle">श्री भक्ति संग्रह</h2>
-    <div id="listContainer">लोड हो रहा है...</div>
+    <h2 id="pageMainTitle">🙏 लोड हो रहा है... 🙏</h2>
+    <div id="listContainer">डेटा मंगाया जा रहा है...</div>
 </div>
 
 <div id="playerView">
-    <button class="back-btn" onclick="goBack()">⬅ वापस लिस्ट पर</button>
-    <h2 id="playerTitle">Title</h2>
+    <button class="back-btn" onclick="goBack()">⬅ वापस</button>
+    <h2 id="playerTitle">शीर्षक</h2>
     <audio id="myAudio" controls style="width: 100%;"><source id="audioSource" src="" type="audio/mpeg"></audio>
     <div id="playerLyrics" class="lyrics-container"></div>
 </div>
 
 <script>
-    const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSw465ooS9QfJ9h6M7UIxIt2giu_XtwS-FLnNrKDP0-XoR_B1YIQylYRILKiMDNJbcBf0Ujn7Ea3x7E/pub?gid=0&single=true&output=csv";
+    // 🔴 नया लिंक जो सुरक्षा घेरे (CORS) को तोड़ देगा 🔴
+    const sheetId = "1Sw465ooS9QfJ9h6M7UIxIt2giu_XtwS-FLnNrKDP0-XoR_B1YIQylYRILKiMDNJbcBf0Ujn7Ea3x7E";
+    const csvUrl = `https://docs.google.com/spreadsheets/d/e/2PACX-1vSw465ooS9QfJ9h6M7UIxIt2giu_XtwS-FLnNrKDP0-XoR_B1YIQylYRILKiMDNJbcBf0Ujn7Ea3x7E/pub?output=csv`;
 
     const urlParams = new URLSearchParams(window.location.search);
     const selectedCat = (urlParams.get('cat') || "khatu").toLowerCase().trim();
@@ -37,32 +39,36 @@
 
     async function loadData() {
         try {
-            const response = await fetch(csvUrl + "?v=" + Math.random());
+            const response = await fetch(csvUrl);
             const data = await response.text();
-            const rows = data.split(/\r?\n/).slice(1);
             
-            let allItems = [];
-            rows.forEach(row => {
-                // स्मार्ट स्प्लिट जो कोमा को सही से हैंडल करे
-                const cols = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.replace(/^"|"$/g, '').trim());
+            // CSV को लाइनों में तोड़ें
+            const rows = data.split(/\r?\n/).map(row => {
+                // स्मार्ट कोमा स्प्लिट
+                return row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.replace(/^"|"$/g, '').trim());
+            });
 
+            let allItems = [];
+            // पहली लाइन हेडर है, इसलिए i=1 से शुरू करें
+            for(let i=1; i<rows.length; i++) {
+                const cols = rows[i];
                 if (cols.length >= 5) {
                     const rowCat = (cols[1] || "").toLowerCase();
-                    const rowTitle = (cols[2] || "");
-                    const rowAudio = (cols[3] || "");
-                    const rowLyrics = (cols[4] || "");
-                    // 🔴 यहाँ बदलाव: Column F (5) और Column G (6) दोनों में Type ढूंढो
                     const rowType = ((cols[5] || "") + (cols[6] || "")).toLowerCase();
 
-                    // अगर Category और Type मैच होते हैं
+                    // अगर कैटेगरी और टाइप में नाम मिलता-जुलता है
                     if (rowCat.includes(selectedCat) && rowType.includes(selectedType)) {
-                        allItems.push({ title: rowTitle, audio: rowAudio, lyrics: rowLyrics });
+                        allItems.push({
+                            title: cols[2],
+                            audio: cols[3],
+                            lyrics: (cols[4] || "").replace(/\\n/g, '\n')
+                        });
                     }
                 }
-            });
+            }
             renderList(allItems);
         } catch (e) {
-            document.getElementById('listContainer').innerText = "नेटवर्क एरर!";
+            document.getElementById('listContainer').innerText = "शीट से डेटा नहीं मिल पाया। इंटरनेट चेक करें।";
         }
     }
 
@@ -70,7 +76,7 @@
         const container = document.getElementById('listContainer');
         container.innerHTML = "";
         if (items.length === 0) {
-            container.innerHTML = "<b>डेटा नहीं मिला।</b><br><small>Check: " + selectedCat + " | " + selectedType + "</small>";
+            container.innerHTML = "<b>कोई भजन नहीं मिला।</b><br><small>खोजा गया: " + selectedCat + " | " + selectedType + "</small>";
             return;
         }
         items.forEach((item, index) => {
@@ -80,7 +86,7 @@
                 document.getElementById('listView').style.display = 'none';
                 document.getElementById('playerView').style.display = 'block';
                 document.getElementById('playerTitle').innerText = item.title;
-                document.getElementById('playerLyrics').innerText = item.lyrics.replace(/\\n/g, '\n');
+                document.getElementById('playerLyrics').innerText = item.lyrics;
                 const audio = document.getElementById('myAudio');
                 document.getElementById('audioSource').src = item.audio;
                 audio.load();
