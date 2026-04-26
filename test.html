@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body style="font-family: sans-serif; padding: 20px;">
+
+    <h2>Google Sheet X-Ray Test 🔍</h2>
+    <p>Agar niche data dikha, toh sab sahi hai. Agar HTML code dikha, toh sheet lock hai.</p>
+    
+    <div id="result" style="background: #eee; padding: 15px; border-radius: 10px; white-space: pre-wrap; font-size: 12px; overflow-x: auto;">
+        Google Sheet se data laya ja raha hai...
+    </div>
+
+    <script>
+        // Aapki nayi sheet ka direct link
+        const sheetId = "1_LzCifHXzlqmX7UWL8mBvJcax62E2adwKvPoELo13To";
+        const testUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv`;
+
+        fetch(testUrl)
+            .then(response => response.text())
+            .then(text => {
+                document.getElementById("result").innerText = text;
+            })
+            .catch(error => {
+                document.getElementById("result").innerText = "Error aa gaya: " + error;
+            });
+    </script>
+
+</body>
+</html>
