@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>भक्ति सागर प्लेयर</title>
+    <title>भक्ति सागर</title>
     <style>
         body { font-family: sans-serif; background-color: #fdf6e3; padding: 15px; text-align: center; }
-        .list-box { background: white; padding: 20px; margin-bottom: 12px; border-radius: 15px; border-left: 6px solid #d35400; cursor: pointer; text-align: left; box-shadow: 0 4px 8px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; }
-        #playerView { display: none; background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        .back-btn { background: #d35400; color: white; border: none; padding: 12px; border-radius: 8px; width: 100%; cursor: pointer; font-weight: bold; margin-bottom: 20px; }
-        .lyrics-container { white-space: pre-wrap; text-align: left; background: #fffaf0; padding: 15px; border-radius: 10px; border: 1px dashed #d35400; margin-top: 15px; line-height: 1.8; }
+        .list-box { background: white; padding: 20px; margin-bottom: 12px; border-radius: 12px; border-left: 5px solid #d35400; text-align: left; box-shadow: 0 2px 5px rgba(0,0,0,0.1); cursor: pointer; }
+        #playerView { display: none; background: white; padding: 20px; border-radius: 15px; }
+        .back-btn { background: #d35400; color: white; border: none; padding: 10px; width: 100%; border-radius: 8px; margin-bottom: 15px; font-weight: bold; }
+        audio { width: 100%; margin: 15px 0; }
+        .lyrics { white-space: pre-wrap; text-align: left; background: #fffaf0; padding: 15px; border-radius: 10px; line-height: 1.6; }
+        .debug-info { font-size: 10px; color: gray; margin-top: 20px; text-align: left; background: #eee; padding: 10px; display: block; }
     </style>
 </head>
 <body>
@@ -17,51 +19,47 @@
 <div id="listView">
     <h2 id="pageMainTitle">🙏 श्री भक्ति संग्रह 🙏</h2>
     <div id="listContainer">डेटा लोड हो रहा है...</div>
+    <div id="debugBox" class="debug-info"></div>
 </div>
 
 <div id="playerView">
-    <button class="back-btn" onclick="goBack()">⬅ वापस लिस्ट पर</button>
-    <h2 id="playerTitle">शीर्षक</h2>
-    <audio id="myAudio" controls style="width: 100%;"><source id="audioSource" src="" type="audio/mpeg"></audio>
-    <div id="playerLyrics" class="lyrics-container"></div>
+    <button class="back-btn" onclick="goBack()">⬅ वापस</button>
+    <h2 id="playerTitle"></h2>
+    <audio id="myAudio" controls><source id="audioSource" src="" type="audio/mpeg"></audio>
+    <div id="playerLyrics" class="lyrics"></div>
 </div>
 
 <script>
     const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSw465ooS9QfJ9h6M7UIxIt2giu_XtwS-FLnNrKDP0-XoR_B1YIQylYRILKiMDNJbcBf0Ujn7Ea3x7E/pub?gid=0&single=true&output=csv";
 
     const urlParams = new URLSearchParams(window.location.search);
-    const selectedCat = (urlParams.get('cat') || "").toLowerCase().trim();
-    const selectedType = (urlParams.get('type') || "").toLowerCase().trim();
+    // हम सिर्फ़ पहले 3-4 अक्षरों से मैच करेंगे ताकि स्पेलिंग की गलती न हो
+    const catSearch = (urlParams.get('cat') || "").toLowerCase().substring(0, 4);
+    const typeSearch = (urlParams.get('type') || "").toLowerCase().substring(0, 3);
 
     async function loadData() {
+        const debug = document.getElementById('debugBox');
         try {
-            // रैंडम नंबर ताकि ब्राउज़र हमेशा ताज़ा डेटा लाए
-            const response = await fetch(csvUrl + "?v=" + Math.random());
+            const response = await fetch(csvUrl + "?t=" + Date.now());
             const text = await response.text();
-            const rows = text.split(/\r?\n/).slice(1);
+            const rows = text.split(/\r?\n/);
             
-            let allItems = [];
-            rows.forEach(row => {
-                if(!row.trim()) return;
-                
-                // कोमा स्प्लिट
-                const cols = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.replace(/^"|"$/g, '').trim());
+            debug.innerHTML = "Sheet Rows Found: " + rows.length + "<br>Searching for: " + catSearch + " + " + typeSearch;
 
-                if (cols.length >= 4) {
-                    // पूरी लाइन में शब्द ढूंढना (सबसे सेफ तरीका)
-                    const rowText = row.toLowerCase();
-                    if (rowText.includes(selectedCat) && rowText.includes(selectedType)) {
-                        allItems.push({
-                            title: cols[2],
-                            audio: cols[3],
-                            lyrics: (cols[4] || "").replace(/\\n/g, '\n')
-                        });
+            let allItems = [];
+            for (let i = 1; i < rows.length; i++) {
+                const row = rows[i].toLowerCase();
+                // अगर लाइन में 'khat' (khatu) और 'aar' (aarti) दोनों हैं
+                if (row.includes(catSearch) && row.includes(typeSearch)) {
+                    const cols = rows[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.replace(/^"|"$/g, '').trim());
+                    if (cols.length >= 4) {
+                        allItems.push({ title: cols[2], audio: cols[3], lyrics: (cols[4] || "").replace(/\\n/g, '\n') });
                     }
                 }
-            });
+            }
             renderList(allItems);
         } catch (e) {
-            document.getElementById('listContainer').innerText = "सर्वर एरर!";
+            document.getElementById('listContainer').innerText = "Error: " + e.message;
         }
     }
 
@@ -69,7 +67,7 @@
         const container = document.getElementById('listContainer');
         container.innerHTML = "";
         if (items.length === 0) {
-            container.innerHTML = `<b>कोई डेटा नहीं मिला।</b><br><small>URL: ${selectedCat} | ${selectedType}</small>`;
+            container.innerHTML = "<b>कोई डेटा नहीं मिला।</b><br>URL चेक करें या शीट में स्पेलिंग देखें।";
             return;
         }
         items.forEach((item, index) => {
@@ -85,7 +83,7 @@
                 audio.load();
                 audio.play();
             };
-            div.innerHTML = `<b>${item.title}</b> <span>▶</span>`;
+            div.innerHTML = "<b>" + item.title + "</b>";
             container.appendChild(div);
         });
     }
