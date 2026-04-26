@@ -11,12 +11,13 @@
         .back-btn { background: #d35400; color: white; border: none; padding: 12px; border-radius: 8px; width: 100%; cursor: pointer; font-weight: bold; margin-bottom: 20px; }
         .lyrics { white-space: pre-wrap; text-align: left; background: #fffaf0; padding: 15px; border-radius: 10px; border: 1px dashed #d35400; margin-top: 15px; line-height: 1.8; font-size: 16px; }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 </head>
 <body>
 
 <div id="listView">
     <h2 id="pageMainTitle">🙏 श्री भक्ति संग्रह 🙏</h2>
-    <div id="listContainer">डेटा लोड हो रहा है... कृपया प्रतीक्षा करें।</div>
+    <div id="listContainer">भजन लोड हो रहे हैं...</div>
 </div>
 
 <div id="playerView">
@@ -27,53 +28,48 @@
 </div>
 
 <script>
-    // 🔴 100% लाइव और सुरक्षित API लिंक (पब्लिश अटका हो तो भी काम करेगा) 🔴
     const sheetId = "1_LzCifHXzlqmX7UWL8mBvJcax62E2adwKvPoELo13To";
-    const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&gid=0`;
+    const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv`;
 
     const urlParams = new URLSearchParams(window.location.search);
-    const catSearch = (urlParams.get('cat') || "").toLowerCase().trim();
-    const typeSearch = (urlParams.get('type') || "").toLowerCase().trim();
+    const catSearch = (urlParams.get('cat') || "khatu").toLowerCase().trim();
+    const typeSearch = (urlParams.get('type') || "aarti").toLowerCase().trim();
 
-    // अगर लिंक में कुछ न हो तो डिफ़ॉल्ट रूप से ये दिखाएगा
-    const finalCat = catSearch ? catSearch : "khatu shyam";
-    const finalType = typeSearch ? typeSearch : "aarti";
+    document.getElementById('pageMainTitle').innerText = "🙏 लोड हो रहा है 🙏";
 
-    document.getElementById('pageMainTitle').innerText = `🙏 लोड हो रहा है 🙏`;
+    function loadData() {
+        // PapaParse अपने आप पूरा डेटा सही से लाएगा
+        Papa.parse(csvUrl + "&t=" + Date.now(), {
+            download: true,
+            complete: function(results) {
+                const rows = results.data;
+                let allItems = [];
 
-    async function loadData() {
-        try {
-            const response = await fetch(csvUrl + "&t=" + Date.now());
-            const text = await response.text();
-            
-            const rows = text.split(/\r?\n/);
-            let allItems = [];
-
-            // पहली लाइन हेडर है, इसलिए 1 से शुरू
-            for (let i = 1; i < rows.length; i++) {
-                const rowText = rows[i];
-                if(!rowText.trim()) continue;
-
-                // 🔴 मास्टरस्ट्रोक: फालतू स्पेस हटाकर पूरी लाइन में शब्द ढूंढना 🔴
-                const rowLower = rowText.toLowerCase().replace(/\s+/g, ' '); 
-                
-                if (rowLower.includes(finalCat) && rowLower.includes(finalType)) {
-                    // CSV कोमा स्प्लिट
-                    const cols = rowText.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.replace(/^"|"$/g, '').trim());
+                // पहली लाइन हेडिंग है, इसलिए 1 से शुरू करेंगे
+                for(let i = 1; i < rows.length; i++) {
+                    const cols = rows[i];
                     
-                    if (cols.length >= 4) {
-                        allItems.push({
-                            title: cols[2] || "Title Not Found",
-                            audio: cols[3] || "",
-                            lyrics: (cols[4] || "").replace(/\\n/g, '\n')
-                        });
+                    // कम से कम 6 कॉलम होने चाहिए (A से F तक)
+                    if(cols.length >= 6) {
+                        const rowCat = (cols[1] || "").toLowerCase();
+                        const rowType = (cols[5] || "").toLowerCase();
+
+                        // अगर कैटेगरी और टाइप मैच करते हैं
+                        if(rowCat.includes(catSearch) && rowType.includes(typeSearch)) {
+                            allItems.push({
+                                title: cols[2] || "बिना शीर्षक",
+                                audio: cols[3] || "",
+                                lyrics: cols[4] || "लिरिक्स उपलब्ध नहीं हैं।"
+                            });
+                        }
                     }
                 }
+                renderList(allItems);
+            },
+            error: function(err) {
+                document.getElementById('listContainer').innerHTML = "<b>नेटवर्क एरर!</b>";
             }
-            renderList(allItems);
-        } catch (e) {
-            document.getElementById('listContainer').innerHTML = `<b>सर्वर से जुड़ने में समस्या!</b>`;
-        }
+        });
     }
 
     function renderList(items) {
@@ -81,12 +77,11 @@
         container.innerHTML = "";
         
         if (items.length === 0) {
-            container.innerHTML = `<b>कोई डेटा नहीं मिला।</b><br><small>कृपया अपनी शीट चेक करें।</small>`;
+            container.innerHTML = "<b>कोई डेटा नहीं मिला!</b><br><small>URL चेक करें या शीट रिफ्रेश करें।</small>";
             return;
         }
 
-        // नाम सेट करें
-        document.getElementById('pageMainTitle').innerText = `🙏 ${items[0].title.split(' ')[1] || 'भक्ति'} संग्रह 🙏`;
+        document.getElementById('pageMainTitle').innerText = "🙏 " + (urlParams.get('cat') || "भक्ति") + " 🙏";
 
         items.forEach((item, index) => {
             const div = document.createElement('div');
