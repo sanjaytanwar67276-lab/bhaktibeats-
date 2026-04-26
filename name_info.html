@@ -18,7 +18,8 @@
 
   <div class="header">🚩 नाम से जानें अपना भविष्य</div>
   
-  <input type="text" id="userName" placeholder="अपना नाम यहाँ लिखें (जैसे: Sandeep)">
+  <p style="font-size: 14px; color: #D84315; margin-bottom: 10px;">सटीक जानकारी के लिए अपना नाम <b>अंग्रेजी (English)</b> में लिखें</p>
+  <input type="text" id="userName" placeholder="जैसे: Sanjay Tanwar">
   <br>
   <button class="check-btn" onclick="analyzeName()">जानकारी देखें</button>
 
@@ -31,10 +32,10 @@
     <span class="label">इष्ट देव (किसकी पूजा करें):</span>
     <p id="res-god"></p>
 
-    <span class="label">शुभ अंक और रंग:</span>
+    <span class="label">शुभ अंक (Lucky Number):</span>
     <p id="res-lucky"></p>
 
-    <span class="label">स्वभाव:</span>
+    <span class="label">आपका स्वभाव:</span>
     <p id="res-nature"></p>
 
     <button class="audio-btn" onclick="speakResult()">🔊 आवाज़ में सुनें</button>
@@ -45,95 +46,109 @@
       let name = document.getElementById("userName").value.trim();
       if(name == "") { alert("कृपया नाम लिखें!"); return; }
 
-      let first = name.charAt(0).toUpperCase();
+      let fullName = name.toUpperCase();
+      let first = fullName.charAt(0);
       let res = document.getElementById("result");
       
-      let rashi = ""; let god = ""; let lucky = ""; let nature = "";
+      let rashi = ""; let god = "";
 
-      // राशि चक्र लॉजिक
-      if (['A', 'L', 'E', 'अ', 'आ', 'इ', 'ई', 'ल'].includes(first)) {
+      // --- 1. वैदिक ज्योतिष: राशि और इष्ट देव (पहले अक्षर से) ---
+      if (['A', 'L', 'E', 'I'].includes(first)) {
           rashi = "मेष (Aries)";
           god = "भगवान हनुमान जी। मंगलवार को हनुमान चालीसा का पाठ आपके लिए सर्वोत्तम है।";
-          lucky = "शुभ अंक: 1, 8 | शुभ रंग: लाल (Red)";
-          nature = "आप साहसी, ऊर्जावान और निडर स्वभाव के व्यक्ति हैं।";
       } 
-      else if (['B', 'V', 'U', 'ब', 'व', 'उ', 'ऊ'].includes(first)) {
+      else if (['B', 'V', 'U', 'W'].includes(first)) {
           rashi = "वृषभ (Taurus)";
-          god = "माता लक्ष्मी और भगवान शिव। शुक्रवार को खीर का भोग लगाना शुभ होगा।";
-          lucky = "शुभ अंक: 2, 7 | शुभ रंग: सफेद या चमकीला";
-          nature = "आप शांत, धैर्यवान और कला प्रेमी व्यक्ति हैं।";
+          god = "माता लक्ष्मी और भगवान शिव। शुक्रवार को माता की पूजा करें।";
       }
-      else if (['K', 'CH', 'GH', 'क', 'छ', 'घ'].includes(first)) {
+      else if (['K', 'Q'].includes(first)) {
           rashi = "मिथुन (Gemini)";
           god = "भगवान गणेश जी। बुधवार को दूर्वा चढ़ाने से बिगड़े काम बनेंगे।";
-          lucky = "शुभ अंक: 3, 6 | शुभ रंग: हरा (Green)";
-          nature = "आप बहुत बुद्धिमान और मिलनसार स्वभाव के हैं।";
       }
-      else if (['H', 'DD', 'ह', 'ड'].includes(first)) {
+      else if (['D', 'H'].includes(first)) {
           rashi = "कर्क (Cancer)";
-          god = "भगवान शिव (महादेव)। सोमवार को जलाभिषेक करना आपके लिए कल्याणकारी है।";
-          lucky = "शुभ अंक: 4 | शुभ रंग: सफेद या चांदी जैसा";
-          nature = "आप भावुक और अपनों का बहुत ख्याल रखने वाले व्यक्ति हैं।";
+          god = "भगवान शिव (महादेव)। सोमवार को जलाभिषेक करना कल्याणकारी है।";
       }
-      else if (['M', 'T', 'म', 'ट'].includes(first)) {
+      else if (['M', 'T'].includes(first)) {
           rashi = "सिंह (Leo)";
-          god = "सूर्य नारायण। प्रतिदिन सूर्य को जल चढ़ाना आपको नई ऊंचाइयों पर ले जाएगा।";
-          lucky = "शुभ अंक: 5 | शुभ रंग: सुनहरा या नारंगी";
-          nature = "आप स्वाभिमानी और नेतृत्व करने की क्षमता रखते हैं।";
+          god = "सूर्य नारायण। प्रतिदिन सूर्य को जल चढ़ाना शुभ है।";
       }
-      else if (['P', 'T', 'प', 'ठ', 'ण'].includes(first)) {
+      else if (['P'].includes(first)) {
           rashi = "कन्या (Virgo)";
           god = "विष्णु जी और गणेश जी। बुधवार को गायत्री मंत्र का जाप करें।";
-          lucky = "शुभ अंक: 3, 8 | शुभ रंग: गहरा हरा";
-          nature = "आप हर काम को बहुत बारीकी और परफेक्शन से करते हैं।";
       }
-      else if (['R', 'T', 'र', 'त'].includes(first)) {
+      else if (['R'].includes(first)) {
           rashi = "तुला (Libra)";
-          god = "माता दुर्गा। शुक्रवार को माता की आरती करें, जीवन सुखमय होगा।";
-          lucky = "शुभ अंक: 2, 7 | शुभ रंग: नीला या सफेद";
-          nature = "आप न्यायप्रिय और संतुलित जीवन जीने वाले व्यक्ति हैं।";
+          god = "माता दुर्गा। शुक्रवार को माता की आरती करें।";
       }
-      else if (['N', 'Y', 'न', 'य'].includes(first)) {
+      else if (['N', 'Y'].includes(first)) {
           rashi = "वृश्चिक (Scorpio)";
           god = "हनुमान जी। मंगलवार को चमेली के तेल का दीपक जलाएं।";
-          lucky = "शुभ अंक: 1, 8 | शुभ रंग: गहरा लाल या मरून";
-          nature = "आप दृढ़ निश्चयी और थोड़े रहस्यमयी स्वभाव के होते हैं।";
       }
-      else if (['D', 'P', 'B', 'ध', 'फ', 'भ', 'य'].includes(first)) {
+      else if (['F'].includes(first)) {
           rashi = "धनु (Sagittarius)";
           god = "भगवान विष्णु और श्री कृष्ण। गुरुवार को पीले अन्न का दान करें।";
-          lucky = "शुभ अंक: 3, 9 | शुभ रंग: पीला (Yellow)";
-          nature = "आप धार्मिक, दयालु और हमेशा सच बोलने वाले व्यक्ति हैं।";
       }
-      else if (['K', 'J', 'ख', 'ज'].includes(first)) {
+      else if (['J'].includes(first)) {
           rashi = "मकर (Capricorn)";
-          god = "शनि देव और शिव जी। शनिवार को पीपल के नीचे तेल का दीपक जलाएं।";
-          lucky = "शुभ अंक: 4, 8 | शुभ रंग: नीला या काला";
-          nature = "आप मेहनती, अनुशासित और गंभीर स्वभाव के हैं।";
+          god = "शनि देव और शिव जी। शनिवार को तेल का दीपक जलाएं।";
       }
-      else if (['G', 'S', 'ग', 'श', 'स', 'ष'].includes(first)) {
+      else if (['G', 'S'].includes(first)) {
           rashi = "कुंभ (Aquarius)";
-          god = "शनि देव और हनुमान जी। शनिवार को सुंदरकांड का पाठ अत्यंत लाभकारी है।";
-          lucky = "शुभ अंक: 4, 8 | शुभ रंग: आसमानी या काला";
-          nature = "आप विचारशील और दूसरों की मदद करने वाले होते हैं।";
+          god = "शनि देव और हनुमान जी। शनिवार को सुंदरकांड का पाठ करें।";
       }
-      else if (['D', 'C', 'J', 'द', 'च', 'झ', 'थ'].includes(first)) {
+      else if (['Z'].includes(first)) {
           rashi = "मीन (Pisces)";
-          god = "श्री राम और विष्णु जी। गुरुवार को विष्णु सहस्त्रनाम का पाठ करें।";
-          lucky = "शुभ अंक: 3, 9 | शुभ रंग: पीला या केसरिया";
-          nature = "आप आध्यात्मिक और कोमल हृदय के व्यक्ति हैं।";
+          god = "श्री राम और विष्णु जी। गुरुवार को विष्णु सहस्त्रनाम पढ़ें।";
       }
       else {
-          rashi = "अक्षर अभी सूची में नहीं है";
+          rashi = "मेष (Aries)";
           god = "भगवान के सभी रूपों की भक्ति करें।";
-          lucky = "शुभ अंक: 9 | शुभ रंग: केसरिया";
-          nature = "आपका व्यक्तित्व बहुत आकर्षक है।";
       }
 
+      // --- 2. अंक ज्योतिष: शुभ अंक की गणना (पूरे नाम से) ---
+      let numerologyMap = {
+          'A': 1, 'J': 1, 'S': 1, 'B': 2, 'K': 2, 'T': 2, 'C': 3, 'L': 3, 'U': 3,
+          'D': 4, 'M': 4, 'V': 4, 'E': 5, 'N': 5, 'W': 5, 'F': 6, 'O': 6, 'X': 6,
+          'G': 7, 'P': 7, 'Y': 7, 'H': 8, 'Q': 8, 'Z': 8, 'I': 9, 'R': 9
+      };
+
+      let totalSum = 0;
+      for (let i = 0; i < fullName.length; i++) {
+          if (numerologyMap[fullName[i]]) {
+              totalSum += numerologyMap[fullName[i]];
+          }
+      }
+
+      while (totalSum > 9) {
+          let tempSum = 0;
+          let digits = totalSum.toString().split('');
+          for(let d of digits) { tempSum += parseInt(d); }
+          totalSum = tempSum;
+      }
+      
+      let luckyNumber = totalSum;
+
+      // --- 3. स्वभाव (Nature): लकी नंबर के हिसाब से ---
+      let behaviorMap = {
+          1: "आप बहुत आत्मविश्वासी और जन्मजात लीडर हैं। आप अपने फैसले खुद लेना पसंद करते हैं।",
+          2: "आप बहुत शांत, दयालु और रिश्तों को अहमियत देने वाले इंसान हैं। दूसरों की मदद करना आपको अच्छा लगता है।",
+          3: "आप बहुत रचनात्मक (Creative) और मिलनसार हैं। लोग आपकी बातों से जल्दी आकर्षित होते हैं।",
+          4: "आप बहुत मेहनती, ईमानदार और अनुशासित हैं। आप किसी भी काम को परफेक्ट तरीके से करना पसंद करते हैं।",
+          5: "आपको आज़ादी और घूमना-फिरना पसंद है। आप बहुत जल्दी नई चीज़ें सीख लेते हैं।",
+          6: "आप परिवार से बहुत प्यार करने वाले और ज़िम्मेदार इंसान हैं। आप सुख-शांति प्रिय व्यक्ति हैं।",
+          7: "आप बहुत गहराई से सोचने वाले और आध्यात्मिक इंसान हैं। आप हमेशा सच्चाई की तलाश में रहते हैं।",
+          8: "आप बहुत महत्वाकांक्षी हैं और करियर में बड़ी सफलता पाने की ताकत रखते हैं। आप न्यायप्रिय हैं।",
+          9: "आप बहुत निडर, साहसी और समाज का भला सोचने वाले इंसान हैं। आप हार नहीं मानते।"
+      };
+
+      let nature = behaviorMap[luckyNumber] || "आप बहुत ही आकर्षक और अच्छे स्वभाव वाले व्यक्ति हैं।";
+
+      // रिजल्ट दिखाना
       document.getElementById("res-name").innerText = name;
       document.getElementById("res-rashi").innerText = rashi;
       document.getElementById("res-god").innerText = god;
-      document.getElementById("res-lucky").innerText = lucky;
+      document.getElementById("res-lucky").innerText = luckyNumber;
       document.getElementById("res-nature").innerText = nature;
       res.style.display = "block";
     }
@@ -141,18 +156,19 @@
     function speakResult() {
       window.speechSynthesis.cancel();
       let text = "नाम: " + document.getElementById("res-name").innerText + ". " +
-                 "राशि: " + document.getElementById("res-rashi").innerText + ". " +
-                 "इष्ट देव: " + document.getElementById("res-god").innerText + ". " +
-                 document.getElementById("res-lucky").innerText + ". " +
-                 "स्वभाव: " + document.getElementById("res-nature").innerText;
+                 "आपकी राशि है " + document.getElementById("res-rashi").innerText + ". " +
+                 "आपके इष्ट देव हैं " + document.getElementById("res-god").innerText + ". " +
+                 "आपका शुभ अंक " + document.getElementById("res-lucky").innerText + " है. " +
+                 "आपका स्वभाव: " + document.getElementById("res-nature").innerText;
       let msg = new SpeechSynthesisUtterance(text);
       msg.lang = 'hi-IN';
       msg.rate = 0.9;
       window.speechSynthesis.speak(msg);
     }
   </script>
+
   <p style="font-size: 10px; color: #999; text-align: center; margin: 20px;">
-  * सूचना: इस पेज का डेटा सामान्य मान्यताओं पर आधारित है। पूर्ण शुद्धता का दावा नहीं है। (See Disclaimer on Home)
-</p>
+    * सूचना: यह गणना अंक ज्योतिष और सामान्य मान्यताओं पर आधारित है।
+  </p>
 </body>
 </html>
