@@ -3,59 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bhakti Sagar Player</title>
+    <title>भक्ति सागर प्लेयर</title>
     <style>
         body { font-family: sans-serif; background-color: #fdf6e3; padding: 15px; text-align: center; color: #3e2723; }
         .list-box { background: white; padding: 20px; margin-bottom: 12px; border-radius: 12px; border-left: 6px solid #d35400; cursor: pointer; text-align: left; box-shadow: 0 4px 6px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; }
         #playerView { display: none; background: white; padding: 20px; border-radius: 15px; position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 100; overflow-y: auto; }
         .back-btn { background: #d35400; color: white; border: none; padding: 12px; border-radius: 8px; width: 100%; cursor: pointer; font-weight: bold; margin-bottom: 20px; }
-        .lyrics { white-space: pre-wrap; text-align: left; background: #fffaf0; padding: 15px; border-radius: 10px; border: 1px dashed #d35400; margin-top: 15px; line-height: 1.8; }
-        .debug-box { font-size: 11px; color: #999; margin-top: 30px; padding: 10px; background: #eee; border-radius: 5px; text-align: left; }
+        .lyrics { white-space: pre-wrap; text-align: left; background: #fffaf0; padding: 15px; border-radius: 10px; border: 1px dashed #d35400; margin-top: 15px; line-height: 1.8; font-size: 16px; }
+        .debug-box { font-size: 11px; color: #777; margin-top: 30px; padding: 10px; background: #eee; border-radius: 5px; text-align: left; overflow-x: auto; }
     </style>
 </head>
 <body>
 
 <div id="listView">
     <h2 id="pageMainTitle">🙏 श्री भक्ति संग्रह 🙏</h2>
-    <div id="listContainer">Data load ho raha hai...</div>
-    <div id="debug" class="debug-box">Initializing...</div>
+    <div id="listContainer">डेटा मंगाया जा रहा है...</div>
+    <div id="debug" class="debug-box">सिस्टम चालू हो रहा है...</div>
 </div>
 
 <div id="playerView">
-    <button class="back-btn" onclick="goBack()">⬅ Back to List</button>
+    <button class="back-btn" onclick="goBack()">⬅ वापस लिस्ट पर</button>
     <h2 id="playerTitle"></h2>
     <audio id="myAudio" controls style="width: 100%;"><source id="audioSource" src="" type="audio/mpeg"></audio>
     <div id="playerLyrics" class="lyrics"></div>
 </div>
 
 <script>
-    // 🔴 DIRECT EXPORT LINK (Isse data kabhi nahi fasega) 🔴
+    // 🔴 आपकी शीट की ID 🔴
     const sheetId = "1Sw465ooS9QfJ9h6M7UIxIt2giu_XtwS-FLnNrKDP0-XoR_B1YIQylYRILKiMDNJbcBf0Ujn7Ea3x7E";
     const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=0`;
 
     const urlParams = new URLSearchParams(window.location.search);
     const catSearch = (urlParams.get('cat') || "Khatu").toLowerCase().trim().substring(0, 4);
-    const typeSearch = (urlParams.get('type') || "Bhajan").toLowerCase().trim().substring(0, 3);
+    const typeSearch = (urlParams.get('type') || "Aarti").toLowerCase().trim().substring(0, 3);
 
     async function loadData() {
         const debug = document.getElementById('debug');
+        const container = document.getElementById('listContainer');
+        
         try {
-            const response = await fetch(csvUrl + "&t=" + Date.now());
-            const text = await response.text();
-            const rows = text.split(/\r?\n/);
+            // 🔴 ऑल-ओरिजिन प्रॉक्सी का इस्तेमाल 🔴
+            const proxyUrl = "https://api.allorigins.win/get?url=" + encodeURIComponent(csvUrl + "&t=" + Date.now());
             
-            debug.innerHTML = `Rows found: ${rows.length} <br> Looking for: ${catSearch} + ${typeSearch}`;
+            const response = await fetch(proxyUrl);
+            const json = await response.json();
+            const text = json.contents; // प्रॉक्सी से मिला असली CSV डेटा
+
+            const rows = text.split(/\r?\n/);
+            debug.innerHTML = `Rows found: ${rows.length} <br> Searching for: ${catSearch} + ${typeSearch}`;
 
             let allItems = [];
             for (let i = 1; i < rows.length; i++) {
                 if (!rows[i].trim()) continue;
                 
-                // Smart Split for CSV
+                // CSV स्प्लिट लॉजिक
                 const cols = rows[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.replace(/^"|"$/g, '').trim());
                 
                 if (cols.length >= 4) {
                     const rowLower = rows[i].toLowerCase();
-                    // Match Category and Type anywhere in the row
+                    // कैटेगरी और टाइप मैच करें
                     if (rowLower.includes(catSearch) && rowLower.includes(typeSearch)) {
                         allItems.push({
                             title: cols[2],
@@ -67,8 +73,8 @@
             }
             renderList(allItems);
         } catch (e) {
-            debug.innerHTML = "Error: " + e.message;
-            document.getElementById('listContainer').innerText = "Network Error!";
+            debug.innerHTML = "Error details: " + e.message;
+            container.innerText = "डेटा लोड करने में समस्या आई।";
         }
     }
 
@@ -76,7 +82,7 @@
         const container = document.getElementById('listContainer');
         container.innerHTML = "";
         if (items.length === 0) {
-            container.innerHTML = "<b>Data nahi mila.</b><br><small>Sheet refresh karke dekhein.</small>";
+            container.innerHTML = "<b>कोई भजन नहीं मिला।</b><br><small>शीट में पक्का करें कि डेटा मौजूद है।</small>";
             return;
         }
         items.forEach((item, index) => {
@@ -88,11 +94,12 @@
                 document.getElementById('playerTitle').innerText = item.title;
                 document.getElementById('playerLyrics').innerText = item.lyrics;
                 const audio = document.getElementById('myAudio');
-                document.getElementById('audioSource').src = item.audio;
+                const source = document.getElementById('audioSource');
+                source.src = item.audio;
                 audio.load();
                 audio.play();
             };
-            div.innerHTML = `<b>${item.title}</b> <span>▶</span>`;
+            div.innerHTML = `<b>${item.title}</b> <span style="font-size:20px; color:#d35400;">▶</span>`;
             container.appendChild(div);
         });
     }
