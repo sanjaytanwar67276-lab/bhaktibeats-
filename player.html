@@ -3,63 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>भक्ति सागर</title>
+    <title>Bhakti Sagar Player</title>
     <style>
-        body { font-family: sans-serif; background-color: #fdf6e3; padding: 15px; text-align: center; }
-        .list-box { background: white; padding: 20px; margin-bottom: 12px; border-radius: 12px; border-left: 5px solid #d35400; text-align: left; box-shadow: 0 2px 5px rgba(0,0,0,0.1); cursor: pointer; }
-        #playerView { display: none; background: white; padding: 20px; border-radius: 15px; }
-        .back-btn { background: #d35400; color: white; border: none; padding: 10px; width: 100%; border-radius: 8px; margin-bottom: 15px; font-weight: bold; }
-        audio { width: 100%; margin: 15px 0; }
-        .lyrics { white-space: pre-wrap; text-align: left; background: #fffaf0; padding: 15px; border-radius: 10px; line-height: 1.6; }
-        .debug-info { font-size: 10px; color: gray; margin-top: 20px; text-align: left; background: #eee; padding: 10px; display: block; }
+        body { font-family: sans-serif; background-color: #fdf6e3; padding: 15px; text-align: center; color: #3e2723; }
+        .list-box { background: white; padding: 20px; margin-bottom: 12px; border-radius: 12px; border-left: 6px solid #d35400; cursor: pointer; text-align: left; box-shadow: 0 4px 6px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; }
+        #playerView { display: none; background: white; padding: 20px; border-radius: 15px; position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 100; overflow-y: auto; }
+        .back-btn { background: #d35400; color: white; border: none; padding: 12px; border-radius: 8px; width: 100%; cursor: pointer; font-weight: bold; margin-bottom: 20px; }
+        .lyrics { white-space: pre-wrap; text-align: left; background: #fffaf0; padding: 15px; border-radius: 10px; border: 1px dashed #d35400; margin-top: 15px; line-height: 1.8; }
+        .debug-box { font-size: 11px; color: #999; margin-top: 30px; padding: 10px; background: #eee; border-radius: 5px; text-align: left; }
     </style>
 </head>
 <body>
 
 <div id="listView">
     <h2 id="pageMainTitle">🙏 श्री भक्ति संग्रह 🙏</h2>
-    <div id="listContainer">डेटा लोड हो रहा है...</div>
-    <div id="debugBox" class="debug-info"></div>
+    <div id="listContainer">Data load ho raha hai...</div>
+    <div id="debug" class="debug-box">Initializing...</div>
 </div>
 
 <div id="playerView">
-    <button class="back-btn" onclick="goBack()">⬅ वापस</button>
+    <button class="back-btn" onclick="goBack()">⬅ Back to List</button>
     <h2 id="playerTitle"></h2>
-    <audio id="myAudio" controls><source id="audioSource" src="" type="audio/mpeg"></audio>
+    <audio id="myAudio" controls style="width: 100%;"><source id="audioSource" src="" type="audio/mpeg"></audio>
     <div id="playerLyrics" class="lyrics"></div>
 </div>
 
 <script>
-    const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSw465ooS9QfJ9h6M7UIxIt2giu_XtwS-FLnNrKDP0-XoR_B1YIQylYRILKiMDNJbcBf0Ujn7Ea3x7E/pub?gid=0&single=true&output=csv";
+    // 🔴 DIRECT EXPORT LINK (Isse data kabhi nahi fasega) 🔴
+    const sheetId = "1Sw465ooS9QfJ9h6M7UIxIt2giu_XtwS-FLnNrKDP0-XoR_B1YIQylYRILKiMDNJbcBf0Ujn7Ea3x7E";
+    const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=0`;
 
     const urlParams = new URLSearchParams(window.location.search);
-    // हम सिर्फ़ पहले 3-4 अक्षरों से मैच करेंगे ताकि स्पेलिंग की गलती न हो
-    const catSearch = (urlParams.get('cat') || "").toLowerCase().substring(0, 4);
-    const typeSearch = (urlParams.get('type') || "").toLowerCase().substring(0, 3);
+    const catSearch = (urlParams.get('cat') || "Khatu").toLowerCase().trim().substring(0, 4);
+    const typeSearch = (urlParams.get('type') || "Bhajan").toLowerCase().trim().substring(0, 3);
 
     async function loadData() {
-        const debug = document.getElementById('debugBox');
+        const debug = document.getElementById('debug');
         try {
-            const response = await fetch(csvUrl + "?t=" + Date.now());
+            const response = await fetch(csvUrl + "&t=" + Date.now());
             const text = await response.text();
             const rows = text.split(/\r?\n/);
             
-            debug.innerHTML = "Sheet Rows Found: " + rows.length + "<br>Searching for: " + catSearch + " + " + typeSearch;
+            debug.innerHTML = `Rows found: ${rows.length} <br> Looking for: ${catSearch} + ${typeSearch}`;
 
             let allItems = [];
             for (let i = 1; i < rows.length; i++) {
-                const row = rows[i].toLowerCase();
-                // अगर लाइन में 'khat' (khatu) और 'aar' (aarti) दोनों हैं
-                if (row.includes(catSearch) && row.includes(typeSearch)) {
-                    const cols = rows[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.replace(/^"|"$/g, '').trim());
-                    if (cols.length >= 4) {
-                        allItems.push({ title: cols[2], audio: cols[3], lyrics: (cols[4] || "").replace(/\\n/g, '\n') });
+                if (!rows[i].trim()) continue;
+                
+                // Smart Split for CSV
+                const cols = rows[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(c => c.replace(/^"|"$/g, '').trim());
+                
+                if (cols.length >= 4) {
+                    const rowLower = rows[i].toLowerCase();
+                    // Match Category and Type anywhere in the row
+                    if (rowLower.includes(catSearch) && rowLower.includes(typeSearch)) {
+                        allItems.push({
+                            title: cols[2],
+                            audio: cols[3],
+                            lyrics: (cols[4] || "").replace(/\\n/g, '\n')
+                        });
                     }
                 }
             }
             renderList(allItems);
         } catch (e) {
-            document.getElementById('listContainer').innerText = "Error: " + e.message;
+            debug.innerHTML = "Error: " + e.message;
+            document.getElementById('listContainer').innerText = "Network Error!";
         }
     }
 
@@ -67,7 +76,7 @@
         const container = document.getElementById('listContainer');
         container.innerHTML = "";
         if (items.length === 0) {
-            container.innerHTML = "<b>कोई डेटा नहीं मिला।</b><br>URL चेक करें या शीट में स्पेलिंग देखें।";
+            container.innerHTML = "<b>Data nahi mila.</b><br><small>Sheet refresh karke dekhein.</small>";
             return;
         }
         items.forEach((item, index) => {
@@ -83,7 +92,7 @@
                 audio.load();
                 audio.play();
             };
-            div.innerHTML = "<b>" + item.title + "</b>";
+            div.innerHTML = `<b>${item.title}</b> <span>▶</span>`;
             container.appendChild(div);
         });
     }
