@@ -13,6 +13,8 @@
     .label { color: #E65100; font-weight: bold; font-size: 16px; display: block; margin-top: 15px; border-bottom: 1px solid #eee; padding-bottom: 3px; }
     p { font-size: 15px; color: #333; line-height: 1.5; margin: 8px 0; }
     .highlight-box { background: #FFF8E1; padding: 12px; border-left: 4px solid #D84315; border-radius: 5px; color: #444; font-weight: 500; }
+    .karma-box { background: #FFCCBC; padding: 12px; border-radius: 8px; margin-top: 25px; text-align: center; border: 1px dashed #D84315; }
+    .karma-text { font-size: 15px; color: #BF360C; font-weight: bold; font-style: italic; }
     .audio-btn { background: #4CAF50; color: white; padding: 12px; border: none; border-radius: 8px; width: 100%; margin-top: 20px; font-weight: bold; font-size: 16px; cursor: pointer; }
   </style>
 </head>
@@ -40,6 +42,10 @@
     <span class="label">इष्ट देव और स्वभाव (Personality):</span>
     <p id="res-nature">गणना जारी है...</p>
 
+    <div class="karma-box">
+      <span class="karma-text">"याद रखें: आपकी सच्ची मेहनत और ईश्वर की भक्ति इन सभी भविष्यवाणियों को बदल सकती है। 🙏"</span>
+    </div>
+
     <button class="audio-btn" onclick="speakResult()">🔊 आवाज़ में सुनें</button>
   </div>
 
@@ -54,22 +60,18 @@
       let firstChar = fullName.charAt(0);
       let rashiData = getRashiFromLetter(firstChar);
       
-      // UI पर नाम और राशि सेट करें
       document.getElementById("res-name").innerText = name;
       document.getElementById("res-rashi").innerText = rashiData.name;
       document.getElementById("result").style.display = "block";
       
-      // 'लोडिंग' टेक्स्ट दिखाएं
       document.getElementById("res-rashifal").innerText = "✨ ग्रहों की चाल देखी जा रही है...";
       document.getElementById("res-lucky").innerText = "शुभ अंक निकाला जा रहा है...";
       document.getElementById("res-nature").innerText = "स्वभाव की गणना जारी है...";
 
-      // --- ऑफ़लाइन बैकअप डेटा तैयार करना (ताकि ऐप कभी न अटके) ---
       let offlineLuckyNumber = calculateOfflineLuckyNumber(fullName);
       let offlineNatureText = getOfflineNature(offlineLuckyNumber);
       let offlineRashifalText = getBackupRashifal(rashiData.id);
 
-      // --- API से असली डेटा मांगने की कोशिश ---
       const today = new Date();
       const dateStr = `${String(today.getDate()).padStart(2,'0')}/${String(today.getMonth()+1).padStart(2,'0')}/${today.getFullYear()}`;
       
@@ -79,23 +81,19 @@
         let data = await res.json();
 
         if(data && data.response && data.response.bot_response) {
-          // 🎉 API सफल रहा! असली डेटा दिखाएं
           document.getElementById("res-rashifal").innerText = data.response.bot_response;
           document.getElementById("res-lucky").innerText = `आज का भाग्यशाली अंक ${data.response.lucky_number || offlineLuckyNumber} और शुभ रंग ${data.response.lucky_color || 'पीला'} है।`;
           document.getElementById("res-nature").innerText = `आपके इष्ट देव ${rashiData.god} हैं। ${offlineNatureText}`;
         } else {
-          throw new Error("API Limit Reached"); // अगर API ने एरर दिया
+          throw new Error("API Limit Reached");
         }
       } catch(e) {
-        // 🛡️ API फेल! तुरंत ऑफ़लाइन बैकअप डेटा दिखाएं (बिना एरर दिखाए)
         console.log("Using Offline Backup Data");
         document.getElementById("res-rashifal").innerText = offlineRashifalText;
         document.getElementById("res-lucky").innerText = `आपका शुभ अंक ${offlineLuckyNumber} है।`;
         document.getElementById("res-nature").innerText = `आपके इष्ट देव ${rashiData.god} हैं। ${offlineNatureText}`;
       }
     }
-
-    // --- बैकअप और लॉजिक फंक्शन्स ---
 
     function getRashiFromLetter(char) {
       const mapping = {
@@ -156,7 +154,8 @@
                  "राशि " + document.getElementById("res-rashi").innerText + ". " +
                  document.getElementById("res-rashifal").innerText + " " +
                  document.getElementById("res-lucky").innerText + " " +
-                 document.getElementById("res-nature").innerText;
+                 document.getElementById("res-nature").innerText + " " +
+                 "और याद रखें, आपकी सच्ची मेहनत और ईश्वर की भक्ति इन सभी भविष्यवाणियों को बदल सकती है। जय श्री राम।";
                  
       let msg = new SpeechSynthesisUtterance(text);
       msg.lang = 'hi-IN';
