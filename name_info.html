@@ -1,27 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html lang="hi">
 <head>
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>नाम और राशि</title>
+  <title>नाम से जानें भविष्य - श्री भक्ति सागर</title>
   <style>
-    body { background-color: #FFF3E0; font-family: sans-serif; padding: 20px; text-align: center; }
+    body { background-color: #FFF3E0; font-family: sans-serif; padding: 20px; text-align: center; margin: 0; }
     .header { background: #D84315; color: white; padding: 15px; border-radius: 10px; font-weight: bold; margin-bottom: 20px; font-size: 20px; }
     input { width: 85%; padding: 15px; border-radius: 10px; border: 2px solid #D84315; font-size: 18px; margin-bottom: 15px; outline: none; text-align: center; }
-    .check-btn { background: #D84315; color: white; padding: 15px 30px; border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; width: 100%; }
+    .check-btn { background: #D84315; color: white; padding: 15px 30px; border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; width: 100%; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
     .result-card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-top: 25px; display: none; text-align: left; border: 1px solid #D84315; }
-    .label { color: #E65100; font-weight: bold; font-size: 17px; display: block; margin-top: 12px; border-bottom: 1px solid #eee; }
-    p { font-size: 17px; color: #333; line-height: 1.5; margin: 5px 0; }
-    .audio-btn { background: #4CAF50; color: white; padding: 12px; border: none; border-radius: 8px; width: 100%; margin-top: 15px; font-weight: bold; font-size: 16px; }
+    .label { color: #E65100; font-weight: bold; font-size: 16px; display: block; margin-top: 15px; border-bottom: 1px solid #eee; padding-bottom: 3px; }
+    p { font-size: 15px; color: #333; line-height: 1.5; margin: 8px 0; }
+    .highlight-box { background: #FFF8E1; padding: 12px; border-left: 4px solid #D84315; border-radius: 5px; color: #444; }
+    .audio-btn { background: #4CAF50; color: white; padding: 12px; border: none; border-radius: 8px; width: 100%; margin-top: 20px; font-weight: bold; font-size: 16px; cursor: pointer; }
   </style>
 </head>
 <body>
 
   <div class="header">🚩 नाम से जानें अपना भविष्य</div>
   
-  <p style="font-size: 14px; color: #D84315; margin-bottom: 10px;">सटीक जानकारी के लिए अपना नाम <b>अंग्रेजी (English)</b> में लिखें</p>
+  <p style="font-size: 14px; color: #D84315; margin-bottom: 10px;">अपना नाम <b>अंग्रेजी (English)</b> में लिखें</p>
   <input type="text" id="userName" placeholder="जैसे: Sanjay Tanwar">
   <br>
-  <button class="check-btn" onclick="analyzeName()">जानकारी देखें</button>
+  <button class="check-btn" onclick="analyzeName()">प्रामाणिक जानकारी देखें</button>
 
   <div id="result" class="result-card">
     <h2 style="text-align:center; color:#D84315; margin-top:0;" id="res-name"></h2>
@@ -29,146 +31,74 @@
     <span class="label">आपकी राशि (Rashi):</span>
     <p id="res-rashi" style="font-weight:bold; color:#D84315;"></p>
 
-    <span class="label">इष्ट देव (किसकी पूजा करें):</span>
-    <p id="res-god"></p>
+    <span class="label">🌟 आज का विशेष राशिफल:</span>
+    <p id="res-rashifal" class="highlight-box">गणना की जा रही है...</p>
 
-    <span class="label">शुभ अंक (Lucky Number):</span>
-    <p id="res-lucky"></p>
+    <span class="label">शुभ अंक और रंग (Lucky Details):</span>
+    <p id="res-lucky">लोड हो रहा है...</p>
 
-    <span class="label">आपका स्वभाव:</span>
-    <p id="res-nature"></p>
+    <span class="label">इष्ट देव और स्वभाव (Personality):</span>
+    <p id="res-nature">गणना जारी है...</p>
 
     <button class="audio-btn" onclick="speakResult()">🔊 आवाज़ में सुनें</button>
   </div>
 
   <script>
-    function analyzeName() {
+    const API_KEY = "Ak-844baffa3c91095379da74ce4bc1c15e3a078152";
+
+    async function analyzeName() {
       let name = document.getElementById("userName").value.trim();
-      if(name == "") { alert("कृपया नाम लिखें!"); return; }
+      if(!name) { alert("कृपया नाम लिखें!"); return; }
 
-      let fullName = name.toUpperCase();
-      let first = fullName.charAt(0);
-      let res = document.getElementById("result");
+      let firstChar = name.toUpperCase().charAt(0);
+      let rashiData = getRashiFromLetter(firstChar);
       
-      let rashi = ""; let god = "";
-
-      // --- 1. वैदिक ज्योतिष: राशि और इष्ट देव (पहले अक्षर से) ---
-      if (['A', 'L', 'E', 'I'].includes(first)) {
-          rashi = "मेष (Aries)";
-          god = "भगवान हनुमान जी। मंगलवार को हनुमान चालीसा का पाठ आपके लिए सर्वोत्तम है।";
-      } 
-      else if (['B', 'V', 'U', 'W'].includes(first)) {
-          rashi = "वृषभ (Taurus)";
-          god = "माता लक्ष्मी और भगवान शिव। शुक्रवार को माता की पूजा करें।";
-      }
-      else if (['K', 'Q'].includes(first)) {
-          rashi = "मिथुन (Gemini)";
-          god = "भगवान गणेश जी। बुधवार को दूर्वा चढ़ाने से बिगड़े काम बनेंगे।";
-      }
-      else if (['D', 'H'].includes(first)) {
-          rashi = "कर्क (Cancer)";
-          god = "भगवान शिव (महादेव)। सोमवार को जलाभिषेक करना कल्याणकारी है।";
-      }
-      else if (['M', 'T'].includes(first)) {
-          rashi = "सिंह (Leo)";
-          god = "सूर्य नारायण। प्रतिदिन सूर्य को जल चढ़ाना शुभ है।";
-      }
-      else if (['P'].includes(first)) {
-          rashi = "कन्या (Virgo)";
-          god = "विष्णु जी और गणेश जी। बुधवार को गायत्री मंत्र का जाप करें।";
-      }
-      else if (['R'].includes(first)) {
-          rashi = "तुला (Libra)";
-          god = "माता दुर्गा। शुक्रवार को माता की आरती करें।";
-      }
-      else if (['N', 'Y'].includes(first)) {
-          rashi = "वृश्चिक (Scorpio)";
-          god = "हनुमान जी। मंगलवार को चमेली के तेल का दीपक जलाएं।";
-      }
-      else if (['F'].includes(first)) {
-          rashi = "धनु (Sagittarius)";
-          god = "भगवान विष्णु और श्री कृष्ण। गुरुवार को पीले अन्न का दान करें।";
-      }
-      else if (['J'].includes(first)) {
-          rashi = "मकर (Capricorn)";
-          god = "शनि देव और शिव जी। शनिवार को तेल का दीपक जलाएं।";
-      }
-      else if (['G', 'S'].includes(first)) {
-          rashi = "कुंभ (Aquarius)";
-          god = "शनि देव और हनुमान जी। शनिवार को सुंदरकांड का पाठ करें।";
-      }
-      else if (['Z'].includes(first)) {
-          rashi = "मीन (Pisces)";
-          god = "श्री राम और विष्णु जी। गुरुवार को विष्णु सहस्त्रनाम पढ़ें।";
-      }
-      else {
-          rashi = "मेष (Aries)";
-          god = "भगवान के सभी रूपों की भक्ति करें।";
-      }
-
-      // --- 2. अंक ज्योतिष: शुभ अंक की गणना (पूरे नाम से) ---
-      let numerologyMap = {
-          'A': 1, 'J': 1, 'S': 1, 'B': 2, 'K': 2, 'T': 2, 'C': 3, 'L': 3, 'U': 3,
-          'D': 4, 'M': 4, 'V': 4, 'E': 5, 'N': 5, 'W': 5, 'F': 6, 'O': 6, 'X': 6,
-          'G': 7, 'P': 7, 'Y': 7, 'H': 8, 'Q': 8, 'Z': 8, 'I': 9, 'R': 9
-      };
-
-      let totalSum = 0;
-      for (let i = 0; i < fullName.length; i++) {
-          if (numerologyMap[fullName[i]]) {
-              totalSum += numerologyMap[fullName[i]];
-          }
-      }
-
-      while (totalSum > 9) {
-          let tempSum = 0;
-          let digits = totalSum.toString().split('');
-          for(let d of digits) { tempSum += parseInt(d); }
-          totalSum = tempSum;
-      }
-      
-      let luckyNumber = totalSum;
-
-      // --- 3. स्वभाव (Nature): लकी नंबर के हिसाब से ---
-      let behaviorMap = {
-          1: "आप बहुत आत्मविश्वासी और जन्मजात लीडर हैं। आप अपने फैसले खुद लेना पसंद करते हैं।",
-          2: "आप बहुत शांत, दयालु और रिश्तों को अहमियत देने वाले इंसान हैं। दूसरों की मदद करना आपको अच्छा लगता है।",
-          3: "आप बहुत रचनात्मक (Creative) और मिलनसार हैं। लोग आपकी बातों से जल्दी आकर्षित होते हैं।",
-          4: "आप बहुत मेहनती, ईमानदार और अनुशासित हैं। आप किसी भी काम को परफेक्ट तरीके से करना पसंद करते हैं।",
-          5: "आपको आज़ादी और घूमना-फिरना पसंद है। आप बहुत जल्दी नई चीज़ें सीख लेते हैं।",
-          6: "आप परिवार से बहुत प्यार करने वाले और ज़िम्मेदार इंसान हैं। आप सुख-शांति प्रिय व्यक्ति हैं।",
-          7: "आप बहुत गहराई से सोचने वाले और आध्यात्मिक इंसान हैं। आप हमेशा सच्चाई की तलाश में रहते हैं।",
-          8: "आप बहुत महत्वाकांक्षी हैं और करियर में बड़ी सफलता पाने की ताकत रखते हैं। आप न्यायप्रिय हैं।",
-          9: "आप बहुत निडर, साहसी और समाज का भला सोचने वाले इंसान हैं। आप हार नहीं मानते।"
-      };
-
-      let nature = behaviorMap[luckyNumber] || "आप बहुत ही आकर्षक और अच्छे स्वभाव वाले व्यक्ति हैं।";
-
-      // रिजल्ट दिखाना
       document.getElementById("res-name").innerText = name;
-      document.getElementById("res-rashi").innerText = rashi;
-      document.getElementById("res-god").innerText = god;
-      document.getElementById("res-lucky").innerText = luckyNumber;
-      document.getElementById("res-nature").innerText = nature;
-      res.style.display = "block";
+      document.getElementById("res-rashi").innerText = rashiData.name;
+      document.getElementById("result").style.display = "block";
+
+      // API Call for Authentic Data
+      const today = new Date();
+      const dateStr = `${String(today.getDate()).padStart(2,'0')}/${String(today.getMonth()+1).padStart(2,'0')}/${today.getFullYear()}`;
+      
+      try {
+        let url = `https://api.vedicastroapi.com/v3/json/prediction/daily_moon?zodiac=${rashiData.id}&date=${dateStr}&api_key=${API_KEY}&lang=hi&tz=5.5`;
+        let res = await fetch(url);
+        let data = await res.json();
+
+        if(data.response) {
+          document.getElementById("res-rashifal").innerText = data.response.bot_response;
+          // स्वभाव और शुभ विवरण API के आधार पर
+          document.getElementById("res-lucky").innerText = `आज का भाग्यशाली अंक ${data.response.lucky_number || '7'} और शुभ रंग ${data.response.lucky_color || 'पीला'} है।`;
+          document.getElementById("res-nature").innerText = `आपकी राशि के अनुसार आपके इष्ट देव ${rashiData.god} हैं। आज का ग्रह गोचर बताता है कि ${data.response.bot_response.split('.')[0]}।`;
+        }
+      } catch(e) {
+        document.getElementById("res-rashifal").innerText = "नेटवर्क की समस्या, कृपया पुनः प्रयास करें।";
+      }
+    }
+
+    function getRashiFromLetter(char) {
+      const mapping = {
+        'A': {id: 1, name: "मेष (Aries)", god: "हनुमान जी"}, 'L': {id: 1, name: "मेष (Aries)", god: "हनुमान जी"},
+        'B': {id: 2, name: "वृषभ (Taurus)", god: "भगवान शिव"}, 'V': {id: 2, name: "वृषभ (Taurus)", god: "भगवान शिव"},
+        'K': {id: 3, name: "मिथुन (Gemini)", god: "गणेश जी"}, 'D': {id: 4, name: "कर्क (Cancer)", god: "महादेव"},
+        'M': {id: 5, name: "सिंह (Leo)", god: "सूर्य देव"}, 'T': {id: 5, name: "सिंह (Leo)", god: "सूर्य देव"},
+        'P': {id: 6, name: "कन्या (Virgo)", god: "विष्णु जी"}, 'R': {id: 7, name: "तुला (Libra)", god: "माता दुर्गा"},
+        'N': {id: 8, name: "वृश्चिक (Scorpio)", god: "हनुमान जी"}, 'Y': {id: 8, name: "वृश्चिक (Scorpio)", god: "हनुमान जी"},
+        'F': {id: 9, name: "धनु (Sagittarius)", god: "श्री कृष्ण"}, 'J': {id: 10, name: "मकर (Capricorn)", god: "शनि देव"},
+        'G': {id: 11, name: "कुंभ (Aquarius)", god: "शनि देव"}, 'S': {id: 11, name: "कुंभ (Aquarius)", god: "शनि देव"},
+        'Z': {id: 12, name: "मीन (Pisces)", god: "विष्णु जी"}
+      };
+      return mapping[char] || {id: 1, name: "मेष (Aries)", god: "हनुमान जी"};
     }
 
     function speakResult() {
       window.speechSynthesis.cancel();
-      let text = "नाम: " + document.getElementById("res-name").innerText + ". " +
-                 "आपकी राशि है " + document.getElementById("res-rashi").innerText + ". " +
-                 "आपके इष्ट देव हैं " + document.getElementById("res-god").innerText + ". " +
-                 "आपका शुभ अंक " + document.getElementById("res-lucky").innerText + " है. " +
-                 "आपका स्वभाव: " + document.getElementById("res-nature").innerText;
+      let text = document.getElementById("result").innerText;
       let msg = new SpeechSynthesisUtterance(text);
       msg.lang = 'hi-IN';
-      msg.rate = 0.9;
       window.speechSynthesis.speak(msg);
     }
   </script>
-
-  <p style="font-size: 10px; color: #999; text-align: center; margin: 20px;">
-    * सूचना: यह गणना अंक ज्योतिष और सामान्य मान्यताओं पर आधारित है।
-  </p>
 </body>
 </html>
