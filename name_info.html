@@ -12,7 +12,7 @@
     .result-card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-top: 25px; display: none; text-align: left; border: 1px solid #D84315; }
     .label { color: #E65100; font-weight: bold; font-size: 16px; display: block; margin-top: 15px; border-bottom: 1px solid #eee; padding-bottom: 3px; }
     p { font-size: 15px; color: #333; line-height: 1.5; margin: 8px 0; }
-    .highlight-box { background: #FFF8E1; padding: 12px; border-left: 4px solid #D84315; border-radius: 5px; color: #444; }
+    .highlight-box { background: #FFF8E1; padding: 12px; border-left: 4px solid #D84315; border-radius: 5px; color: #444; font-weight: 500; }
     .audio-btn { background: #4CAF50; color: white; padding: 12px; border: none; border-radius: 8px; width: 100%; margin-top: 20px; font-weight: bold; font-size: 16px; cursor: pointer; }
   </style>
 </head>
@@ -21,7 +21,7 @@
   <div class="header">🚩 नाम से जानें अपना भविष्य</div>
   
   <p style="font-size: 14px; color: #D84315; margin-bottom: 10px;">अपना नाम <b>अंग्रेजी (English)</b> में लिखें</p>
-  <input type="text" id="userName" placeholder="जैसे: Sanjay Tanwar">
+  <input type="text" id="userName" placeholder="जैसे: Sanjay Tanwar" autocomplete="off">
   <br>
   <button class="check-btn" onclick="analyzeName()">प्रामाणिक जानकारी देखें</button>
 
@@ -50,14 +50,26 @@
       let name = document.getElementById("userName").value.trim();
       if(!name) { alert("कृपया नाम लिखें!"); return; }
 
-      let firstChar = name.toUpperCase().charAt(0);
+      let fullName = name.toUpperCase();
+      let firstChar = fullName.charAt(0);
       let rashiData = getRashiFromLetter(firstChar);
       
+      // UI पर नाम और राशि सेट करें
       document.getElementById("res-name").innerText = name;
       document.getElementById("res-rashi").innerText = rashiData.name;
       document.getElementById("result").style.display = "block";
+      
+      // 'लोडिंग' टेक्स्ट दिखाएं
+      document.getElementById("res-rashifal").innerText = "✨ ग्रहों की चाल देखी जा रही है...";
+      document.getElementById("res-lucky").innerText = "शुभ अंक निकाला जा रहा है...";
+      document.getElementById("res-nature").innerText = "स्वभाव की गणना जारी है...";
 
-      // API Call for Authentic Data
+      // --- ऑफ़लाइन बैकअप डेटा तैयार करना (ताकि ऐप कभी न अटके) ---
+      let offlineLuckyNumber = calculateOfflineLuckyNumber(fullName);
+      let offlineNatureText = getOfflineNature(offlineLuckyNumber);
+      let offlineRashifalText = getBackupRashifal(rashiData.id);
+
+      // --- API से असली डेटा मांगने की कोशिश ---
       const today = new Date();
       const dateStr = `${String(today.getDate()).padStart(2,'0')}/${String(today.getMonth()+1).padStart(2,'0')}/${today.getFullYear()}`;
       
@@ -66,37 +78,89 @@
         let res = await fetch(url);
         let data = await res.json();
 
-        if(data.response) {
+        if(data && data.response && data.response.bot_response) {
+          // 🎉 API सफल रहा! असली डेटा दिखाएं
           document.getElementById("res-rashifal").innerText = data.response.bot_response;
-          // स्वभाव और शुभ विवरण API के आधार पर
-          document.getElementById("res-lucky").innerText = `आज का भाग्यशाली अंक ${data.response.lucky_number || '7'} और शुभ रंग ${data.response.lucky_color || 'पीला'} है।`;
-          document.getElementById("res-nature").innerText = `आपकी राशि के अनुसार आपके इष्ट देव ${rashiData.god} हैं। आज का ग्रह गोचर बताता है कि ${data.response.bot_response.split('.')[0]}।`;
+          document.getElementById("res-lucky").innerText = `आज का भाग्यशाली अंक ${data.response.lucky_number || offlineLuckyNumber} और शुभ रंग ${data.response.lucky_color || 'पीला'} है।`;
+          document.getElementById("res-nature").innerText = `आपके इष्ट देव ${rashiData.god} हैं। ${offlineNatureText}`;
+        } else {
+          throw new Error("API Limit Reached"); // अगर API ने एरर दिया
         }
       } catch(e) {
-        document.getElementById("res-rashifal").innerText = "नेटवर्क की समस्या, कृपया पुनः प्रयास करें।";
+        // 🛡️ API फेल! तुरंत ऑफ़लाइन बैकअप डेटा दिखाएं (बिना एरर दिखाए)
+        console.log("Using Offline Backup Data");
+        document.getElementById("res-rashifal").innerText = offlineRashifalText;
+        document.getElementById("res-lucky").innerText = `आपका शुभ अंक ${offlineLuckyNumber} है।`;
+        document.getElementById("res-nature").innerText = `आपके इष्ट देव ${rashiData.god} हैं। ${offlineNatureText}`;
       }
     }
 
+    // --- बैकअप और लॉजिक फंक्शन्स ---
+
     function getRashiFromLetter(char) {
       const mapping = {
-        'A': {id: 1, name: "मेष (Aries)", god: "हनुमान जी"}, 'L': {id: 1, name: "मेष (Aries)", god: "हनुमान जी"},
-        'B': {id: 2, name: "वृषभ (Taurus)", god: "भगवान शिव"}, 'V': {id: 2, name: "वृषभ (Taurus)", god: "भगवान शिव"},
-        'K': {id: 3, name: "मिथुन (Gemini)", god: "गणेश जी"}, 'D': {id: 4, name: "कर्क (Cancer)", god: "महादेव"},
+        'A': {id: 1, name: "मेष (Aries)", god: "हनुमान जी"}, 'L': {id: 1, name: "मेष (Aries)", god: "हनुमान जी"}, 'E': {id: 1, name: "मेष (Aries)", god: "हनुमान जी"}, 'I': {id: 1, name: "मेष (Aries)", god: "हनुमान जी"},
+        'B': {id: 2, name: "वृषभ (Taurus)", god: "भगवान शिव"}, 'V': {id: 2, name: "वृषभ (Taurus)", god: "भगवान शिव"}, 'U': {id: 2, name: "वृषभ (Taurus)", god: "भगवान शिव"}, 'W': {id: 2, name: "वृषभ (Taurus)", god: "भगवान शिव"},
+        'K': {id: 3, name: "मिथुन (Gemini)", god: "गणेश जी"}, 'Q': {id: 3, name: "मिथुन (Gemini)", god: "गणेश जी"},
+        'D': {id: 4, name: "कर्क (Cancer)", god: "महादेव"}, 'H': {id: 4, name: "कर्क (Cancer)", god: "महादेव"},
         'M': {id: 5, name: "सिंह (Leo)", god: "सूर्य देव"}, 'T': {id: 5, name: "सिंह (Leo)", god: "सूर्य देव"},
-        'P': {id: 6, name: "कन्या (Virgo)", god: "विष्णु जी"}, 'R': {id: 7, name: "तुला (Libra)", god: "माता दुर्गा"},
+        'P': {id: 6, name: "कन्या (Virgo)", god: "विष्णु जी"},
+        'R': {id: 7, name: "तुला (Libra)", god: "माता दुर्गा"},
         'N': {id: 8, name: "वृश्चिक (Scorpio)", god: "हनुमान जी"}, 'Y': {id: 8, name: "वृश्चिक (Scorpio)", god: "हनुमान जी"},
-        'F': {id: 9, name: "धनु (Sagittarius)", god: "श्री कृष्ण"}, 'J': {id: 10, name: "मकर (Capricorn)", god: "शनि देव"},
+        'F': {id: 9, name: "धनु (Sagittarius)", god: "श्री कृष्ण"},
+        'J': {id: 10, name: "मकर (Capricorn)", god: "शनि देव"},
         'G': {id: 11, name: "कुंभ (Aquarius)", god: "शनि देव"}, 'S': {id: 11, name: "कुंभ (Aquarius)", god: "शनि देव"},
         'Z': {id: 12, name: "मीन (Pisces)", god: "विष्णु जी"}
       };
       return mapping[char] || {id: 1, name: "मेष (Aries)", god: "हनुमान जी"};
     }
 
+    function calculateOfflineLuckyNumber(fullName) {
+      let numerologyMap = { 'A':1, 'J':1, 'S':1, 'B':2, 'K':2, 'T':2, 'C':3, 'L':3, 'U':3, 'D':4, 'M':4, 'V':4, 'E':5, 'N':5, 'W':5, 'F':6, 'O':6, 'X':6, 'G':7, 'P':7, 'Y':7, 'H':8, 'Q':8, 'Z':8, 'I':9, 'R':9 };
+      let totalSum = 0;
+      for (let i = 0; i < fullName.length; i++) { if (numerologyMap[fullName[i]]) totalSum += numerologyMap[fullName[i]]; }
+      while (totalSum > 9) { let tempSum = 0; let digits = totalSum.toString().split(''); for(let d of digits) tempSum += parseInt(d); totalSum = tempSum; }
+      return totalSum || 7;
+    }
+
+    function getOfflineNature(luckyNumber) {
+      let behaviorMap = {
+          1: "आप बहुत आत्मविश्वासी और जन्मजात लीडर हैं। आप फैसले खुद लेना पसंद करते हैं।",
+          2: "आप बहुत शांत, दयालु और रिश्तों को अहमियत देने वाले इंसान हैं।",
+          3: "आप बहुत रचनात्मक (Creative) और मिलनसार हैं।",
+          4: "आप बहुत मेहनती, ईमानदार और अनुशासित हैं।",
+          5: "आपको आज़ादी और घूमना-फिरना पसंद है।",
+          6: "आप परिवार से बहुत प्यार करने वाले इंसान हैं। आप सुख-शांति प्रिय व्यक्ति हैं।",
+          7: "आप बहुत गहराई से सोचने वाले और आध्यात्मिक इंसान हैं।",
+          8: "आप महत्वाकांक्षी हैं और करियर में बड़ी सफलता पाने की ताकत रखते हैं।",
+          9: "आप बहुत निडर, साहसी और समाज का भला सोचने वाले इंसान हैं।"
+      };
+      return behaviorMap[luckyNumber] || "आप बहुत ही आकर्षक स्वभाव वाले व्यक्ति हैं।";
+    }
+
+    function getBackupRashifal(zodiacId) {
+      const backupRashifal = {
+          1: "आज का दिन आपके लिए ऊर्जा से भरा रहेगा। रुके हुए कार्य पूरे होंगे।", 2: "आज आपको आर्थिक लाभ हो सकता है। परिवार में खुशी का माहौल रहेगा।",
+          3: "आज आपकी संवाद शैली से लोग प्रभावित होंगे। व्यापार में लाभ के योग हैं।", 4: "आज आप भावनात्मक रूप से मज़बूत रहेंगे। अपनों का सहयोग मिलेगा।",
+          5: "आज आपके मान-सम्मान में वृद्धि होगी। कोई नई ज़िम्मेदारी मिल सकती है।", 6: "आज आप अपने काम में बहुत ध्यान देंगे। मेहनत का फल मिलेगा।",
+          7: "आज आपके जीवन में संतुलन बना रहेगा। पुराने मित्र से मुलाकात हो सकती है।", 8: "आज आपको कोई शुभ समाचार मिल सकता है। आत्मविश्वास बनाए रखें।",
+          9: "आज आपका मन धार्मिक कार्यों में लगेगा। यात्रा के योग बन रहे हैं।", 10: "आज आपके कार्यक्षेत्र में सफलता मिलेगी। दिन आपके पक्ष में रहेगा।",
+          11: "आज आपको नए अवसर प्राप्त होंगे। धन लाभ और उन्नति की संभावना है।", 12: "आज आपका दिन शांतिपूर्ण रहेगा। किसी रचनात्मक काम में मन लगेगा।"
+      };
+      return backupRashifal[zodiacId] || "आज का दिन आपके लिए शुभ और मंगलमय रहेगा।";
+    }
+
     function speakResult() {
       window.speechSynthesis.cancel();
-      let text = document.getElementById("result").innerText;
+      let text = "नाम " + document.getElementById("res-name").innerText + ". " +
+                 "राशि " + document.getElementById("res-rashi").innerText + ". " +
+                 document.getElementById("res-rashifal").innerText + " " +
+                 document.getElementById("res-lucky").innerText + " " +
+                 document.getElementById("res-nature").innerText;
+                 
       let msg = new SpeechSynthesisUtterance(text);
       msg.lang = 'hi-IN';
+      msg.rate = 0.85;
       window.speechSynthesis.speak(msg);
     }
   </script>
