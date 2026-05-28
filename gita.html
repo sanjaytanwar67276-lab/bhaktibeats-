@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="hi">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>📖 गीता का ज्ञान</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+
+<style>
+
+/* =============================== */
+/* DIVINE GITA PAGE */
+/* =============================== */
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+
+font-family:'Poppins',sans-serif;
+
+background:
+linear-gradient(
+135deg,
+#ffe082 0%,
+#ffcc80 20%,
+#ffab91 40%,
+#ce93d8 60%,
+#81d4fa 80%,
+#80cbc4 100%
+);
+
+background-size:400% 400%;
+
+animation:bgMove 14s ease infinite;
+
+min-height:100vh;
+
+padding:20px;
+
+overflow-x:hidden;
+
+position:relative;
+
+}
+
+/* BG ANIMATION */
+
+@keyframes bgMove{
+
+0%{
+background-position:0% 50%;
+}
+
+50%{
+background-position:100% 50%;
+}
+
+100%{
+background-position:0% 50%;
+}
+
+}
+
+/* GLOW */
+
+body::before{
+
+content:"";
+
+position:fixed;
+
+top:0;
+left:0;
+
+width:100%;
+height:100%;
+
+background:
+
+radial-gradient(circle at top left,
+rgba(255,255,255,0.3),
+transparent 30%),
+
+radial-gradient(circle at bottom right,
+rgba(255,255,255,0.2),
+transparent 30%),
+
+radial-gradient(circle at center,
+rgba(255,255,255,0.12),
+transparent 40%);
+
+z-index:-2;
+
+animation:glow 8s infinite alternate;
+
+}
+
+@keyframes glow{
+
+0%{
+transform:scale(1);
+}
+
+100%{
+transform:scale(1.08);
+}
+
+}
+
+/* PARTICLES */
+
+body::after{
+
+content:"";
+
+position:fixed;
+
+top:0;
+left:0;
+
+width:100%;
+height:100%;
+
+background-image:
+radial-gradient(rgba(255,255,255,0.35) 2px, transparent 2px);
+
+background-size:35px 35px;
+
+opacity:0.25;
+
+z-index:-1;
+
+animation:particles 20s linear infinite;
+
+}
+
+@keyframes particles{
+
+0%{
+transform:translateY(0);
+}
+
+100%{
+transform:translateY(-80px);
+}
+
+}
+
+/* HEADER */
+
+.header{
+
+text-align:center;
+
+font-size:44px;
+
+font-weight:900;
+
+margin-bottom:35px;
+
+animation:headerGlow 3s infinite alternate;
+
+}
+
+.gita-text{
+
+background:
+linear-gradient(
+90deg,
+#fff176,
+#ffeb3b,
+#ff9800,
+#ff5722,
+#ffd54f
+);
+
+background-size:300% 300%;
+
+animation:gitaGlow 5s linear infinite;
+
+-webkit-background-clip:text;
+
+-webkit-text-fill-color:transparent;
+
+text-shadow:
+
+0 0 10px rgba(255,152,0,0.7),
+
+0 0 20px rgba(255,87,34,0.6),
+
+0 5px 15px rgba(0,0,0,0.5);
+
+}
+
+@keyframes gitaGlow{
+
+0%{
+background-position:0% 50%;
+}
+
+100%{
+background-position:100% 50%;
+}
+
+}
+
+@keyframes headerGlow{
+
+0%{
+transform:scale(1);
+}
+
+100%{
+transform:scale(1.03);
+}
+
+}
+
+/* CARD */
+
+.gita-card{
+
+background:
+linear-gradient(
+145deg,
+rgba(255,255,255,0.22),
+rgba(255,255,255,0.08)
+);
+
+backdrop-filter:blur(18px);
+
+border:2px solid rgba(255,255,255,0.25);
+
+border-radius:32px;
+
+padding:24px;
+
+margin-bottom:28px;
+
+box-shadow:
+
+0 18px 40px rgba(0,0,0,0.25),
+
+inset 0 2px 4px rgba(255,255,255,0.3);
+
+transition:0.4s;
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+.gita-card::before{
+
+content:"";
+
+position:absolute;
+
+top:-50%;
+right:-20%;
+
+width:220px;
+height:220px;
+
+background:
+rgba(255,255,255,0.15);
+
+transform:rotate(35deg);
+
+border-radius:50%;
+
+}
+
+.gita-card:hover{
+
+transform:
+translateY(-6px)
+scale(1.02);
+
+box-shadow:
+0 25px 50px rgba(0,0,0,0.3);
+
+}
+
+/* TITLE */
+
+.chapter-title{
+
+font-size:25px;
+
+font-weight:900;
+
+color:#4e342e;
+
+margin-bottom:15px;
+
+line-height:1.4;
+
+text-shadow:
+
+0 2px 3px rgba(255,255,255,0.6),
+
+0 3px 8px rgba(0,0,0,0.18);
+
+}
+
+/* SHLOK */
+
+.shlok{
+
+font-size:17px;
+
+font-weight:800;
+
+line-height:2;
+
+color:#bf360c;
+
+background:
+linear-gradient(
+90deg,
+rgba(255,241,118,0.6),
+rgba(255,204,128,0.6)
+);
+
+padding:16px;
+
+border-radius:18px;
+
+margin-bottom:18px;
+
+box-shadow:
+0 6px 15px rgba(0,0,0,0.12);
+
+}
+
+/* MEANING */
+
+.meaning{
+
+font-size:15px;
+
+font-weight:700;
+
+line-height:1.9;
+
+color:#5d4037;
+
+margin-bottom:20px;
+
+}
+
+/* HIGHLIGHT */
+
+.highlight{
+
+color:#d84315;
+
+font-weight:900;
+
+background:
+linear-gradient(
+90deg,
+#fff176,
+#ffcc80
+);
+
+padding:2px 8px;
+
+border-radius:8px;
+
+}
+
+/* AUDIO */
+
+audio{
+
+width:100%;
+
+border-radius:50px;
+
+background:
+linear-gradient(
+90deg,
+#ff6f00,
+#ff1744
+);
+
+box-shadow:
+0 12px 25px rgba(0,0,0,0.3);
+
+}
+
+audio::-webkit-media-controls-panel{
+
+background:
+linear-gradient(
+90deg,
+#ff6f00,
+#ff1744
+);
+
+}
+
+/* MOBILE */
+
+@media(max-width:480px){
+
+.header{
+font-size:32px;
+}
+
+.chapter-title{
+font-size:21px;
+}
+
+.shlok{
+font-size:15px;
+}
+
+.meaning{
+font-size:14px;
+}
+
+.gita-card{
+padding:20px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+📖 <span class="gita-text">गीता का ज्ञान</span>
+</div>
+
+<div id="gitaContainer"></div>
+
+<script>
+
+const gitaData = [
+
+{
+title:"अध्याय 1 - कर्म का महत्व",
+shlok:"कर्मण्येवाधिकारस्ते मा फलेषु कदाचन।",
+meaning:"मनुष्य को केवल <span class='highlight'>कर्म</span> करने का अधिकार है, फल की चिंता नहीं करनी चाहिए।",
+audio:"https://res.cloudinary.com/dbutl9qr6/video/upload/v1779956440/Generated-Audio-May-28-2026-1-48_djp972.mp3"
+},
+
+{
+title:"अध्याय 2 - आत्मा अमर है",
+shlok:"न जायते म्रियते वा कदाचित्।",
+meaning:"<span class='highlight'>आत्मा</span> कभी जन्म नहीं लेती और कभी मरती नहीं है।",
+audio:"https://res.cloudinary.com/dbutl9qr6/video/upload/v1779957225/Generated-Audio-May-28-2026-2-01_ze8fya.mp3"
+},
+
+{
+title:"अध्याय 3 - धर्म का पालन",
+shlok:"स्वधर्मे निधनं श्रेयः परधर्मो भयावहः।",
+meaning:"अपने <span class='highlight'>धर्म</span> का पालन करना श्रेष्ठ है।",
+audio:"https://res.cloudinary.com/dbutl9qr6/video/upload/v1779957593/Generated-Audio-May-28-2026-2-08_ne65ud.mp3"
+},
+
+{
+title:"अध्याय 4 - भगवान का अवतार",
+shlok:"यदा यदा हि धर्मस्य ग्लानिर्भवति भारत।",
+meaning:"जब-जब धर्म की हानि होती है तब भगवान अवतार लेते हैं।",
+audio:"https://res.cloudinary.com/dbutl9qr6/video/upload/v1779957971/Generated-Audio-May-28-2026-2-13_x2xkhw.mp3"
+},
+
+{
+title:"अध्याय 5 - मन की शांति",
+shlok:"शान्तिरन्तरात्मा।",
+meaning:"जिसका मन शांत होता है वही सच्चा सुख प्राप्त करता है।",
+audio:"https://res.cloudinary.com/dbutl9qr6/video/upload/v1779958463/Generated_Audio_May_28_2026_-_2_20PM_nwbyqy.wav"
+},
+
+{
+title:"अध्याय 6 - योग की शक्ति",
+shlok:"योगः कर्मसु कौशलम्।",
+meaning:"योग मनुष्य को कर्म में कुशल बनाता है।",
+audio:"https://res.cloudinary.com/dbutl9qr6/video/upload/v1779958793/Generated-Audio-May-28-2026-2-27_nwvhaz.mp3"
+},
+
+{
+title:"अध्याय 7 - भक्ति का मार्ग",
+shlok:"मन्मना भव मद्भक्तो।",
+meaning:"भगवान कहते हैं कि मेरा भक्त बनो और मुझे स्मरण करो।",
+audio:"https://res.cloudinary.com/dbutl9qr6/video/upload/v1779959102/Generated_Audio_May_28_2026_-_2_33PM_orsm3x.wav"
+},
+
+{
+title:"अध्याय 8 - मृत्यु और मोक्ष",
+shlok:"अन्तकाले च मामेव स्मरन्।",
+meaning:"जो अंतिम समय में भगवान को स्मरण करता है वह मोक्ष प्राप्त करता है।",
+audio:"https://res.cloudinary.com/dbutl9qr6/video/upload/v1779959354/Generated-Audio-May-28-2026-2-37_fzh464.mp3"
+},
+
+{
+title:"अध्याय 9 - परम ज्ञान",
+shlok:"राजविद्या राजगुह्यं।",
+meaning:"भगवद गीता का ज्ञान सबसे श्रेष्ठ और पवित्र है।",
+audio:"https://res.cloudinary.com/dbutl9qr6/video/upload/v1779959787/Generated-Audio-May-28-2026-2-44_vquxsn.mp3"
+},
+
+{
+title:"अध्याय 10 - भगवान की विभूतियाँ",
+shlok:"अहमात्मा गुडाकेश।",
+meaning:"भगवान प्रत्येक जीव के हृदय में स्थित हैं।",
+audio:"https://res.cloudinary.com/dbutl9qr6/video/upload/v1779960022/Generated-Audio-May-28-2026-2-48_eqswul.mp3"
+},
+
+{
+title:"अध्याय 11 - विश्वरूप दर्शन",
+shlok:"दिवि सूर्यसहस्रस्य भवेद्युगपदुत्थिता।",
+meaning:"भगवान श्री कृष्ण ने अर्जुन को अपना <span class='highlight'>विश्वरूप</span> दिखाया।",
+audio:"audio/gita11.mp3"
+},
+
+{
+title:"अध्याय 12 - भक्ति योग",
+shlok:"मय्यावेश्य मनो ये मां।",
+meaning:"जो भक्त भगवान में मन लगाता है वही सच्चा भक्त है।",
+audio:"audio/gita12.mp3"
+},
+
+{
+title:"अध्याय 13 - शरीर और आत्मा",
+shlok:"क्षेत्रज्ञं चापि मां विद्धि।",
+meaning:"यह शरीर <span class='highlight'>क्षेत्र</span> है और आत्मा उसका ज्ञाता है।",
+audio:"audio/gita13.mp3"
+},
+
+{
+title:"अध्याय 14 - तीन गुण",
+shlok:"सत्त्वं रजस्तम इति गुणाः।",
+meaning:"संसार तीन गुणों <span class='highlight'>सत्त्व, रज और तम</span> से बना है।",
+audio:"audio/gita14.mp3"
+},
+
+{
+title:"अध्याय 15 - पुरुषोत्तम योग",
+shlok:"ऊर्ध्वमूलमधःशाखम्।",
+meaning:"यह संसार एक विशाल वृक्ष के समान है।",
+audio:"audio/gita15.mp3"
+},
+
+{
+title:"अध्याय 16 - दैवी और आसुरी गुण",
+shlok:"अभयं सत्त्वसंशुद्धिः।",
+meaning:"दैवी गुण मनुष्य को <span class='highlight'>मोक्ष</span> की ओर ले जाते हैं।",
+audio:"audio/gita16.mp3"
+},
+
+{
+title:"अध्याय 17 - श्रद्धा की शक्ति",
+shlok:"श्रद्धामयोऽयं पुरुषः।",
+meaning:"मनुष्य जैसी <span class='highlight'>श्रद्धा</span> रखता है वैसा ही बन जाता है।",
+audio:"audio/gita17.mp3"
+},
+
+{
+title:"अध्याय 18 - मोक्ष संन्यास योग",
+shlok:"सर्वधर्मान्परित्यज्य मामेकं शरणं व्रज।",
+meaning:"भगवान श्री कृष्ण कहते हैं कि सब कुछ छोड़कर मेरी <span class='highlight'>शरण</span> में आओ।",
+audio:"audio/gita18.mp3"
+}
+
+];
+
+const container =
+document.getElementById("gitaContainer");
+
+gitaData.forEach(item=>{
+
+container.innerHTML += `
+
+<div class="gita-card">
+
+<div class="chapter-title">
+${item.title}
+</div>
+
+<div class="shlok">
+🕉️ ${item.shlok}
+</div>
+
+<div class="meaning">
+${item.meaning}
+</div>
+
+<audio controls>
+<source src="${item.audio}" type="audio/mpeg">
+</audio>
+
+</div>
+
+`;
+
+});
+
+</script>
+
+</body>
+</html>
