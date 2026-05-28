@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="hi">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>🏹 रामायण कथा</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+
+font-family:'Poppins',sans-serif;
+
+background:
+linear-gradient(
+135deg,
+#ff9a9e 0%,
+#fad0c4 20%,
+#fbc2eb 40%,
+#a18cd1 60%,
+#84fab0 80%,
+#8fd3f4 100%
+);
+
+background-size:400% 400%;
+
+animation:bgMove 15s ease infinite;
+
+min-height:100vh;
+
+padding:22px;
+
+overflow-x:hidden;
+
+position:relative;
+
+}
+
+@keyframes bgMove{
+
+0%{
+background-position:0% 50%;
+}
+
+50%{
+background-position:100% 50%;
+}
+
+100%{
+background-position:0% 50%;
+}
+
+}
+
+body::before{
+
+content:"";
+
+position:fixed;
+
+top:0;
+left:0;
+
+width:100%;
+height:100%;
+
+background:
+
+radial-gradient(circle at top left,
+rgba(255,255,255,0.35),
+transparent 30%),
+
+radial-gradient(circle at bottom right,
+rgba(255,255,255,0.25),
+transparent 30%),
+
+radial-gradient(circle at center,
+rgba(255,255,255,0.15),
+transparent 45%);
+
+z-index:-2;
+
+animation:glow 8s infinite alternate;
+
+}
+
+@keyframes glow{
+
+0%{
+transform:scale(1);
+}
+
+100%{
+transform:scale(1.08);
+}
+
+}
+
+body::after{
+
+content:"";
+
+position:fixed;
+
+top:0;
+left:0;
+
+width:100%;
+height:100%;
+
+background-image:
+radial-gradient(rgba(255,255,255,0.35) 2px, transparent 2px);
+
+background-size:35px 35px;
+
+opacity:0.25;
+
+z-index:-1;
+
+animation:particles 20s linear infinite;
+
+}
+
+@keyframes particles{
+
+0%{
+transform:translateY(0);
+}
+
+100%{
+transform:translateY(-90px);
+}
+
+}
+
+.header{
+
+text-align:center;
+
+font-size:46px;
+
+font-weight:900;
+
+margin-bottom:38px;
+
+animation:headerFloat 3s infinite alternate;
+
+}
+
+.ramayan-text{
+
+background:
+linear-gradient(
+90deg,
+#fff176,
+#ffeb3b,
+#ff9800,
+#ff5722,
+#ffd54f
+);
+
+background-size:300% 300%;
+
+animation:ramGlow 6s linear infinite;
+
+-webkit-background-clip:text;
+
+-webkit-text-fill-color:transparent;
+
+text-shadow:
+
+0 0 10px rgba(255,152,0,0.8),
+0 0 20px rgba(255,87,34,0.7),
+0 0 30px rgba(255,193,7,0.5),
+0 6px 18px rgba(0,0,0,0.5);
+
+}
+
+@keyframes ramGlow{
+
+0%{
+background-position:0% 50%;
+}
+
+100%{
+background-position:100% 50%;
+}
+
+}
+
+@keyframes headerFloat{
+
+0%{
+transform:translateY(0px);
+}
+
+100%{
+transform:translateY(-5px);
+}
+
+}
+
+.episode-card{
+
+background:
+linear-gradient(
+145deg,
+rgba(255,255,255,0.22),
+rgba(255,255,255,0.08)
+);
+
+backdrop-filter:blur(20px);
+
+border:2px solid rgba(255,255,255,0.25);
+
+border-radius:34px;
+
+padding:24px;
+
+margin-bottom:30px;
+
+box-shadow:
+
+0 20px 45px rgba(0,0,0,0.28),
+
+inset 0 2px 5px rgba(255,255,255,0.3),
+
+0 0 25px rgba(255,255,255,0.1);
+
+transition:0.45s;
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+.episode-card:hover{
+
+transform:
+translateY(-8px)
+scale(1.02);
+
+}
+
+.ep-title{
+
+font-size:28px;
+
+font-weight:900;
+
+color:#4e342e;
+
+margin-bottom:14px;
+
+line-height:1.4;
+
+}
+
+.ep-desc{
+
+font-size:17px;
+
+font-weight:700;
+
+line-height:1.9;
+
+color:#5d4037;
+
+margin-bottom:20px;
+
+}
+
+.highlight{
+
+color:#bf360c;
+
+font-weight:900;
+
+background:
+linear-gradient(
+90deg,
+#fff176,
+#ffcc80
+);
+
+padding:2px 9px;
+
+border-radius:10px;
+
+}
+
+audio{
+
+width:100%;
+
+border-radius:50px;
+
+margin-bottom:15px;
+
+background:
+linear-gradient(
+90deg,
+#ff6f00,
+#ff1744
+);
+
+}
+
+.coming{
+
+margin-top:15px;
+
+padding:16px;
+
+border-radius:18px;
+
+font-size:16px;
+
+font-weight:900;
+
+text-align:center;
+
+background:
+linear-gradient(
+90deg,
+#ff9800,
+#ff5722
+);
+
+color:white;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+🏹 <span class="ramayan-text">रामायण कथा</span>
+</div>
+
+<div id="episodes"></div>
+
+<script>
+
+const episodes = [
+
+{
+title:"एपिसोड 1 - श्री राम जन्म",
+desc:"राजा दशरथ के घर <span class='highlight'>भगवान श्री राम</span> का दिव्य जन्म।",
+audio:[
+"https://res.cloudinary.com/dbutl9qr6/video/upload/v1779866831/Ramayan_01_sxjskh.mp3"
+]
+},
+
+{
+title:"एपिसोड 2 - बाल लीला",
+desc:"बाल रूप में <span class='highlight'>श्री राम</span> की अद्भुत लीलाएँ।",
+audio:[
+"https://res.cloudinary.com/dbutl9qr6/video/upload/v1779869198/Ramayan_2_ytx6pr.mp3",
+"https://res.cloudinary.com/dbutl9qr6/video/upload/v1779878541/Generated-Audio-May-27-2026-4-07_wzeupj.mp3"
+]
+},
+
+{
+title:"एपिसोड 3 - गुरु आश्रम",
+desc:"<span class='highlight'>श्री राम</span> और लक्ष्मण का गुरु आश्रम में जाना।",
+audio:[
+"https://res.cloudinary.com/dbutl9qr6/video/upload/v1779869801/Generated_Audio_May_27_2026_-_1_44PM_noeiah.wav"
+]
+},
+
+{
+title:"एपिसोड 4 - ताड़का वध",
+desc:"भगवान श्री राम द्वारा <span class='highlight'>ताड़का</span> का वध।",
+audio:[
+"https://res.cloudinary.com/dbutl9qr6/video/upload/v1779870539/Generated-Audio-May-27-2026-1-56_iukntj.mp3"
+]
+},
+
+{
+title:"एपिसोड 5 - अहिल्या उद्धार",
+desc:"भगवान श्री राम द्वारा <span class='highlight'>माता अहिल्या</span> का उद्धार।",
+audio:[
+"https://res.cloudinary.com/dbutl9qr6/video/upload/v1779871266/Generated-Audio-May-27-2026-2-08_emobhc.mp3"
+]
+},
+
+{
+title:"एपिसोड 6 - सीता स्वयंवर",
+desc:"भगवान श्री राम द्वारा <span class='highlight'>शिव धनुष</span> तोड़ना।",
+audio:[
+"https://res.cloudinary.com/dbutl9qr6/video/upload/v1779871682/Generated-Audio-May-27-2026-2-15_t8zlxi.mp3",
+"https://res.cloudinary.com/dbutl9qr6/video/upload/v1779902209/Generated-Audio-May-27-2026-10-4_gvwmsr.mp3"
+]
+},
+
+{
+title:"एपिसोड 7 - परशुराम संवाद",
+desc:"भगवान <span class='highlight'>परशुराम</span> और श्री राम का संवाद।",
+audio:[
+"https://res.cloudinary.com/dbutl9qr6/video/upload/v1779872129/Generated_Audio_May_27_2026_-_2_22PM_q7wkqo.wav",
+"https://res.cloudinary.com/dbutl9qr6/video/upload/v1779902960/Generated-Audio-May-27-2026-10-5_pxxkyw.mp3"
+]
+},
+
+{
+title:"एपिसोड 8 - श्री राम विवाह",
+desc:"भगवान श्री राम और <span class='highlight'>माता सीता</span> का विवाह।",
+audio:[
+"https://res.cloudinary.com/dbutl9qr6/video/upload/v1779873285/Generated-Audio-May-27-2026-2-41_dwikw9.mp3"
+]
+},
+
+{
+title:"एपिसोड 9 - कैकेयी के वरदान",
+desc:"<span class='highlight'>कैकेयी</span> द्वारा दो वर मांगना।",
+audio:[
+"https://res.cloudinary.com/dbutl9qr6/video/upload/v1779873879/Generated-Audio-May-27-2026-2-51_mz1wox.mp3",
+"https://res.cloudinary.com/dbutl9qr6/video/upload/v1779903387/Generated-Audio-May-27-2026-11-0_djsgi2.mp3"
+]
+},
+
+{
+title:"एपिसोड 10 - राम वनवास",
+desc:"भगवान श्री राम का <span class='highlight'>14 वर्ष</span> के वनवास पर जाना।",
+audio:[
+"https://res.cloudinary.com/dbutl9qr6/video/upload/v1779874393/Generated-Audio-May-27-2026-3-01_trnbhc.mp3",
+"https://res.cloudinary.com/dbutl9qr6/video/upload/v1779903706/Generated-Audio-May-27-2026-11-0_1_g7xowj.mp3"
+]
+},
+
+{
+title:"एपिसोड 11 - दशरथ मृत्यु",
+desc:"श्री राम वियोग में <span class='highlight'>राजा दशरथ</span> का निधन।",
+audio:[
+"https://res.cloudinary.com/dbutl9qr6/video/upload/v1779876683/Generated-Audio-May-27-2026-3-39_wqcu79.mp3",
+"https://res.cloudinary.com/dbutl9qr6/video/upload/v1779904122/Generated_Audio_May_27_2026_-_11_16PM_elpcdm.wav"
+]
+},
+
+{
+title:"एपिसोड 12 - भरत मिलाप",
+desc:"<span class='highlight'>भरत जी</span> का श्री राम से मिलना।",
+audio:[
+"https://res.cloudinary.com/dbutl9qr6/video/upload/v1779943453/Generated-Audio-May-28-2026-9-58_kjyfaa.mp3"
+]
+},
+
+{
+title:"एपिसोड 13 - पंचवटी निवास",
+desc:"श्री राम, लक्ष्मण और सीता का <span class='highlight'>पंचवटी</span> में रहना।",
+audio:[
+"https://res.cloudinary.com/dbutl9qr6/video/upload/v1779952358/Generated-Audio-May-28-2026-12-4_ppend3.mp3"
+]
+},
+
+{
+title:"एपिसोड 14 - शूर्पणखा प्रसंग",
+desc:"<span class='highlight'>शूर्पणखा</span> का श्री राम से विवाह प्रस्ताव।",
+audio:["https://res.cloudinary.com/dbutl9qr6/video/upload/v1779955646/Generated-Audio-May-28-2026-1-34_t0flh9.mp3"
+]
+},
+
+{
+title:"एपिसोड 15 - खर दूषण वध",
+desc:"भगवान श्री राम द्वारा <span class='highlight'>खर-दूषण</span> का वध।",
+audio:["https://res.cloudinary.com/dbutl9qr6/video/upload/v1779955123/Generated-Audio-May-28-2026-1-26_wk39vk.mp3"
+]
+},
+
+{
+title:"एपिसोड 16 - स्वर्ण मृग",
+desc:"मारीच द्वारा <span class='highlight'>स्वर्ण मृग</span> का रूप लेना।",
+audio:[]
+},
+
+{
+title:"एपिसोड 17 - सीता हरण",
+desc:"<span class='highlight'>रावण</span> द्वारा माता सीता का हरण।",
+audio:[]
+},
+
+{
+title:"एपिसोड 18 - जटायु युद्ध",
+desc:"<span class='highlight'>जटायु</span> और रावण के बीच युद्ध।",
+audio:[]
+},
+
+{
+title:"एपिसोड 19 - शबरी मिलन",
+desc:"भगवान श्री राम का <span class='highlight'>शबरी माता</span> से मिलना।",
+audio:[]
+},
+
+{
+title:"एपिसोड 20 - हनुमान मिलन",
+desc:"भगवान श्री राम और <span class='highlight'>हनुमान जी</span> की पहली भेंट।",
+audio:[]
+},
+
+{
+title:"एपिसोड 21 - सुग्रीव मित्रता",
+desc:"श्री राम और <span class='highlight'>सुग्रीव</span> की मित्रता।",
+audio:[]
+},
+
+{
+title:"एपिसोड 22 - बाली वध",
+desc:"भगवान श्री राम द्वारा <span class='highlight'>बाली</span> का वध।",
+audio:[]
+},
+
+{
+title:"एपिसोड 23 - समुद्र लांघना",
+desc:"<span class='highlight'>हनुमान जी</span> का समुद्र पार करना।",
+audio:[]
+},
+
+{
+title:"एपिसोड 24 - अशोक वाटिका",
+desc:"हनुमान जी का <span class='highlight'>माता सीता</span> से मिलना।",
+audio:[]
+},
+
+{
+title:"एपिसोड 25 - लंका दहन",
+desc:"हनुमान जी द्वारा <span class='highlight'>लंका दहन</span>।",
+audio:[]
+},
+
+{
+title:"एपिसोड 26 - राम सेतु निर्माण",
+desc:"वानर सेना द्वारा <span class='highlight'>राम सेतु</span> का निर्माण।",
+audio:[]
+},
+
+{
+title:"एपिसोड 27 - लंका युद्ध",
+desc:"श्री राम और रावण के बीच <span class='highlight'>महायुद्ध</span>।",
+audio:[]
+},
+
+{
+title:"एपिसोड 28 - मेघनाद वध",
+desc:"<span class='highlight'>लक्ष्मण जी</span> द्वारा मेघनाद का वध।",
+audio:[]
+},
+
+{
+title:"एपिसोड 29 - कुंभकर्ण वध",
+desc:"भगवान श्री राम द्वारा <span class='highlight'>कुंभकर्ण</span> का वध।",
+audio:[]
+},
+
+{
+title:"एपिसोड 30 - रावण वध",
+desc:"भगवान श्री राम द्वारा <span class='highlight'>रावण</span> का अंत।",
+audio:[]
+},
+
+{
+title:"एपिसोड 31 - अयोध्या वापसी",
+desc:"भगवान श्री राम की <span class='highlight'>अयोध्या वापसी</span>।",
+audio:[]
+},
+
+{
+title:"एपिसोड 32 - श्री राम राज्याभिषेक",
+desc:"भगवान श्री राम का <span class='highlight'>राज्याभिषेक</span> और रामराज्य की स्थापना।",
+audio:[]
+}
+
+];
+
+const container =
+document.getElementById("episodes");
+
+episodes.forEach(ep=>{
+
+container.innerHTML += `
+
+<div class="episode-card">
+
+<div class="ep-title">
+${ep.title}
+</div>
+
+<div class="ep-desc">
+${ep.desc}
+</div>
+
+${
+ep.audio.length > 0
+
+?
+
+ep.audio.map(link => `
+
+<audio controls>
+<source src="${link}" type="audio/mpeg">
+</audio>
+
+`).join("")
+
+:
+
+`
+
+<div class="coming">
+🚩 जल्द ही आ रहा है 🚩
+</div>
+
+`
+}
+
+</div>
+
+`;
+
+});
+
+</script>
+
+</body>
+</html>
