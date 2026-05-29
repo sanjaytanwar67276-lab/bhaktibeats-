@@ -602,7 +602,7 @@ ${item.title}
 ${item.meaning}
 </div>
 
-<audio controls>
+<audio controls preload="none" controlsList="nodownload">
 <source src="${item.audio}" type="audio/mpeg">
 </audio>
 
@@ -613,6 +613,27 @@ ${item.meaning}
 });
 
 </script>
+<script>
 
+let currentAudio = null;
+
+document.addEventListener("play", function(e){
+
+if(e.target.tagName === "AUDIO"){
+
+if(currentAudio && currentAudio !== e.target){
+
+currentAudio.pause();
+
+}
+
+currentAudio = e.target;
+
+}
+
+}, true);
+
+</script>
 </body>
+
 </html>
