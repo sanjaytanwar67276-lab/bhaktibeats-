@@ -1,27 +1,137 @@
 <!DOCTYPE html>
-<html>
+<html lang="hi">
 <head>
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>आज का सुविचार</title>
+  <title>आज का सुविचार - भक्ति सागर</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;600;700&display=swap" rel="stylesheet">
+
   <style>
-    body { background-color: #FFF3E0; font-family: sans-serif; padding: 20px; text-align: center; }
-    .header { background: #00897B; color: white; padding: 15px; border-radius: 10px; font-weight: bold; margin-bottom: 20px; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Mukta', sans-serif;
+    }
+
+    body { 
+      background: linear-gradient(135deg, #FFF8E1, #FFE082); 
+      padding: 20px; 
+      text-align: center; 
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .header { 
+      background: linear-gradient(90deg, #D84315, #FF7043); 
+      color: white; 
+      padding: 12px 30px; 
+      border-radius: 50px; 
+      font-size: 24px;
+      font-weight: 700; 
+      margin-bottom: 30px;
+      box-shadow: 0 5px 15px rgba(216, 67, 21, 0.3);
+    }
     
-    /* सुविचार कार्ड */
+    /* Premium Quote Card */
     .quote-card { 
-      background: linear-gradient(135deg, #00897B, #004D40); 
-      color: white; padding: 40px 20px; border-radius: 20px; 
-      box-shadow: 0 10px 20px rgba(0,0,0,0.2); margin-bottom: 25px; 
-      min-height: 150px; display: flex; align-items: center; justify-content: center;
-      font-size: 22px; font-style: italic; line-height: 1.6; border: 5px solid white;
+      background: linear-gradient(145deg, #00897B, #004D40); 
+      color: white; 
+      padding: 40px 30px; 
+      border-radius: 25px; 
+      box-shadow: 0 15px 35px rgba(0,0,0,0.25), inset 0 2px 5px rgba(255,255,255,0.2); 
+      margin-bottom: 35px; 
+      min-height: 200px; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center;
+      font-size: 24px; 
+      font-weight: 600;
+      line-height: 1.5; 
+      border: 3px solid rgba(255,255,255,0.4);
+      position: relative;
+      max-width: 500px;
+      width: 100%;
+      transition: opacity 0.4s ease-in-out, transform 0.4s ease;
+    }
+
+    /* Animation class for smooth text change */
+    .fade-anim {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    /* Quote Mark Icons (Decorative) */
+    .quote-card::before {
+      content: '❝';
+      position: absolute;
+      top: 10px;
+      left: 20px;
+      font-size: 50px;
+      color: rgba(255,255,255,0.15);
+    }
+    .quote-card::after {
+      content: '❞';
+      position: absolute;
+      bottom: -10px;
+      right: 20px;
+      font-size: 50px;
+      color: rgba(255,255,255,0.15);
+    }
+
+    /* Buttons */
+    .btn-container {
+      width: 100%;
+      max-width: 500px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .btn { 
+      padding: 16px; 
+      border: none; 
+      border-radius: 50px; 
+      font-size: 18px; 
+      font-weight: 700; 
+      cursor: pointer; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      gap: 10px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      width: 100%;
+    }
+
+    .btn:active {
+      transform: scale(0.96);
+    }
+
+    .btn-share { 
+      background: linear-gradient(90deg, #25D366, #128C7E); 
+      color: white; 
+      box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
     }
     
-    .btn-share { 
-      background: #25D366; color: white; padding: 15px; border: none; 
-      border-radius: 50px; width: 100%; font-size: 18px; font-weight: bold; 
-      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;
+    .btn-next { 
+      background: linear-gradient(90deg, #FF9800, #F57C00); 
+      color: white;
+      box-shadow: 0 8px 20px rgba(255, 152, 0, 0.4);
     }
-    .btn-next { background: #00897B; margin-top: 15px; }
+
+    .footer-note {
+      font-size: 13px; 
+      color: #666; 
+      text-align: center; 
+      margin-top: 40px;
+      font-weight: 600;
+    }
   </style>
 </head>
 <body>
@@ -31,13 +141,19 @@
   <div class="quote-card" id="quote-text">
     </div>
 
-  <button class="btn-share" onclick="shareOnWhatsApp()">
-    🟢 WhatsApp पर शेयर करें
-  </button>
+  <div class="btn-container">
+    <button class="btn btn-share" onclick="shareQuote()">
+      🟢 WhatsApp पर शेयर करें
+    </button>
 
-  <button class="btn-share btn-next" onclick="nextQuote()">
-    🔄 अगला सुविचार देखें
-  </button>
+    <button class="btn btn-next" onclick="nextQuote()">
+      🔄 अगला सुविचार देखें
+    </button>
+  </div>
+
+  <p class="footer-note">
+    * सूचना: ये सुविचार महान ग्रंथों और महापुरुषों के विचारों पर आधारित हैं।
+  </p>
 
   <script>
     const quotes = [
@@ -93,46 +209,53 @@
       "जय श्री राम! ईश्वर के नाम में वह शक्ति है जो असंभव को भी संभव कर सकती है।"
     ];
 
+    const quoteElement = document.getElementById("quote-text");
+    const playStoreLink = "https://play.google.com/store/apps/details?id=com.appcollection.xbhaktisagar_10307"; 
+
+    // Function to update text with smooth animation
+    function updateQuoteUI(text) {
+      quoteElement.classList.add("fade-anim");
+      setTimeout(() => {
+        quoteElement.innerText = text;
+        quoteElement.classList.remove("fade-anim");
+      }, 300); // 300ms delay matches CSS transition
+    }
+
     // हर दिन के हिसाब से सुविचार सेट करने का फंक्शन
     function setDailyQuote() {
-      // आज की तारीख से दिन का नंबर निकालते हैं
       let today = new Date();
       let dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
-      
-      // दिन के नंबर को quotes की लिस्ट के आकार (50) से भाग देकर इंडेक्स निकालते हैं
       let dailyIndex = dayOfYear % quotes.length;
-      
-      // उस इंडेक्स वाले सुविचार को स्क्रीन पर दिखाते हैं
-      document.getElementById("quote-text").innerText = `"${quotes[dailyIndex]}"`;
+      updateQuoteUI(`"${quotes[dailyIndex]}"`);
     }
 
-    // यह फंक्शन रैंडम सुविचार दिखाता है (जब कोई 'अगला सुविचार' पर क्लिक करता है)
+    // यह फंक्शन रैंडम सुविचार दिखाता है
     function nextQuote() {
       let randomIndex = Math.floor(Math.random() * quotes.length);
-      document.getElementById("quote-text").innerText = `"${quotes[randomIndex]}"`;
+      updateQuoteUI(`"${quotes[randomIndex]}"`);
     }
 
-    function shareOnWhatsApp() {
-      let text = document.getElementById("quote-text").innerText;
-      
-      // यहाँ 'com.your.package.name' की जगह अपने ऐप का असली पैकेज नाम डालें
-      let playStoreLink = "https://play.google.com/store/apps/details?id=com.your.package.name"; 
-      
-      // शेयर होने वाला पूरा मैसेज
+    // Advanced Share Function (Web Share API + WhatsApp Fallback)
+    function shareQuote() {
+      let text = quoteElement.innerText;
       let shareMessage = "🚩 *आज का सुविचार* 🚩\n\n" + text + "\n\nऐसे और अनमोल वचन, पूजा विधि और व्रत की जानकारी के लिए *भक्ति सागर* ऐप अभी डाउनलोड करें 👇\n" + playStoreLink;
       
-      let url = "whatsapp://send?text=" + encodeURIComponent(shareMessage);
-      window.location.href = url;
+      // Check if the device supports native sharing (Android WebViews usually do)
+      if (navigator.share) {
+        navigator.share({
+          title: 'भक्ति सागर - सुविचार',
+          text: shareMessage,
+        }).catch(console.error);
+      } else {
+        // Fallback specifically for WhatsApp if Web Share is not supported
+        let url = "whatsapp://send?text=" + encodeURIComponent(shareMessage);
+        window.location.href = url;
+      }
     }
 
     // जैसे ही पेज खुलेगा, सबसे पहले आज का सुविचार लोड हो जाएगा
     window.onload = setDailyQuote;
 
   </script>
-
-  <p style="font-size: 10px; color: #999; text-align: center; margin-top: 30px;">
-    * सूचना: ये सुविचार महान ग्रंथों और महापुरुषों के विचारों पर आधारित हैं। (See Disclaimer on Home)
-  </p>
-
 </body>
 </html>
