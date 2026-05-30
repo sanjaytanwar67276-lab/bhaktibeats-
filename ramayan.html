@@ -1,45 +1,28 @@
 <!DOCTYPE html>
 <html lang="hi">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>🏹 रामायण कथा</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>🏹 रामायण कथा - Advanced</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://res.cloudinary.com">
-    
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        /* --- CORE DESIGN (UNCHANGED) --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(
-                135deg,
-                #ff9a9e 0%,
-                #fad0c4 20%,
-                #fbc2eb 40%,
-                #a18cd1 60%,
-                #84fab0 80%,
-                #8fd3f4 100%
-            );
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 20%, #fbc2eb 40%, #a18cd1 60%, #84fab0 80%, #8fd3f4 100%);
             background-size: 400% 400%;
             animation: bgMove 15s ease infinite;
             min-height: 100vh;
             padding: 22px;
             overflow-x: hidden;
             position: relative;
-            
-            /* Performance optimizations */
             -webkit-font-smoothing: antialiased;
-            will-change: background-position;
         }
 
         @keyframes bgMove {
@@ -49,18 +32,12 @@
         }
 
         body::before {
-            content: "";
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
+            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: radial-gradient(circle at top left, rgba(255,255,255,0.35), transparent 30%),
                         radial-gradient(circle at bottom right, rgba(255,255,255,0.25), transparent 30%),
                         radial-gradient(circle at center, rgba(255,255,255,0.15), transparent 45%);
-            z-index: -2;
-            animation: glow 8s infinite alternate;
-            /* GPU Acceleration */
-            will-change: transform;
-            transform: translateZ(0);
+            z-index: -2; animation: glow 8s infinite alternate;
+            will-change: transform; transform: translateZ(0);
         }
 
         @keyframes glow {
@@ -69,18 +46,11 @@
         }
 
         body::after {
-            content: "";
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
+            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-image: radial-gradient(rgba(255,255,255,0.35) 2px, transparent 2px);
-            background-size: 35px 35px;
-            opacity: 0.25;
-            z-index: -1;
+            background-size: 35px 35px; opacity: 0.25; z-index: -1;
             animation: particles 20s linear infinite;
-            /* GPU Acceleration */
-            will-change: transform;
-            transform: translateZ(0);
+            will-change: transform; transform: translateZ(0);
         }
 
         @keyframes particles {
@@ -89,110 +59,107 @@
         }
 
         .header {
-            text-align: center;
-            font-size: 46px;
-            font-weight: 900;
-            margin-bottom: 38px;
-            animation: headerFloat 3s infinite alternate;
-            will-change: transform;
+            text-align: center; font-size: 46px; font-weight: 900; margin-bottom: 38px;
+            animation: headerFloat 3s infinite alternate; will-change: transform;
         }
 
         .ramayan-text {
             background: linear-gradient(90deg, #fff176, #ffeb3b, #ff9800, #ff5722, #ffd54f);
-            background-size: 300% 300%;
-            animation: ramGlow 6s linear infinite;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 10px rgba(255,152,0,0.8),
-                         0 0 20px rgba(255,87,34,0.7),
-                         0 0 30px rgba(255,193,7,0.5),
-                         0 6px 18px rgba(0,0,0,0.5);
+            background-size: 300% 300%; animation: ramGlow 6s linear infinite;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(255,152,0,0.8), 0 0 20px rgba(255,87,34,0.7),
+                         0 0 30px rgba(255,193,7,0.5), 0 6px 18px rgba(0,0,0,0.5);
         }
 
-        @keyframes ramGlow {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 100% 50%; }
-        }
+        @keyframes ramGlow { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
+        @keyframes headerFloat { 0% { transform: translateY(0px) translateZ(0); } 100% { transform: translateY(-5px) translateZ(0); } }
 
-        @keyframes headerFloat {
-            0% { transform: translateY(0px) translateZ(0); }
-            100% { transform: translateY(-5px) translateZ(0); }
-        }
-
+        /* --- ADVANCED CARD & SCROLL REVEAL --- */
         .episode-card {
             background: linear-gradient(145deg, rgba(255,255,255,0.22), rgba(255,255,255,0.08));
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 2px solid rgba(255,255,255,0.25);
-            border-radius: 34px;
-            padding: 24px;
-            margin-bottom: 30px;
-            box-shadow: 0 20px 45px rgba(0,0,0,0.28),
-                        inset 0 2px 5px rgba(255,255,255,0.3),
-                        0 0 25px rgba(255,255,255,0.1);
-            transition: 0.45s;
-            position: relative;
-            overflow: hidden;
-            
-            /* Performance & Render Optimizations for Mobile */
-            will-change: transform;
-            transform: translateZ(0);
-            contain: content; /* Isolates the rendering of each card */
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 2px solid rgba(255,255,255,0.25); border-radius: 34px;
+            padding: 24px; margin-bottom: 30px;
+            box-shadow: 0 20px 45px rgba(0,0,0,0.28), inset 0 2px 5px rgba(255,255,255,0.3), 0 0 25px rgba(255,255,255,0.1);
+            transition: transform 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.6s ease;
+            position: relative; overflow: hidden; contain: content;
+            /* Scroll Reveal Initial State */
+            opacity: 0; transform: translateY(40px) scale(0.95);
+            will-change: transform, opacity;
         }
 
-        .episode-card:hover {
-            transform: translateY(-8px) scale(1.02) translateZ(0);
+        .episode-card.show {
+            opacity: 1; transform: translateY(0) scale(1);
         }
 
-        .ep-title {
-            font-size: 28px;
-            font-weight: 900;
-            color: #4e342e;
-            margin-bottom: 14px;
-            line-height: 1.4;
+        .episode-card:hover.show {
+            transform: translateY(-8px) scale(1.02);
         }
 
-        .ep-desc {
-            font-size: 17px;
-            font-weight: 700;
-            line-height: 1.9;
-            color: #5d4037;
-            margin-bottom: 20px;
-        }
-
-        .highlight {
-            color: #bf360c;
-            font-weight: 900;
-            background: linear-gradient(90deg, #fff176, #ffcc80);
-            padding: 2px 9px;
-            border-radius: 10px;
-        }
-
-        audio {
-            width: 100%;
-            border-radius: 50px;
-            margin-bottom: 15px;
-            background: linear-gradient(90deg, #ff6f00, #ff1744);
-        }
-
-        /* Customize audio controls for webkit */
-        audio::-webkit-media-controls-enclosure {
-            border-radius: 50px;
-        }
+        .ep-title { font-size: 28px; font-weight: 900; color: #4e342e; margin-bottom: 14px; line-height: 1.4; }
+        .ep-desc { font-size: 17px; font-weight: 700; line-height: 1.9; color: #5d4037; margin-bottom: 20px; }
+        .highlight { color: #bf360c; font-weight: 900; background: linear-gradient(90deg, #fff176, #ffcc80); padding: 2px 9px; border-radius: 10px; }
 
         .coming {
-            margin-top: 15px;
-            padding: 16px;
-            border-radius: 18px;
-            font-size: 16px;
-            font-weight: 900;
-            text-align: center;
-            background: linear-gradient(90deg, #ff9800, #ff5722);
-            color: white;
+            margin-top: 15px; padding: 16px; border-radius: 18px; font-size: 16px; font-weight: 900;
+            text-align: center; background: linear-gradient(90deg, #ff9800, #ff5722); color: white;
         }
+
+        /* --- CUSTOM PREMIUM AUDIO PLAYER UI --- */
+        .custom-player {
+            display: flex; align-items: center; gap: 15px;
+            background: linear-gradient(90deg, #ff6f00, #ff1744);
+            padding: 12px 18px; border-radius: 50px; margin-bottom: 12px;
+            box-shadow: inset 0 2px 5px rgba(255,255,255,0.3), 0 5px 15px rgba(255,23,68,0.4);
+        }
+
+        .play-btn {
+            background: white; border: none; outline: none;
+            width: 40px; height: 40px; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            cursor: pointer; color: #ff1744; font-size: 18px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: 0.3s;
+            flex-shrink: 0;
+        }
+        
+        .play-btn:active { transform: scale(0.9); }
+
+        .progress-container {
+            flex-grow: 1; display: flex; flex-direction: column; gap: 4px;
+        }
+
+        .seek-bar {
+            -webkit-appearance: none; width: 100%; height: 6px;
+            background: rgba(255,255,255,0.3); border-radius: 5px;
+            outline: none; cursor: pointer; position: relative;
+        }
+
+        .seek-bar::-webkit-slider-thumb {
+            -webkit-appearance: none; width: 16px; height: 16px;
+            background: white; border-radius: 50%; cursor: pointer;
+            box-shadow: 0 0 5px rgba(0,0,0,0.5);
+        }
+        
+        .seek-bar::-moz-range-thumb {
+            width: 16px; height: 16px; background: white;
+            border: none; border-radius: 50%; cursor: pointer;
+        }
+
+        .time-display {
+            font-size: 12px; font-weight: 700; color: white;
+            display: flex; justify-content: space-between;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        /* Part Label if multiple audios */
+        .part-label {
+            font-size: 12px; color: #fff; font-weight: 900;
+            background: rgba(0,0,0,0.2); padding: 3px 8px;
+            border-radius: 10px; margin-right: 5px;
+        }
+
     </style>
 </head>
-
 <body>
 
     <div class="header">
@@ -202,6 +169,7 @@
     <div id="episodes"></div>
 
     <script>
+        // Data Array
         const episodes = [
             { title:"एपिसोड 1 - श्री राम जन्म", desc:"राजा दशरथ के घर <span class='highlight'>भगवान श्री राम</span> का दिव्य जन्म।", audio:["https://res.cloudinary.com/dbutl9qr6/video/upload/v1779866831/Ramayan_01_sxjskh.mp3"] },
             { title:"एपिसोड 2 - बाल लीला", desc:"बाल रूप में <span class='highlight'>श्री राम</span> की अद्भुत लीलाएँ।", audio:["https://res.cloudinary.com/dbutl9qr6/video/upload/v1779869198/Ramayan_2_ytx6pr.mp3", "https://res.cloudinary.com/dbutl9qr6/video/upload/v1779878541/Generated-Audio-May-27-2026-4-07_wzeupj.mp3"] },
@@ -237,42 +205,156 @@
             { title:"एपिसोड 32 - श्री राम राज्याभिषेक", desc:"भगवान श्री राम का <span class='highlight'>राज्याभिषेक</span> और रामराज्य की स्थापना।", audio:[] }
         ];
 
+        // 1. FAST DOM RENDERING
         const container = document.getElementById("episodes");
-
-        // OPTIMIZATION: Build HTML string first, insert into DOM exactly ONCE
-        // OPTIMIZATION: Used preload="none" to prevent 32 audio files fetching metadata concurrently (Saves tons of bandwidth & memory)
-        const htmlContent = episodes.map(ep => `
-            <div class="episode-card">
+        
+        container.innerHTML = episodes.map((ep, epIndex) => `
+            <div class="episode-card" id="card-${epIndex}">
                 <div class="ep-title">${ep.title}</div>
                 <div class="ep-desc">${ep.desc}</div>
-                ${ep.audio.length > 0
-                    ? ep.audio.map(link => `
-                        <audio controls preload="none">
-                            <source src="${link}" type="${link.endsWith('.wav') ? 'audio/wav' : 'audio/mpeg'}">
-                        </audio>
-                    `).join("")
+                ${ep.audio.length > 0 
+                    ? ep.audio.map((link, audioIndex) => `
+                        <div class="custom-player" data-src="${link}" data-id="${epIndex}-${audioIndex}">
+                            ${ep.audio.length > 1 ? `<span class="part-label">Part ${audioIndex + 1}</span>` : ''}
+                            <button class="play-btn" data-action="play">▶</button>
+                            <div class="progress-container">
+                                <input type="range" class="seek-bar" value="0" max="100" step="0.1" data-action="seek">
+                                <div class="time-display">
+                                    <span class="current-time">00:00</span>
+                                    <span class="total-time">00:00</span>
+                                </div>
+                            </div>
+                        </div>
+                    `).join("") 
                     : `<div class="coming">🚩 जल्द ही आ रहा है 🚩</div>`
                 }
             </div>
         `).join("");
 
-        // Fast Single DOM Update
-        container.innerHTML = htmlContent;
-    </script>
-
-    <script>
-        // OPTIMIZATION: Memory efficient single-audio-play logic
-        let currentPlayingAudio = null;
-
-        document.addEventListener("play", function(e) {
-            if (e.target.tagName === 'AUDIO') {
-                if (currentPlayingAudio && currentPlayingAudio !== e.target) {
-                    currentPlayingAudio.pause();
+        // 2. SCROLL REVEAL ANIMATION (Intersection Observer)
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                    observer.unobserve(entry.target); // Animate only once
                 }
-                currentPlayingAudio = e.target;
-            }
-        }, true);
-    </script>
+            });
+        }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
 
+        document.querySelectorAll('.episode-card').forEach(card => observer.observe(card));
+
+        // 3. ADVANCED SINGLE AUDIO ENGINE (Memory Optimized)
+        const AudioEngine = new Audio();
+        let currentPlayingId = null;
+        let animationFrameId = null;
+
+        // Helper to format time (Seconds -> MM:SS)
+        const formatTime = (time) => {
+            if (isNaN(time)) return "00:00";
+            const min = Math.floor(time / 60);
+            const sec = Math.floor(time % 60);
+            return `${min < 10 ? '0' : ''}${min}:${sec < 10 ? '0' : ''}${sec}`;
+        };
+
+        // UI Update Loop (60FPS Hardware Accelerated)
+        const updateUI = () => {
+            if (!currentPlayingId) return;
+            const playerUI = document.querySelector(`.custom-player[data-id="${currentPlayingId}"]`);
+            if (playerUI && AudioEngine.duration) {
+                const seekBar = playerUI.querySelector('.seek-bar');
+                const currentTimeEl = playerUI.querySelector('.current-time');
+                
+                const percent = (AudioEngine.currentTime / AudioEngine.duration) * 100;
+                seekBar.value = percent;
+                currentTimeEl.textContent = formatTime(AudioEngine.currentTime);
+                
+                // Dynamic Range Input Background
+                seekBar.style.background = `linear-gradient(to right, #fff ${percent}%, rgba(255,255,255,0.3) ${percent}%)`;
+            }
+            animationFrameId = requestAnimationFrame(updateUI);
+        };
+
+        // Reset UI of any player
+        const resetPlayerUI = (id) => {
+            if(!id) return;
+            const playerUI = document.querySelector(`.custom-player[data-id="${id}"]`);
+            if (playerUI) {
+                playerUI.querySelector('.play-btn').innerHTML = "▶"; // Play icon
+            }
+        };
+
+        // 4. EVENT DELEGATION (Single Listener for Whole Page)
+        document.body.addEventListener('click', (e) => {
+            // Handle Play/Pause
+            if (e.target.closest('.play-btn')) {
+                const btn = e.target.closest('.play-btn');
+                const playerContainer = btn.closest('.custom-player');
+                const src = playerContainer.getAttribute('data-src');
+                const id = playerContainer.getAttribute('data-id');
+
+                // If clicking the same audio that is already loaded
+                if (currentPlayingId === id) {
+                    if (AudioEngine.paused) {
+                        AudioEngine.play();
+                        btn.innerHTML = "⏸"; // Pause icon
+                        updateUI();
+                    } else {
+                        AudioEngine.pause();
+                        btn.innerHTML = "▶";
+                        cancelAnimationFrame(animationFrameId);
+                    }
+                } 
+                // If clicking a NEW audio
+                else {
+                    resetPlayerUI(currentPlayingId); // Reset old button
+                    cancelAnimationFrame(animationFrameId);
+                    
+                    currentPlayingId = id;
+                    AudioEngine.src = src;
+                    AudioEngine.load();
+                    AudioEngine.play();
+                    
+                    btn.innerHTML = "⏳"; // Loading state
+                }
+            }
+        });
+
+        // Handle Seeking (Slider drag)
+        document.body.addEventListener('input', (e) => {
+            if (e.target.classList.contains('seek-bar')) {
+                const playerContainer = e.target.closest('.custom-player');
+                const id = playerContainer.getAttribute('data-id');
+                
+                if (currentPlayingId === id && AudioEngine.duration) {
+                    const seekTo = AudioEngine.duration * (e.target.value / 100);
+                    AudioEngine.currentTime = seekTo;
+                    e.target.style.background = `linear-gradient(to right, #fff ${e.target.value}%, rgba(255,255,255,0.3) ${e.target.value}%)`;
+                }
+            }
+        });
+
+        // Audio Engine Events
+        AudioEngine.addEventListener('playing', () => {
+            const btn = document.querySelector(`.custom-player[data-id="${currentPlayingId}"] .play-btn`);
+            if(btn) btn.innerHTML = "⏸";
+            updateUI();
+        });
+
+        AudioEngine.addEventListener('loadedmetadata', () => {
+            const totalTimeEl = document.querySelector(`.custom-player[data-id="${currentPlayingId}"] .total-time`);
+            if(totalTimeEl) totalTimeEl.textContent = formatTime(AudioEngine.duration);
+        });
+
+        AudioEngine.addEventListener('ended', () => {
+            resetPlayerUI(currentPlayingId);
+            cancelAnimationFrame(animationFrameId);
+            const seekBar = document.querySelector(`.custom-player[data-id="${currentPlayingId}"] .seek-bar`);
+            if(seekBar) {
+                seekBar.value = 0;
+                seekBar.style.background = `rgba(255,255,255,0.3)`;
+            }
+        });
+
+    </script>
 </body>
 </html>
