@@ -861,26 +861,24 @@ font-size:28px;
 <script>
 
 function openYouTube(){
-
-window.open(
-"https://youtube.com/@Kajaltanwer-eo5jo",
-"_blank"
-);
-
+  window.open("https://youtube.com/@Kajaltanwer-eo5jo", "_blank");
 }
 
 function shareApp(){
+  // 🔗 यहाँ आपका असली Play Store लिंक जोड़ दिया गया है
+  const playStoreLink = "https://play.google.com/store/apps/details?id=com.appcollection.xbhaktisagar_10307";
+  
+  // 📝 आकर्षक शेयर मैसेज
+  const text = "🚩 *श्री भक्ति सागर ऐप डाउनलोड करें* 🚩\n\nआरती, भजन, व्रत कथा, पूजा विधि, और गीता ज्ञान एक ही ऐप में पाएं।\n\n👇 *अभी डाउनलोड करें* 👇\n" + playStoreLink;
 
-const text="🚩 श्री भक्ति सागर ऐप डाउनलोड करें 🚩";
-
-window.open(
-"https://wa.me/?text="+encodeURIComponent(text),
-"_blank"
-);
-
+  // WhatsApp ओपन करने की कमांड
+  window.open(
+    "https://wa.me/?text=" + encodeURIComponent(text),
+    "_blank"
+  );
 }
 
 </script>
 
 </body>
-  </html>
+</html>
