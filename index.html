@@ -4,22 +4,27 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Android WebView और Mobile Chrome के लिए परफेक्ट परफॉर्मेंस व्यूपोर्ट -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <title>🚩 श्री भक्ति सागर 🚩</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 
 <style>
 
 /* ======================================= */
-/* ULTRA HD DIVINE SQUARE BOX DESIGN */
+/* ULTRA HD DIVINE SQUARE BOX DESIGN (HIGH-PERFORMANCE) */
 /* ======================================= */
 
 *{
 margin:0;
 padding:0;
 box-sizing:border-box;
+/* एंड्रॉइड पर क्लिक करने वाले लैग और गंदे नीले बॉक्स को हटाता है */
+-webkit-tap-highlight-color: transparent;
 }
 
 html{
@@ -27,681 +32,285 @@ scroll-behavior:smooth;
 }
 
 body{
-
 font-family:'Poppins',sans-serif;
-
-background:
-linear-gradient(
+background: linear-gradient(
 135deg,
 #ffecd2 0%,
 #fcb69f 20%,
 #ffdde1 40%,
 #d4fc79 60%,
 #96e6ff 80%,
-#ffd3a5 100%
+#ffd3a5 100-percent
 );
-
-background-size:400% 400%;
-
-animation:bgFlow 14s ease infinite;
-
+background-size:300% 300%; /* एनीमेशन को स्मूथ करने के लिए साइज थोड़ा कम किया */
+animation:bgFlow 18s ease infinite; /* गति थोड़ी धीमी की ताकि CPU पर लोड न आए */
 min-height:100vh;
-
 overflow-x:hidden;
-
 padding-bottom:40px;
-
 position:relative;
-
-/* FIX */
-
 background-attachment:fixed;
 
-transform:translateZ(0);
-
+/* मोबाइल स्क्रॉलिंग को मक्खन जैसा बनाने के लिए नेटिव टच */
+-webkit-overflow-scrolling: touch;
+overscroll-behavior-y: none;
 -webkit-font-smoothing:antialiased;
-
 }
 
-/* BACKGROUND FLOW */
-
+/* BACKGROUND FLOW - GPU ACCELERATED */
 @keyframes bgFlow{
-
-0%{
-background-position:0% 50%;
-}
-
-50%{
-background-position:100% 50%;
-}
-
-100%{
-background-position:0% 50%;
-}
-
+0%{ background-position:0% 50%; }
+50%{ background-position:100% 50%; }
+100%{ background-position:0% 50%; }
 }
 
 /* LIGHT EFFECT */
-
 body::before{
-
 content:"";
-
 position:fixed;
-
 top:0;
 left:0;
-
 width:100%;
 height:100%;
-
 background:
-
-radial-gradient(circle at top left,
-rgba(255,255,255,0.35),
-transparent 25%),
-
-radial-gradient(circle at bottom right,
-rgba(255,255,255,0.25),
-transparent 25%);
-
+radial-gradient(circle at top left, rgba(255,255,255,0.35), transparent 25%),
+radial-gradient(circle at bottom right, rgba(255,255,255,0.25), transparent 25%);
 z-index:-2;
-
+transform: translateZ(0); /* फ़ोर्स GPU रेंडरिंग */
 }
 
 /* PARTICLES */
-
 body::after{
-
 content:"";
-
 position:fixed;
-
 top:0;
 left:0;
-
 width:100%;
 height:100%;
-
-background-image:
-radial-gradient(rgba(255,255,255,0.3) 2px, transparent 2px);
-
+background-image: radial-gradient(rgba(255,255,255,0.3) 2px, transparent 2px);
 background-size:35px 35px;
-
 opacity:0.22;
-
 z-index:-1;
-
-animation:particles 20s linear infinite;
-
+animation:particles 22s linear infinite;
+transform: translateZ(0);
+will-change: transform;
 }
 
 @keyframes particles{
-
-0%{
-transform:translateY(0);
-}
-
-100%{
-transform:translateY(-80px);
-}
-
+0%{ transform:translateY(0) translateZ(0); }
+100%{ transform:translateY(-80px) translateZ(0); }
 }
 
 /* HEADER */
-
 .header{
-
-background:
-linear-gradient(
-145deg,
-#ff1744,
-#ff9100,
-#ffea00,
-#00c853,
-#2979ff,
-#aa00ff
-);
-
-background-size:400% 400%;
-
-animation:headerFlow 10s linear infinite;
-
+background: linear-gradient(145deg, #ff1744, #ff9100, #ffea00, #00c853, #2979ff, #aa00ff);
+background-size:300% 300%;
+animation:headerFlow 12s linear infinite;
 padding:42px 18px;
-
 font-size:34px;
-
 font-weight:900;
-
 text-align:center;
-
 color:white;
-
 border-bottom-left-radius:40px;
-
 border-bottom-right-radius:40px;
-
-box-shadow:
-
-0 15px 40px rgba(0,0,0,0.35),
-
-inset 0 3px 10px rgba(255,255,255,0.3);
-
-text-shadow:
-0 5px 12px rgba(0,0,0,0.4);
-
+box-shadow: 0 15px 40px rgba(0,0,0,0.35), inset 0 3px 10px rgba(255,255,255,0.3);
+text-shadow: 0 5px 12px rgba(0,0,0,0.4);
+transform: translateZ(0);
 }
 
 @keyframes headerFlow{
-
-0%{
-background-position:0% 50%;
-}
-
-100%{
-background-position:100% 50%;
-}
-
+0%{ background-position:0% 50%; }
+100%{ background-position:100% 50%; }
 }
 
 /* LIVE */
-
 .live-ticker{
-
-background:
-linear-gradient(
-90deg,
-#ff1744,
-#ff9100,
-#ffea00,
-#00e676,
-#00b0ff,
-#d500f9
-);
-
-background-size:400% 400%;
-
-animation:tickerFlow 8s linear infinite;
-
+background: linear-gradient(90deg, #ff1744, #ff9100, #ffea00, #00e676, #00b0ff, #d500f9);
+background-size:300% 300%;
+animation:tickerFlow 10s linear infinite;
 padding:13px 0;
-
 font-size:14px;
-
 font-weight:900;
-
 color:white;
-
 text-align:center;
-
-box-shadow:
-0 8px 20px rgba(0,0,0,0.3);
-
+box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+transform: translateZ(0);
 }
 
 @keyframes tickerFlow{
-
-0%{
-background-position:0% 50%;
-}
-
-100%{
-background-position:100% 50%;
-}
-
+0%{ background-position:0% 50%; }
+100%{ background-position:100% 50%; }
 }
 
 /* SPECIAL BOX TOP */
-
 .special-box{
-
 margin:24px auto;
-
 width:92%;
-
 max-width:540px;
-
-background:
-linear-gradient(
-145deg,
-rgba(255,255,255,0.22),
-rgba(255,255,255,0.08)
-);
-
-backdrop-filter:blur(18px);
-
--webkit-backdrop-filter:blur(18px);
-
+background: linear-gradient(145deg, rgba(255,255,255,0.22), rgba(255,255,255,0.08));
+backdrop-filter:blur(8px);
+-webkit-backdrop-filter:blur(8px); /* ऑप्टिमाइज़्ड ब्लर रेडियस ताकि लैग न हो */
 padding:28px;
-
 border-radius:35px;
-
 border:3px solid rgba(255,255,255,0.25);
-
-box-shadow:
-0 18px 35px rgba(0,0,0,0.22);
-
+box-shadow: 0 18px 35px rgba(0,0,0,0.22);
 text-align:center;
-
 position:relative;
-
 overflow:hidden;
 
+/* इकलौते बॉक्स के रेंडरिंग को सीमित कर परफॉर्मेंस बूस्ट करता है */
 transform:translateZ(0);
-
+contain: content; 
 }
 
 .special-box::before{
-
 content:"";
-
 position:absolute;
-
 top:-50%;
 right:-20%;
-
 width:220px;
 height:220px;
-
-background:
-rgba(255,255,255,0.18);
-
+background: rgba(255,255,255,0.18);
 border-radius:50%;
-
 }
 
-.special-box h3{
-
-font-size:28px;
-
-font-weight:900;
-
-color:white;
-
-text-shadow:
-0 4px 10px rgba(0,0,0,0.35);
-
-margin-bottom:10px;
-
-position:relative;
-
-z-index:2;
-
-}
-
-.special-box h4{
-
-font-size:15px;
-
-font-weight:700;
-
-color:#fffde7;
-
-margin-bottom:18px;
-
-position:relative;
-
-z-index:2;
-
-}
-
-audio{
-
-width:100%;
-
-border-radius:50px;
-
-position:relative;
-
-z-index:2;
-
-}
+.special-box h3{ font-size:28px; font-weight:900; color:white; text-shadow: 0 4px 10px rgba(0,0,0,0.35); margin-bottom:10px; position:relative; z-index:2; }
+.special-box h4{ font-size:15px; font-weight:700; color:#fffde7; margin-bottom:18px; position:relative; z-index:2; }
+audio{ width:100%; border-radius:50px; position:relative; z-index:2; }
 
 /* MAIN */
-
 .container{
-
 padding:24px 14px;
-
 display:grid;
-
 grid-template-columns:1fr 1fr;
-
 gap:22px;
-
 max-width:560px;
-
 margin:auto;
-
 }
 
 /* ======================================= */
 /* SQUARE BOX STYLE */
 /* ======================================= */
-
 .folder{
-
 position:relative;
-
 height:185px;
-
 border-radius:28px;
-
 display:flex;
-
 flex-direction:column;
-
 align-items:center;
-
 justify-content:center;
-
 text-align:center;
-
 overflow:hidden;
-
 cursor:pointer;
-
-transition:0.35s;
-
 border:3px solid rgba(255,255,255,0.25);
+backdrop-filter:blur(8px);
+-webkit-backdrop-filter:blur(8px); /* स्क्रीन अटकने से बचाने के लिए 8px बेस्ट है */
 
-backdrop-filter:blur(18px);
-
--webkit-backdrop-filter:blur(18px);
-
+/* एडवांस हार्डवेयर एक्सेलेरेशन सेटिंग्स */
 transform:translateZ(0);
-
 will-change:transform;
-
 backface-visibility:hidden;
+-webkit-backface-visibility: hidden;
+contain: content;
 
 box-shadow:
-
 0 18px 35px rgba(0,0,0,0.25),
-
 inset 0 3px 6px rgba(255,255,255,0.35),
-
 inset 0 -3px 8px rgba(0,0,0,0.12);
-
+transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s;
 }
 
-/* BOX DESIGN */
+.folder::before{ content:""; position:absolute; top:14px; left:14px; width:45px; height:45px; border:4px solid rgba(255,255,255,0.22); border-radius:8px; }
+.folder::after{ content:""; position:absolute; bottom:14px; right:14px; width:50px; height:50px; border:4px solid rgba(255,255,255,0.18); border-radius:8px; }
 
-.folder::before{
-
-content:"";
-
-position:absolute;
-
-top:14px;
-left:14px;
-
-width:45px;
-height:45px;
-
-border:4px solid rgba(255,255,255,0.22);
-
-border-radius:8px;
-
-transform:translateZ(0);
-
+/* मोबाइल पर क्लिक रिस्पांस को फ़ास्ट करने के लिए :active स्टेट */
+.folder:active{
+transform: translateY(-2px) scale(0.97) translateZ(0);
+box-shadow: 0 12px 25px rgba(0,0,0,0.2);
 }
-
-.folder::after{
-
-content:"";
-
-position:absolute;
-
-bottom:14px;
-right:14px;
-
-width:50px;
-height:50px;
-
-border:4px solid rgba(255,255,255,0.18);
-
-border-radius:8px;
-
-transform:translateZ(0);
-
-}
-
-/* HOVER */
 
 .folder:hover{
-
-transform:
-translateY(-6px)
-scale(1.03)
-translateZ(0);
-
-box-shadow:
-0 24px 45px rgba(0,0,0,0.35);
-
+transform: translateY(-6px) scale(1.03) translateZ(0);
+box-shadow: 0 24px 45px rgba(0,0,0,0.35);
 }
 
 /* ICON */
-
 .icon{
-
 font-size:48px;
-
 margin-bottom:14px;
-
-filter:
-drop-shadow(0 4px 8px rgba(0,0,0,0.3));
-
+filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
 animation:iconFloat 3s infinite ease-in-out;
-
 z-index:2;
-
+will-change: transform;
 }
 
 @keyframes iconFloat{
-
-0%{
-transform:translateY(0);
-}
-
-50%{
-transform:translateY(-5px);
-}
-
-100%{
-transform:translateY(0);
-}
-
+0%{ transform:translateY(0) translateZ(0); }
+50%{ transform:translateY(-5px) translateZ(0); }
+100%{ transform:translateY(0) translateZ(0); }
 }
 
 /* TEXT */
-
-.folder h2{
-
-font-size:20px;
-
-font-weight:900;
-
-line-height:1.45;
-
-color:white;
-
-text-shadow:
-0 3px 8px rgba(0,0,0,0.4);
-
-padding:0 10px;
-
-z-index:2;
-
-}
-
-.folder p{
-
-font-size:13px;
-
-font-weight:700;
-
-line-height:1.6;
-
-color:#fffde7;
-
-margin-top:10px;
-
-padding:0 12px;
-
-z-index:2;
-
-}
+.folder h2{ font-size:20px; font-weight:900; line-height:1.45; color:white; text-shadow: 0 3px 8px rgba(0,0,0,0.4); padding:0 10px; z-index:2; }
+.folder p{ font-size:13px; font-weight:700; line-height:1.6; color:#fffde7; margin-top:10px; padding:0 12px; z-index:2; }
 
 /* COLORS */
-
-.pink{
-background:linear-gradient(145deg,#ff4081,#f50057);
-}
-
-.orange{
-background:linear-gradient(145deg,#ff6d00,#ffab00);
-}
-
-.yellow{
-background:linear-gradient(145deg,#ff9100,#ffea00);
-}
-
-.green{
-background:linear-gradient(145deg,#00c853,#64dd17);
-}
-
-.blue{
-background:linear-gradient(145deg,#2979ff,#00b0ff);
-}
-
-.purple{
-background:linear-gradient(145deg,#aa00ff,#d500f9);
-}
-
-.teal{
-background:linear-gradient(145deg,#00bfa5,#1de9b6);
-}
-
-.red{
-background:linear-gradient(145deg,#ff1744,#ff5252);
-}
-
-.indigo{
-background:linear-gradient(145deg,#3d5afe,#651fff);
-}
-
-.gold{
-background:linear-gradient(145deg,#ff6f00,#ffca28);
-}
+.pink{ background:linear-gradient(145deg,#ff4081,#f50057); }
+.orange{ background:linear-gradient(145deg,#ff6d00,#ffab00); }
+.yellow{ background:linear-gradient(145deg,#ff9100,#ffea00); }
+.green{ background:linear-gradient(145deg,#00c853,#64dd17); }
+.blue{ background:linear-gradient(145deg,#2979ff,#00b0ff); }
+.purple{ background:linear-gradient(145deg,#aa00ff,#d500f9); }
+.teal{ background:linear-gradient(145deg,#00bfa5,#1de9b6); }
+.red{ background:linear-gradient(145deg,#ff1744,#ff5252); }
+.indigo{ background:linear-gradient(145deg,#3d5afe,#651fff); }
+.gold{ background:linear-gradient(145deg,#ff6f00,#ffca28); }
 
 /* BUTTONS */
-
 .btn-container{
-
 padding:14px;
-
 text-align:center;
-
 }
 
 .youtube-btn,
 .whatsapp-btn{
-
 width:92%;
-
 padding:18px;
-
 border:none;
-
 border-radius:70px;
-
 font-size:17px;
-
 font-weight:900;
-
 cursor:pointer;
-
 margin-bottom:18px;
-
 color:white;
-
-transition:0.4s;
-
-box-shadow:
-0 18px 35px rgba(0,0,0,0.25);
-
+transition: transform 0.2s;
+box-shadow: 0 18px 35px rgba(0,0,0,0.25);
+transform: translateZ(0);
 }
 
-.youtube-btn{
+.youtube-btn{ background: linear-gradient(145deg,#ff1744,#d50000); }
+.whatsapp-btn{ background: linear-gradient(145deg,#00e676,#00c853); }
 
-background:
-linear-gradient(145deg,#ff1744,#d50000);
-
-}
-
-.whatsapp-btn{
-
-background:
-linear-gradient(145deg,#00e676,#00c853);
-
+.youtube-btn:active,
+.whatsapp-btn:active{
+transform: translateY(-2px) scale(0.97) translateZ(0);
 }
 
 .youtube-btn:hover,
 .whatsapp-btn:hover{
-
-transform:
-translateY(-5px)
-scale(1.04);
-
+transform: translateY(-5px) scale(1.04) translateZ(0);
 }
 
 /* FOOTER */
-
-footer{
-
-padding:35px;
-
-text-align:center;
-
-font-size:14px;
-
-font-weight:800;
-
-color:white;
-
-text-shadow:
-0 3px 8px rgba(0,0,0,0.35);
-
-}
+footer{ padding:35px; text-align:center; font-size:14px; font-weight:800; color:white; text-shadow: 0 3px 8px rgba(0,0,0,0.35); }
 
 /* MOBILE */
-
 @media(max-width:480px){
-
-.container{
-gap:18px;
-}
-
-.folder{
-height:180px;
-}
-
-.folder h2{
-font-size:18px;
-}
-
-.folder p{
-font-size:12px;
-}
-
-.icon{
-font-size:42px;
-}
-
-.header{
-font-size:28px;
-}
-
+.container{ gap:18px; }
+.folder{ height:180px; }
+.folder h2{ font-size:18px; }
+.folder p{ font-size:12px; }
+.icon{ font-size:42px; }
+.header{ font-size:28px; }
 }
 
 </style>
@@ -711,11 +320,7 @@ font-size:28px;
 <body>
 
 <div class="live-ticker">
-
-<marquee scrollamount="5">
-🚩 जय श्री राम! श्री भक्ति सागर ऐप में आपका स्वागत है 🚩
-</marquee>
-
+<marquee scrollamount="5">🚩 जय श्री राम! श्री भक्ति सागर ऐप में आपका स्वागत है 🚩</marquee>
 </div>
 
 <div class="header">
@@ -723,135 +328,83 @@ font-size:28px;
 </div>
 
 <!-- SPECIAL STORY TOP -->
-
 <div class="special-box">
-
 <h3>🎙️ आज की विशेष कथा</h3>
-
 <h4>(प्ले बटन दबाएं और सुनें)</h4>
-
-<audio controls>
+<!-- Optimized: preload="none" ऐप ओपन होते ही डेटा और रैम ब्लॉक होने से रोकता है -->
+<audio controls preload="none">
 <source src="story.mp3" type="audio/mpeg">
 </audio>
-
 </div>
 
 <!-- MAIN BOXES -->
-
 <div class="container">
 
 <div class="folder pink" onclick="location.href='gods_list.html'">
-
 <div class="icon">🎧</div>
-
 <h2>आरती, भजन</h2>
-
 <p>मधुर ऑडियो सुनें</p>
-
 </div>
 
 <div class="folder orange" onclick="location.href='puja.html'">
-
 <div class="icon">🔱</div>
-
-<h2>पूजा विधि</h2>
-
+<h2> पूजा विधि</h2>
 <p>पूजन सामग्री और मंत्र</p>
-
 </div>
 
 <div class="folder yellow" onclick="location.href='fasts.html'">
-
 <div class="icon">🥣</div>
-
 <h2>व्रत कथा</h2>
-
 <p>व्रत और लाभ</p>
-
 </div>
 
 <div class="folder green" onclick="location.href='name_info.html'">
-
 <div class="icon">🕉️</div>
-
 <h2>राशि ज्ञान</h2>
-
 <p>इष्ट देव जानें</p>
-
 </div>
 
 <div class="folder blue" onclick="location.href='panchang.html'">
-
 <div class="icon">📅</div>
-
 <h2>पंचांग</h2>
-
 <p>तिथि और मुहूर्त</p>
-
 </div>
 
 <div class="folder purple" onclick="location.href='quiz.html'">
-
 <div class="icon">🧩</div>
-
 <h2>भक्ति क्विज़</h2>
-
 <p>सनातन धर्म खेल</p>
-
 </div>
 
 <div class="folder teal" onclick="location.href='quotes.html'">
-
 <div class="icon">📜</div>
-
 <h2>अनमोल वचन</h2>
-
 <p>प्रेरक सुविचार</p>
-
 </div>
 
 <div class="folder red" onclick="location.href='ramayan.html'">
-
 <div class="icon">🏹</div>
-
 <h2>रामायण कथा</h2>
-
 <p>श्री राम की कथा</p>
-
 </div>
 
 <div class="folder indigo" onclick="location.href='gita.html'">
-
 <div class="icon">📖</div>
-
 <h2>गीता ज्ञान</h2>
-
 <p>गीता श्लोक और अर्थ</p>
-
 </div>
 
 <div class="folder gold" onclick="location.href='store.html'">
-
 <div class="icon">🛒</div>
-
 <h2>Bhakti Store</h2>
-
 <p>पूजा सामग्री खरीदें</p>
-
 </div>
 
 </div>
 
 <div class="btn-container">
-
-<button class="youtube-btn" onclick="openYouTube()">
-📺 YouTube Channel
-</button>
-
-<button class="whatsapp-btn" onclick="shareApp()">
-🟢 WhatsApp पर शेयर करें
-</button>
-
+<button class="youtube-btn" onclick="openYouTube()">📺 YouTube Channel</button>
+<button class="whatsapp-btn" onclick="shareApp()">🟢 WhatsApp पर शेयर करें</button>
 </div>
 
 <footer>
@@ -859,25 +412,19 @@ font-size:28px;
 </footer>
 
 <script>
-
 function openYouTube(){
   window.open("https://youtube.com/@Kajaltanwer-eo5jo", "_blank");
 }
 
 function shareApp(){
-  // 🔗 यहाँ आपका असली Play Store लिंक जोड़ दिया गया है
   const playStoreLink = "https://play.google.com/store/apps/details?id=com.appcollection.xbhaktisagar_10307";
-  
-  // 📝 आकर्षक शेयर मैसेज
   const text = "🚩 *श्री भक्ति सागर ऐप डाउनलोड करें* 🚩\n\nआरती, भजन, व्रत कथा, पूजा विधि, और गीता ज्ञान एक ही ऐप में पाएं।\n\n👇 *अभी डाउनलोड करें* 👇\n" + playStoreLink;
 
-  // WhatsApp ओपन करने की कमांड
   window.open(
     "https://wa.me/?text=" + encodeURIComponent(text),
     "_blank"
   );
 }
-
 </script>
 
 </body>
