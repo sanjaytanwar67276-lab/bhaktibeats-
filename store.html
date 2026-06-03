@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Bhakti Store - 🛒</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; -webkit-tap-highlight-color: transparent; }
+        
+        body {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 20%, #ffdde1 40%, #d4fc79 60%, #96e6ff 80%, #ffd3a5 100%);
+            background-size: 300% 300%; animation: bgFlow 18s ease infinite; min-height: 100vh; padding-bottom: 40px;
+        }
+
+        @keyframes bgFlow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+
+        /* 🛒 Header & Back Button */
+        .header {
+            background: linear-gradient(145deg, #ff9100, #ff1744); padding: 25px 20px; text-align: center; color: white;
+            border-bottom-left-radius: 35px; border-bottom-right-radius: 35px; box-shadow: 0 10px 25px rgba(255, 23, 68, 0.4);
+            position: relative; margin-bottom: 30px;
+        }
+        .header h1 { font-size: 26px; font-weight: 900; text-shadow: 0 3px 8px rgba(0,0,0,0.3); }
+        .back-btn {
+            position: absolute; left: 15px; top: 28px; background: rgba(255,255,255,0.2); border: 2px solid white;
+            color: white; padding: 5px 12px; border-radius: 20px; font-weight: 700; text-decoration: none; font-size: 13px;
+        }
+
+        /* 📦 Grid Container */
+        .container {
+            padding: 10px 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 18px; max-width: 560px; margin: auto;
+        }
+
+        /* 🛍️ Product Folder / Box */
+        .folder {
+            position: relative; height: 230px; border-radius: 28px; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; text-align: center; overflow: hidden; cursor: pointer;
+            border: 3px solid rgba(255,255,255,0.4); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15), inset 0 3px 6px rgba(255,255,255,0.35);
+            transition: transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .folder:active { transform: scale(0.95); }
+
+        /* 🖼️ Product Image Styling */
+        .prod-img {
+            width: 90px; height: 90px; border-radius: 20px; object-fit: cover; margin-bottom: 12px;
+            border: 3px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.2); background: white; z-index: 2;
+        }
+
+        /* 📝 Text Styling */
+        .folder h2 { font-size: 17px; font-weight: 800; line-height: 1.3; color: white; text-shadow: 0 3px 6px rgba(0,0,0,0.4); z-index: 2; padding: 0 5px; }
+        .folder p { font-size: 13px; font-weight: 700; color: #fffde7; margin-top: 8px; background: rgba(0,0,0,0.3); padding: 4px 12px; border-radius: 15px; z-index: 2; }
+
+        /* 🎨 Background Colors */
+        .gold { background: linear-gradient(145deg,#ffb300,#ff6f00); }
+        .red { background: linear-gradient(145deg,#ff5252,#d50000); }
+        .purple { background: linear-gradient(145deg,#e040fb,#aa00ff); }
+        .green { background: linear-gradient(145deg,#00e676,#00c853); }
+        .blue { background: linear-gradient(145deg,#40c4ff,#0091ea); }
+
+        @media(max-width:480px){
+            .container{ gap: 14px; } .folder{ height: 210px; } .prod-img{ width: 80px; height: 80px; } .folder h2{ font-size: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <a href="index.html" class="back-btn">⬅ वापस</a>
+        <h1>🛒 Bhakti Store</h1>
+    </div>
+
+    <div class="container">
+        
+        <div class="folder gold" onclick="window.open('https://amzn.to/4uaKDWJ', '_blank')">
+            <img src="https://m.media-amazon.com/images/I/51WVQTxLM4L.jpg" class="prod-img" alt="वॉल आर्ट">
+            <h2>भक्ति वॉल आर्ट</h2>
+            <p>🛒 खरीदें</p>
+        </div>
+
+        <div class="folder red" onclick="window.open('https://amzn.to/43eTJGM', '_blank')">
+            <img src="https://m.media-amazon.com/images/I/81dFAk3KhHL._SL1500_.jpg" class="prod-img" alt="भगवद्गीता">
+            <h2>भगवद्गीता</h2>
+            <p>🛒 खरीदें</p>
+        </div>
+
+        <div class="folder purple" onclick="window.open('https://amzn.to/4x9k9az', '_blank')">
+            <img src="https://m.media-amazon.com/images/I/71ee2K0x1eL._SL1500_.jpg" class="prod-img" alt="हनुमान चालीसा">
+            <h2>हनुमान चालीसा</h2>
+            <p>🛒 खरीदें</p>
+        </div>
+
+        <div class="folder green" onclick="window.open('https://amzn.to/4vwlR4s', '_blank')">
+            <img src="https://m.media-amazon.com/images/I/71moNy+bNBL._SL1254_.jpg" class="prod-img" alt="अगरबत्ती">
+            <h2>शुद्ध धूप/बत्ती</h2>
+            <p>🛒 खरीदें</p>
+        </div>
+
+        <div class="folder blue" onclick="window.open('https://amzn.to/4x7y94B', '_blank')">
+            <img src="https://m.media-amazon.com/images/I/61pvSlaDYXL._SL1024_.jpg" class="prod-img" alt="बाल कृष्ण">
+            <h2>बाल कृष्ण मूर्ति</h2>
+            <p>🛒 खरीदें</p>
+        </div>
+
+    </div>
+
+</body>
+</html>
