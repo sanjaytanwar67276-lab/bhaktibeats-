@@ -23,13 +23,17 @@ function openYouTube() {
     window.open("https://www.youtube.com/" + channelHandle, '_blank');
 }
 
-// WhatsApp शेयर का 100% वर्किंग फंक्शन
+// WhatsApp शेयर का 100% वर्किंग फंक्शन (Android App के लिए)
 function shareApp() {
-    // origin की जगह href का उपयोग करें ताकि आपके ऐप का पूरा लिंक शेयर हो
-    const appUrl = window.location.href; 
-    const message = "🚩 *श्री भक्ति सागर* 🚩\n\nदैनिक पंचांग, पूजा विधि और 40+ व्रत कथा के लिए इस ऐप को अभी देखें:\n" + appUrl;
+    // आपके ऐप का असली Play Store लिंक 
+    const appUrl = "https://play.google.com/store/apps/details?id=com.appcollection.xbhaktisagar_10307";
     
-    // api.whatsapp.com की जगह wa.me का इस्तेमाल (मोबाइल और वेब दोनों पर बेहतरीन काम करता है)
-    const whatsappUrl = "https://wa.me/?text=" + encodeURIComponent(message);
-    window.open(whatsappUrl, '_blank');
+    // जो मैसेज आप भेजना चाहते हैं
+    const message = "🚩 *श्री भक्ति सागर* 🚩\n\nदैनिक पंचांग, पूजा विधि और 40+ व्रत कथा के लिए इस ऐप को अभी डाउनलोड करें:\n" + appUrl;
+    
+    // Android App (WebView) के लिए डायरेक्ट WhatsApp खोलने का कोड
+    const whatsappUrl = "whatsapp://send?text=" + encodeURIComponent(message);
+    
+    // यह सीधा आपके मोबाइल का WhatsApp खोलेगा (बिना किसी %E0%A4 वाले कचरा टेक्स्ट के)
+    window.location.href = whatsappUrl;
 }
