@@ -8,145 +8,209 @@
         body { background-color: #FFF3E0; font-family: sans-serif; padding: 20px; text-align: center; margin:0; }
         .header { background: #BF360C; color: white; padding: 15px; font-weight: bold; font-size: 20px; position: sticky; top:0; z-index:100; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
         .date-box { font-size: 18px; color: #BF360C; font-weight: bold; margin: 20px auto; padding: 12px; border: 2px solid #BF360C; border-radius: 10px; display: inline-block; background: white; width: 85%; }
-        .panchang-card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: left; border-left: 8px solid #BF360C; margin-bottom: 20px; width: 85%; margin-left: auto; margin-right: auto; }
+        
+        .panchang-card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: left; border-left: 8px solid #BF360C; margin-bottom: 5px; width: 85%; margin-left: auto; margin-right: auto; }
         .item { margin-bottom: 12px; border-bottom: 1px dashed #eee; padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
         .label { color: #E65100; font-weight: bold; font-size: 15px; }
         .val { color: #333; font-size: 16px; font-weight: 500; text-align: right; }
-        .btn-audio { background: #4CAF50; color: white; padding: 15px; border: none; border-radius: 10px; width: 90%; font-weight: bold; font-size: 18px; cursor: pointer; margin: 10px auto; display: block; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        
+        .location-note { font-size: 11px; color: #1565C0; text-align: center; margin-bottom: 20px; font-style: italic; font-weight: bold; }
+
+        .section-title { color: #BF360C; font-size: 18px; font-weight: bold; text-align: left; width: 85%; margin: 25px auto 10px auto; display: flex; align-items: center; gap: 8px; }
+        
+        .choghadiya-table { width: 90%; margin: 0 auto 20px auto; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .choghadiya-table th, .choghadiya-table td { padding: 12px; text-align: center; border-bottom: 1px solid #eee; font-size: 14px; }
+        .choghadiya-table th { background: #E65100; color: white; font-weight: bold; }
+        .shubh-tag { background: #E8F5E9; color: #2E7D32; padding: 4px 8px; border-radius: 5px; font-weight: bold; }
+        .ashubh-tag { background: #FFEBEE; color: #C62828; padding: 4px 8px; border-radius: 5px; font-weight: bold; }
+        
+        .special-box { background: #FFF8E1; padding: 15px; border-radius: 12px; border: 1px solid #FFE082; width: 85%; margin: 0 auto 20px auto; text-align: left; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .special-box p { margin: 5px 0; font-size: 15px; color: #4E342E; line-height: 1.5; }
+        
+        .btn-audio { background: #4CAF50; color: white; padding: 15px; border: none; border-radius: 10px; width: 90%; font-weight: bold; font-size: 18px; cursor: pointer; margin: 25px auto 10px auto; display: block; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         .btn-audio:active { transform: translateY(2px); }
-        .footer-note { font-size: 11px; color: #888; margin-top: 15px; line-height: 1.4; padding: 10px; }
+        
+        .footer-note { font-size: 12px; color: #666; margin-top: 25px; line-height: 1.6; padding: 15px; text-align: justify; background-color: #fdfdfd; border-radius: 8px; border: 1px solid #e0e0e0; }
     </style>
 </head>
 <body>
 
     <div class="header">🌞 दैनिक पंचांग</div>
     
-    <div class="date-box" id="display-date">पंचांग लोड हो रहा है...</div>
+    <div class="date-box" id="display-date"></div>
 
     <div class="panchang-card">
-        <div class="item"><span class="label">सूर्योदय:</span> <span class="val" id="sunrise">--:-- AM</span></div>
-        <div class="item"><span class="label">सूर्यास्त:</span> <span class="val" id="sunset">--:-- PM</span></div>
-        <div class="item"><span class="label">तिथि:</span> <span class="val" id="tithi">प्रतीक्षा करें...</span></div>
-        <div class="item"><span class="label">पक्ष:</span> <span class="val" id="paksh">प्रतीक्षा करें...</span></div>
-        <div class="item"><span class="label">नक्षत्र:</span> <span class="val" id="nakshatra">प्रतीक्षा करें...</span></div>
-        <div class="item"><span class="label">राहुकाल:</span> <span class="val" id="rahukaal">--:--</span></div>
-        <div class="item" style="border:none;"><span class="label" style="color:green;">अभिजीत मुहूर्त:</span> <span class="val" id="muhurat" style="color:green; font-weight:bold;">11:55 AM - 12:45 PM</span></div>
+        <div class="item"><span class="label">सूर्योदय:</span> <span class="val" id="sunrise"></span></div>
+        <div class="item"><span class="label">सूर्यास्त:</span> <span class="val" id="sunset"></span></div>
+        <div class="item"><span class="label">तिथि:</span> <span class="val" id="tithi"></span></div>
+        <div class="item"><span class="label">पक्ष:</span> <span class="val" id="paksh"></span></div>
+        <div class="item"><span class="label">नक्षत्र:</span> <span class="val" id="nakshatra"></span></div>
+        <div class="item"><span class="label">राहुकाल:</span> <span class="val" id="rahukaal"></span></div>
+        <div class="item" style="border:none;"><span class="label" style="color:green;">अभिजीत मुहूर्त:</span> <span class="val" id="muhurat" style="color:green; font-weight:bold;"></span></div>
+    </div>
+    
+    <div class="location-note" id="loc-status">✨ पंचांग आपके शहर के अनुसार सेट किया जा रहा है...</div>
+
+    <div class="section-title">⏱️ आज का मुख्य चौघड़िया</div>
+    <table class="choghadiya-table">
+        <thead><tr><th>समय (Time)</th><th>चौघड़िया</th><th>प्रकार</th></tr></thead>
+        <tbody id="choghadiya-body"></tbody>
+    </table>
+
+    <div class="section-title">🚩 आज का विशेष पर्व एवं व्रत</div>
+    <div class="special-box" style="border-left: 5px solid #FF9800;">
+        <p id="festival-text"></p>
+    </div>
+
+    <div class="section-title">✨ भक्ति विशेष उपाय (जन-कल्याण हेतु)</div>
+    <div class="special-box" style="border-left: 5px solid #4CAF50; background-color: #E8F5E9;">
+        <p id="remedy-text"></p>
     </div>
 
     <button class="btn-audio" onclick="speakPanchang()">🔊 आज का पंचांग सुनें</button>
 
     <div class="footer-note">
-        * पंचांग की गणना 100% प्रामाणिक (Authentic) API और आपके स्थानीय समय पर आधारित है। <br>
-        * इसमें सुरक्षित लोकेशन (बिना GPS अनुमति) का उपयोग किया गया है।
+        <b>* अस्वीकरण (Disclaimer):</b> इस पंचांग की गणना खगोलीय सूत्रों पर आधारित है। हम इसकी 100% पूर्ण शुद्धता या प्रामाणिकता का दावा नहीं करते हैं। <br><br>
+        * यह जानकारी केवल धार्मिक रुचि के लिए है। किसी भी विशेष निर्णय के लिए विद्वान ज्योतिषी से परामर्श लें।
     </div>
 
     <script>
-        // आपकी API Key सुरक्षित रूप से यहाँ सेट की गई है
-        const PANCHANG_API_KEY = "Ak-844baffa3c91095379da74ce4bc1c15e3a078152";
-
-        // 1. बैकअप: खगोलीय गणित (अगर API लिमिट खत्म हो जाए)
-        function calculateAstrologyFallback(date) {
-            const newMoonRef = new Date("2024-01-11T11:57:00Z"); 
-            const synodicMonth = 29.53058868;
-            let diffDays = (date - newMoonRef) / (1000 * 60 * 60 * 24);
-            let lunarAge = diffDays % synodicMonth;
-            if (lunarAge < 0) lunarAge += synodicMonth;
-
-            let tithiIndex = Math.floor((lunarAge / synodicMonth) * 30) + 1;
-            let paksha = (tithiIndex <= 15) ? "शुक्ल पक्ष" : "कृष्ण पक्ष";
-
-            const tithiNames = ["अमावस्या", "प्रतिपदा", "द्वितीया", "तृतीया", "चतुर्थी", "पंचमी", "षष्ठी", "सप्तमी", "अष्टमी", "नवमी", "दशमी", "एकादशी", "द्वादशी", "त्रयोदशी", "चतुर्दशी", "पूर्णिमा"];
-            let tithiName = (tithiIndex === 30) ? "अमावस्या" : (tithiIndex === 15) ? "पूर्णिमा" : tithiNames[tithiIndex > 15 ? tithiIndex - 15 : tithiIndex];
-
-            const nakshatras = ["अश्विनी", "भरणी", "कृत्तिका", "रोहिणी", "मृगशिरा", "आर्द्रा", "पुनर्वसु", "पुष्य", "आश्लेषा", "मघा", "पूर्वाफाल्गुनी", "उत्तराफाल्गुनी", "हस्त", "चित्रा", "स्वाती", "विशाखा", "अनुराधा", "ज्येष्ठा", "मूल", "पूर्वाषाढ़ा", "उत्तराषाढ़ा", "श्रवण", "धनिष्ठा", "शतभिषा", "पूर्वाभाद्रपद", "उत्तराभाद्रपद", "रेवती"];
-            const nakshatraCycle = 27.321661;
-            let nPos = (diffDays % nakshatraCycle) / nakshatraCycle;
-            if (nPos < 0) nPos += 1;
-            let nIndex = Math.floor(nPos * 27) + 10; 
-            if (nIndex >= 27) nIndex -= 27;
-
-            return { tithi: tithiName, paksha: paksha, nakshatra: nakshatras[nIndex] };
-        }
-
-        // 2. सूर्योदय/सूर्यास्त फ्री API से (लोकेशन के हिसाब से)
-        async function fetchSunriseSunset(lat, lng) {
-            try {
-                let res = await fetch(`https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lng}&formatted=0`);
-                let data = await res.json();
-                let sunrise = new Date(data.results.sunrise).toLocaleTimeString('hi-IN', {hour: '2-digit', minute:'2-digit'});
-                let sunset = new Date(data.results.sunset).toLocaleTimeString('hi-IN', {hour: '2-digit', minute:'2-digit'});
-                document.getElementById("sunrise").innerText = sunrise;
-                document.getElementById("sunset").innerText = sunset;
-            } catch (e) {
-                document.getElementById("sunrise").innerText = "05:45 AM";
-                document.getElementById("sunset").innerText = "06:45 PM";
-            }
-        }
-
-        // 3. मुख्य फंक्शन: पंचांग लोड करना
-        async function loadDynamicPanchang() {
-            const today = new Date();
+        // =======================================================
+        // 🛑 आपको रोज़ सिर्फ यह डेटा बदलना है 🛑
+        // =======================================================
+        const todaysData = {
+            date: "गुरुवार, 18 जून 2026",
+            tithi: "तृतीया",
+            paksh: "शुक्ल पक्ष",
+            nakshatra: "शतभिषा",
             
-            // तारीख सेट करना
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            document.getElementById("display-date").innerText = today.toLocaleDateString('hi-IN', options);
+            // यह नई दिल्ली का डिफ़ॉल्ट समय है
+            default_sunrise: "05:20 AM",
+            default_sunset: "07:25 PM",
+            default_rahukaal: "01:30 PM - 03:00 PM",
+            default_muhurat: "11:55 AM - 12:45 PM",
+            
+            // चौघड़िया के नाम और प्रकार (समय अपने आप कैलकुलेट होगा)
+            ch1_name: "शुभ", ch1_type: "शुभ मुहूर्त", ch1_class: "shubh-tag",
+            ch2_name: "रोग", ch2_type: "अशुभ समय", ch2_class: "ashubh-tag",
+            ch3_name: "अमृत", ch3_type: "सर्वोत्तम मुहूर्त", ch3_class: "shubh-tag",
+            ch4_name: "शुभ", ch4_type: "शुभ मुहूर्त", ch4_class: "shubh-tag",
 
-            // राहुकाल सेट करना
-            const rahukaalTimes = ["04:30 PM - 06:00 PM", "07:30 AM - 09:00 AM", "03:00 PM - 04:30 PM", "12:00 PM - 01:30 PM", "01:30 PM - 03:00 PM", "10:30 AM - 12:00 PM", "09:00 AM - 10:30 AM"];
-            document.getElementById("rahukaal").innerText = rahukaalTimes[today.getDay()];
+            // विशेष ज्ञान
+            festival: "✨ आज शुक्ल पक्ष की तृतीया तिथि का पावन संयोग है, जो माता पार्वती (मां गौरी) की पूजा के लिए अत्यंत उत्तम माना जाता है। आज के दिन दान-पुण्य करने से अक्षय फल की प्राप्ति होती है।",
+            remedy: "🌿 <b>आरोग्य और सुख-समृद्धि के लिए:</b> आज शतभिषा नक्षत्र होने के कारण भगवान शिव की आराधना का विशेष महत्व है। आज शाम महामृत्युंजय मंत्र का 11 बार जाप करें और शिवलिंग पर जल अर्पित करें।"
+        };
+        // =======================================================
 
-            // सुरक्षित तरीके से लोकेशन निकालना (बिना पॉप-अप के)
-            let lat = 28.6139; let lng = 77.2090; // Default (New Delhi)
+        // 1. सबसे पहले डिफ़ॉल्ट डेटा दिखाएं (Instant Load के लिए)
+        function loadDefaultData() {
+            document.getElementById("display-date").innerText = todaysData.date;
+            document.getElementById("tithi").innerText = todaysData.tithi;
+            document.getElementById("paksh").innerText = todaysData.paksh;
+            document.getElementById("nakshatra").innerText = todaysData.nakshatra;
+            document.getElementById("festival-text").innerHTML = todaysData.festival;
+            document.getElementById("remedy-text").innerHTML = todaysData.remedy;
+            
+            document.getElementById("sunrise").innerText = todaysData.default_sunrise;
+            document.getElementById("sunset").innerText = todaysData.default_sunset;
+            document.getElementById("rahukaal").innerText = todaysData.default_rahukaal;
+            document.getElementById("muhurat").innerText = todaysData.default_muhurat;
+
+            // डिफ़ॉल्ट चौघड़िया समय (नई दिल्ली के अनुसार)
+            document.getElementById("choghadiya-body").innerHTML = `
+                <tr><td>05:20 AM - 07:05 AM</td><td>${todaysData.ch1_name}</td><td><span class="${todaysData.ch1_class}">${todaysData.ch1_type}</span></td></tr>
+                <tr><td>07:05 AM - 08:50 AM</td><td>${todaysData.ch2_name}</td><td><span class="${todaysData.ch2_class}">${todaysData.ch2_type}</span></td></tr>
+                <tr><td>12:22 PM - 02:07 PM</td><td>${todaysData.ch3_name}</td><td><span class="${todaysData.ch3_class}">${todaysData.ch3_type}</span></td></tr>
+                <tr><td>05:37 PM - 07:25 PM</td><td>${todaysData.ch4_name}</td><td><span class="${todaysData.ch4_class}">${todaysData.ch4_type}</span></td></tr>
+            `;
+        }
+
+        // 2. स्मार्ट हाइब्रिड इंजन: यूज़र की लोकेशन के हिसाब से ऑटोमेटिक गणित
+        async function calculateLocalTimes() {
             try {
+                // फ्री IP API से लोकेशन निकालना
                 let ipRes = await fetch('https://ipapi.co/json/');
                 let ipData = await ipRes.json();
-                if (ipData && ipData.latitude) { lat = ipData.latitude; lng = ipData.longitude; }
-            } catch (error) { console.log("IP fallback"); }
+                let lat = ipData.latitude;
+                let lng = ipData.longitude;
+                let city = ipData.city || "आपके शहर";
 
-            fetchSunriseSunset(lat, lng);
+                // सूर्योदय और सूर्यास्त निकालना
+                let sunRes = await fetch(`https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lng}&formatted=0`);
+                let sunData = await sunRes.json();
+                
+                let sunriseObj = new Date(sunData.results.sunrise);
+                let sunsetObj = new Date(sunData.results.sunset);
+                
+                // समय को AM/PM फॉर्मेट में बदलने का छोटा फंक्शन
+                let formatTime = (dateObj) => dateObj.toLocaleTimeString('hi-IN', {hour: '2-digit', minute:'2-digit'}).toUpperCase();
 
-            // API कॉल करना (आपकी Key के साथ)
-            const dd = String(today.getDate()).padStart(2, '0');
-            const mm = String(today.getMonth() + 1).padStart(2, '0');
-            const yyyy = today.getFullYear();
-            
-            try {
-                // यह API 100% ऑथेंटिक डेटा लाने का प्रयास करेगा
-                let apiUrl = `https://api.vedicastroapi.com/v3/json/panchang?api_key=${PANCHANG_API_KEY}&date=${dd}/${mm}/${yyyy}&tz=5.5&lat=${lat}&lon=${lng}&lang=hi`;
-                let response = await fetch(apiUrl);
-                let apiData = await response.json();
+                let localSunrise = formatTime(sunriseObj);
+                let localSunset = formatTime(sunsetObj);
 
-                if (apiData && apiData.response) {
-                    // API सफल रहा! एकदम असली डेटा दिखाना
-                    document.getElementById("tithi").innerText = apiData.response.tithi.name || "एकादशी";
-                    document.getElementById("nakshatra").innerText = apiData.response.nakshatra.name || "अश्विनी";
-                    document.getElementById("paksh").innerText = apiData.response.paksha || "शुक्ल पक्ष";
-                } else {
-                    throw new Error("API Limit reached"); // अगर लिमिट खत्म हो गई
-                }
-            } catch (apiError) {
-                // अगर API फेल हुआ, तो बैकअप गणित अपने आप चालू हो जाएगा
-                console.log("API Limit Reached or Error. Using Mathematical Fallback.");
-                const astroData = calculateAstrologyFallback(today);
-                document.getElementById("tithi").innerText = astroData.tithi;
-                document.getElementById("paksh").innerText = astroData.paksha;
-                document.getElementById("nakshatra").innerText = astroData.nakshatra;
+                // गणित: दिन की अवधि और 8 हिस्से (प्रत्येक चौघड़िया की अवधि)
+                let dayDurationMs = sunsetObj.getTime() - sunriseObj.getTime();
+                let oneEighthMs = dayDurationMs / 8;
+
+                // गणित: राहुकाल (दिन के हिसाब से)
+                const todayNum = new Date().getDay();
+                const rahukaalParts = [8, 2, 7, 5, 6, 4, 3]; // Sun=8, Mon=2, Tue=7, Wed=5, Thu=6, Fri=4, Sat=3
+                let rPart = rahukaalParts[todayNum];
+                
+                let rahuStart = new Date(sunriseObj.getTime() + (rPart - 1) * oneEighthMs);
+                let rahuEnd = new Date(rahuStart.getTime() + oneEighthMs);
+                let localRahu = formatTime(rahuStart) + " - " + formatTime(rahuEnd);
+
+                // गणित: अभिजीत मुहूर्त (दोपहर से 24 मिनट पहले और बाद)
+                let midDayMs = sunriseObj.getTime() + (dayDurationMs / 2);
+                let abhiStart = new Date(midDayMs - (24 * 60 * 1000));
+                let abhiEnd = new Date(midDayMs + (24 * 60 * 1000));
+                let localAbhijit = formatTime(abhiStart) + " - " + formatTime(abhiEnd);
+
+                // गणित: चौघड़िया का डायनामिक कैलकुलेशन
+                let ch1Start = sunriseObj;
+                let ch1End = new Date(sunriseObj.getTime() + oneEighthMs);
+                
+                let ch2Start = ch1End;
+                let ch2End = new Date(ch1End.getTime() + oneEighthMs);
+                
+                let ch3Start = new Date(sunriseObj.getTime() + 4 * oneEighthMs); // 5वां हिस्सा
+                let ch3End = new Date(ch3Start.getTime() + oneEighthMs);
+                
+                let ch4Start = new Date(sunriseObj.getTime() + 7 * oneEighthMs); // 8वां हिस्सा
+                let ch4End = sunsetObj;
+
+                // चौघड़िया टेबल को स्क्रीन पर लाइव अपडेट करना
+                document.getElementById("choghadiya-body").innerHTML = `
+                    <tr><td>${formatTime(ch1Start)} - ${formatTime(ch1End)}</td><td>${todaysData.ch1_name}</td><td><span class="${todaysData.ch1_class}">${todaysData.ch1_type}</span></td></tr>
+                    <tr><td>${formatTime(ch2Start)} - ${formatTime(ch2End)}</td><td>${todaysData.ch2_name}</td><td><span class="${todaysData.ch2_class}">${todaysData.ch2_type}</span></td></tr>
+                    <tr><td>${formatTime(ch3Start)} - ${formatTime(ch3End)}</td><td>${todaysData.ch3_name}</td><td><span class="${todaysData.ch3_class}">${todaysData.ch3_type}</span></td></tr>
+                    <tr><td>${formatTime(ch4Start)} - ${formatTime(ch4End)}</td><td>${todaysData.ch4_name}</td><td><span class="${todaysData.ch4_class}">${todaysData.ch4_type}</span></td></tr>
+                `;
+
+                // स्क्रीन पर बाकी लोकल डेटा अपडेट करना
+                document.getElementById("sunrise").innerText = localSunrise;
+                document.getElementById("sunset").innerText = localSunset;
+                document.getElementById("rahukaal").innerText = localRahu;
+                document.getElementById("muhurat").innerText = localAbhijit;
+                document.getElementById("loc-status").innerText = `✨ यह डेटा ${city} के समय अनुसार सटीक है।`;
+
+            } catch (error) {
+                document.getElementById("loc-status").innerText = `✨ मानक भारतीय समय (IST) अनुसार`;
             }
         }
 
-        window.onload = loadDynamicPanchang;
+        window.onload = function() {
+            loadDefaultData();
+            calculateLocalTimes(); // बैकग्राउंड में स्मार्ट कैलकुलेशन
+        };
 
-        // 4. आवाज़ में सुनें (TTS)
         function speakPanchang() {
             window.speechSynthesis.cancel();
-            let date = document.getElementById("display-date").innerText;
-            let sunrise = document.getElementById("sunrise").innerText;
-            let tithi = document.getElementById("tithi").innerText;
-            let paksh = document.getElementById("paksh").innerText;
-            let nakshatra = document.getElementById("nakshatra").innerText;
-            let rahukaal = document.getElementById("rahukaal").innerText;
+            let sunriseTxt = document.getElementById("sunrise").innerText;
+            let rahuTxt = document.getElementById("rahukaal").innerText;
             
-            let speechText = `जय श्री राम. आज ${date} है. आज ${paksh} की ${tithi} तिथि है. आज का नक्षत्र ${nakshatra} है. सूर्योदय का समय ${sunrise} है, और राहुकाल ${rahukaal} तक रहेगा. आपका दिन शुभ हो.`;
+            let speechText = `जय श्री राम. आज ${todaysData.date} है. आज ${todaysData.paksh} की ${todaysData.tithi} तिथि है. आज का नक्षत्र ${todaysData.nakshatra} है. सूर्योदय का समय ${sunriseTxt} है, और राहुकाल ${rahuTxt} तक रहेगा. आज का विशेष संदेश: ${document.getElementById("festival-text").innerText}. आपका दिन शुभ और मंगलमय हो.`;
             
             let msg = new SpeechSynthesisUtterance(speechText);
             msg.lang = 'hi-IN'; 
