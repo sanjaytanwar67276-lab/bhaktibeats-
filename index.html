@@ -415,16 +415,17 @@ footer{ padding:35px; text-align:center; font-size:14px; font-weight:800; color:
 function openYouTube(){
   window.open("https://youtube.com/@Kajaltanwer-eo5jo", "_blank");
 }
-
 function shareApp(){
   const playStoreLink = "https://play.google.com/store/apps/details?id=com.appcollection.xbhaktisagar_10307";
   const text = "🚩 *श्री भक्ति सागर ऐप डाउनलोड करें* 🚩\n\nआरती, भजन, व्रत कथा, पूजा विधि, और गीता ज्ञान एक ही ऐप में पाएं।\n\n👇 *अभी डाउनलोड करें* 👇\n" + playStoreLink;
 
-  window.open(
-    "https://wa.me/?text=" + encodeURIComponent(text),
-    "_blank"
-  );
+  // यह Android Intent है जो ऐप में 100% साफ हिंदी भेजेगा
+  const intentUrl = "intent://send?text=" + encodeURIComponent(text) + "#Intent;scheme=whatsapp;package=com.whatsapp;end";
+
+  // सीधा WhatsApp खोलें
+  window.location.href = intentUrl;
 }
+
 </script>
 
 </body>
